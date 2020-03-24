@@ -1,0 +1,273 @@
+@import url(../fonts/GothamBook.css);
+@import url(../fonts/GothamBold.css);
+*{
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	/*overflow:auto;*/
+}
+
+@media (max-width: 1000px){
+        header{  
+        	width: 100%;
+                flex-direction: column;
+                
+                align-items: flex-start;
+        }
+}
+
+.inicio{
+font-size: 25px;
+text-align: center;
+} 
+.navegacion{
+	width: 1000px auto;
+	/*margin: 30px auto;*/
+	background: #000000;
+	/*position:fixed*/;
+text-align: center;
+
+}
+.navegacion ul{
+	list-style: none;
+    margin: 0;
+}
+.navegacion2{
+	width: 500px auto;
+	/*background:#f8c253;*/
+background: rgb(40, 146, 157);
+
+
+height: 79px;
+text-align: center;
+
+}
+
+
+.menu > li{
+	/*position: relative;*/
+	display: inline-block;
+
+}
+
+.menu2 > li{
+	/*position: relative;*/
+	display: inline-block;
+	
+
+}
+
+
+.menu > li > a{
+	display: block;
+	padding: 15px 15px;
+	color: #ffffff;
+	font-family: 'Open sans';
+	text-decoration: none;
+}
+
+.menu2 > li > a{
+	display: block;
+	padding: 15px 15px;
+	color: white;
+	font-family: 'Open sans';
+	text-decoration: none;
+	text-align: center;
+	margin-right:30px;
+
+}
+.menu li a:hover{
+	color: pink;
+	transition: all .3s;
+
+}
+
+/* Submenu*/
+.submenu{
+	position: fixed;
+	/*position: absolute;*/
+	background: #ffffff;
+	width: 41.3%;
+	height: 51.3%;
+	visibility: hidden;
+	opacity: 1;
+	transition: opacity 1.5s;
+
+}
+
+.submenu li a{
+	display: block;
+	padding: 15px;
+	color: #000000;
+	font-family: 'Open sans';
+	text-decoration: none;
+}
+
+.menu li:hover .submenu{
+	visibility: visible;
+	opacity: 1;
+}
+
+.left{
+    float: left;
+    background:#FBC5FB;
+  	font-family: Arial;
+  	width: 18%;
+}
+.left select {
+   font-size: 14px;
+   height: 29px;
+   padding: 5px; 
+   width: 268px;
+}
+.center{
+	width: 33.33%;
+	text-align: center;
+}
+textarea {
+  resize: none;
+}
+
+footer {
+  position: relative;
+  left: 0;
+  bottom: 0;
+  /*width: 100%;*/
+  background-color:#f4f4f4;
+  color: black;
+  text-align: center;
+}
+img {
+    max-width: 100%;
+    display:block;
+	margin:auto;
+}
+
+.container{
+	width: 100%;
+		margin: 0;
+	padding: 0;
+	position: static;
+}
+.eldiv{
+	width: 100%;
+	margin-bottom: 0;
+	text-align: center;
+
+}
+
+
+.contenedor{
+	width: 100%;
+
+	margin: 0px;
+	text-align: center;
+
+}
+.second{
+	position: block;
+
+   height: 100%;
+   /*width: 100% ;*/
+}
+
+
+
+	.new{
+margin-left: 300px;
+width: 100%;
+	}
+
+	.now{
+		padding: 0px;	
+	}
+
+
+.titulo{
+	font-weight: bold;
+	font-size: 20px;
+}
+.titulos{
+	font-weight: bold;
+	font-size: 30px;
+}
+
+.cursos{
+	margin-right:auto;
+	text-align:center;
+	
+}
+.verde{
+	background-color: rgb(40, 146, 157);
+	width: 100%;
+}
+.nuevo{
+	float: right;
+}
+.card-img-top{
+	height:6em;
+}
+
+/* NAVBAR */
+body{
+	background: #ededed;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'arial';
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+h1{
+	font-size: 26px;
+}
+h2{
+	font-size: 20px;
+}
+h3{
+	font-size: 18px;
+}
+h4{
+	font-size: 16px;
+}
+h5{
+	font-size: 14px;
+}
+h6{
+	font-size: 12px;
+}
+p{
+	font-family: 'arial';
+	letter-spacing: 2px;
+	font-size: 14px;
+	line-height: 20px;
+}
+a{
+	text-decoration: none;
+	font-family: arial;
+	letter-spacing: 1px;
+}
+span {
+    font-family: 'arial';
+    letter-spacing: 1px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+nav a{
+	color: #FFF;
+	display: block;
+	font-size: 10pt;
+	font-family: 'arial';
+	padding: 150px 30px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	transition: background .5s;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: white;
+}
+
+/*****************************************************************/
