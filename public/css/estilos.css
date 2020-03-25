@@ -207,7 +207,7 @@ width: 100%;
 	float: right;
 }
 .card-img-top{
-	height:6em;
+	height: 10em;
 }
 
 /* NAVBAR */
@@ -217,7 +217,7 @@ body{
 h1, h2, h3, h4, h5, h6 {
     font-family: 'arial';
     font-weight: bold;
-    letter-spacing: 1px;
+    
 }
 h1{
 	font-size: 26px;
@@ -239,7 +239,6 @@ h6{
 }
 p{
 	font-family: 'arial';
-	letter-spacing: 2px;
 	font-size: 14px;
 	line-height: 20px;
 }
@@ -249,9 +248,16 @@ a{
 }
 span {
     font-family: 'arial';
-    letter-spacing: 1px;
     font-size: 14px;
     line-height: 20px;
+}
+
+hr {
+    margin-top: 0;
+}
+
+nav {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 nav a{
@@ -269,6 +275,7 @@ nav a{
     color: white;
 }
 
+/*
 button.cerrar-sesion {
     text-decoration: none;
     font-family: arial;
@@ -279,8 +286,6 @@ button.cerrar-sesion {
     background-color: transparent;
     border: 0px;
 }
-
-
 button.cerrar-sesion:hover {
     text-decoration: none;
     font-family: arial;
@@ -291,5 +296,16 @@ button.cerrar-sesion:hover {
     background-color: transparent;
     border: 0px;
 }
+*/
+
+/* CARDS */
+.card{
+	margin-top: 5%;
+	margin-bottom: 5%;
+	margin-left: 5%;
+	margin-right: 5%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 /*****************************************************************/
+

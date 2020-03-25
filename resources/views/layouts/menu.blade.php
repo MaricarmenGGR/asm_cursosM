@@ -8,7 +8,7 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/estilos.css">
-    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
 <body>
     
@@ -73,7 +73,7 @@
 
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <a class="navbar-brand"></a>
+        <a class="navbar-brand" style="display:none;"></a>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="#">Inicio</a>
@@ -93,13 +93,25 @@
                     </div>
                 </li>
             </ul>
-        <form class="form-inline" id="logout-form" action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="cerrar-sesion">
-                {{ __('Cerrar Sesión') }}
-            </button>   
-            
-        </form>
+            <ul class="navbar-nav ml-auto nav-flex-icons">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                    {{ Auth::user()->name }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+                    <a class="dropdown-item" href="#">Mi Perfil</a>
+                    <form class="form-inline" id="logout-form" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                            <button type="submit" style="border: 0;">
+                            <a class="dropdown-item">
+                                {{ __('CERRAR SESIÓN') }}
+                            </a>
+                            </button>             
+                    </form>
+                </div>
+            </li>
+            </ul>
         </div>
         </nav>
 
