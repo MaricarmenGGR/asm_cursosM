@@ -93,9 +93,12 @@
                     </div>
                 </li>
             </ul>
-        <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form class="form-inline" id="logout-form" action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="cerrar-sesion">
+                {{ __('Cerrar Sesión') }}
+            </button>   
+            
         </form>
         </div>
         </nav>

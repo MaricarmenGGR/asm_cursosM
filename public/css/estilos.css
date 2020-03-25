@@ -246,7 +246,6 @@ p{
 a{
 	text-decoration: none;
 	font-family: arial;
-	letter-spacing: 1px;
 }
 span {
     font-family: 'arial';
@@ -268,6 +267,29 @@ nav a{
 
 .navbar-light .navbar-nav .nav-link {
     color: white;
+}
+
+button.cerrar-sesion {
+    text-decoration: none;
+    font-family: arial;
+    font-size: 10pt;
+    letter-spacing: 1px;
+    color: white;
+    text-transform: uppercase;
+    background-color: transparent;
+    border: 0px;
+}
+
+
+button.cerrar-sesion:hover {
+    text-decoration: none;
+    font-family: arial;
+    font-size: 10pt;
+    letter-spacing: 1px;
+    color: black;
+    text-transform: uppercase;
+    background-color: transparent;
+    border: 0px;
 }
 
 /*****************************************************************/
