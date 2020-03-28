@@ -22,7 +22,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/cursos', 'CursosController@index')->name('cursos');
 
-Route::get('/usuarios', 'UsuariosController@index')->name('usuarios');
+Route::resource('usuarios','UsuariosController');
+//Route::get('/usuarios', 'UsuariosController@index')->name('usuarios');
+//Route::get('/perfil', 'UsuariosController@perfil')->name('perfil');
 /*
 Route::get('/cursos', function () {
     return view('cursos.curso');

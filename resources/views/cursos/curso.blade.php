@@ -3,7 +3,15 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <div class="card-tabs">
+            <br>
+            
+            <h2>&nbsp;&nbsp;Curso: $nombre_curso</h2>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-tabs" style="margin-top: 1%;">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                         

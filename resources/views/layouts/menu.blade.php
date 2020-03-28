@@ -91,7 +91,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href={{ route("usuarios.index") }}>
                             <i class="fas fa-users"></i>
                             Usuarios
                         </a>
@@ -117,7 +117,7 @@
                         {{ Auth::user()->role->descripcion }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-                        <a class="dropdown-item" href="#">Mi Perfil</a>
+                        <a class="dropdown-item" href={{route("usuarios.show",Auth::user())}} >Mi Perfil</a>
                         <form class="form-inline" id="logout-form" action="{{ route('logout') }}" method="POST">
                             @csrf
                                 <button type="submit" style="border: 0;">
@@ -134,7 +134,34 @@
 
         @yield('content')
 
+    <script>
+        $(document).ready(function() {
 
+            $('#dataTable').DataTable( {
+                responsive: true,
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            } );
 
+        } );
+    </script>
 </body>
 </html>

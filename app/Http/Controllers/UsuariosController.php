@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Role;
 
 class UsuariosController extends Controller
 {
@@ -17,7 +19,8 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        return view('usuarios.index');
+        $usuarios=User::get();
+        return view('usuarios.index',compact('usuarios'));
     }
 
     /**
@@ -49,7 +52,13 @@ class UsuariosController extends Controller
      */
     public function show($id)
     {
-        //
+        $rol=Role::get();
+        $user=User::findOrFail($id);
+        return view('usuarios.show',
+            ['usuario'=>$user,
+             'rol'=>$rol
+            ]
+        );
     }
 
     /**
@@ -60,7 +69,6 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**
@@ -84,5 +92,10 @@ class UsuariosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function perfil()
+    {
+        return view('usuarios.perfil');
     }
 }
