@@ -11,6 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('areas')->insert([
+            'id'=>1,
+            'nombre'=>'Sistemas y Comuncaciones'
+        ]);
         DB::table('roles')->insert([
             'id'=>1,
             'descripcion'=>'Administrador'
@@ -24,7 +28,8 @@ class DatabaseSeeder extends Seeder
             'name'=>'Carlos',
             'apPaterno'=>'Cedeno',
             'apMaterno'=>'Martinez',
-            'id_role'=>1,
+            'role_id'=>1,
+            'area_id'=>1,
             'email'=>"carlos@admin.com",
             'email_verified_at'=>null,
             'password' => bcrypt('carlosadmin'),
@@ -35,7 +40,8 @@ class DatabaseSeeder extends Seeder
             'name'=>'Maricarmen',
             'apPaterno'=>'X',
             'apMaterno'=>'X',
-            'id_role'=>1,
+            'role_id'=>1,
+            'area_id'=>1,
             'email'=>"maricarmen@admin.com",
             'email_verified_at'=>null,
             'password' => bcrypt('maricarmenadmin'),
@@ -46,7 +52,8 @@ class DatabaseSeeder extends Seeder
             'name'=>'Alexa',
             'apPaterno'=>'X',
             'apMaterno'=>'X',
-            'id_role'=>1,
+            'role_id'=>1,
+            'area_id'=>1,
             'email'=>"alexa@admin.com",
             'email_verified_at'=>null,
             'password' => bcrypt('alexaadmin'),

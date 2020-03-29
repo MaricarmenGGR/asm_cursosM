@@ -14,12 +14,15 @@ class CreateRolesTable extends Migration
     public function up()
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->Increments("id");
-            $table->string("descripcion",250);
+            $table->engine = 'InnoDB';
+            $table->charset='utf8';
+            $table->collation = 'utf8_unicode_ci';
+            $table->Increments('id');
+            $table->string('descripcion');
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateCursoAreasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,17 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('curso-areas', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset='utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
-            $table->string('name');
-            $table->string('apMaterno');
-            $table->string('apPaterno');
-            $table->string('email')->unique();
-            $table->unsignedinteger('role_id');
-            $table->foreign('role_id')->references('id')->on('roles');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('curp')->nullable();
+            $table->unsignedinteger('curso_id');
+            $table->foreign('curso_id')->references('id')->on('cursos');
             $table->unsignedinteger('area_id');
             $table->foreign('area_id')->references('id')->on('areas');
-            $table->rememberToken();
+            $table->integer('capacidad');
+            $table->integer('disponible')->nullable();
             $table->timestamps();
         });
     }
@@ -42,7 +36,7 @@ class CreateUsersTable extends Migration
     public function down()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('curso-areas');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
