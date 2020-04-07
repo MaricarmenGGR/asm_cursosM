@@ -97,7 +97,7 @@
                             var i;
                             for (i = 0; i <numeroAreas; i++) {
                               text +=
-                             "<br><div class='container'><div class='row text-left'><div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'><select class='custom-select'><option value='' disabled selected>Elige el área</option><option value='1'>Contabilidad</option><option value='2'>Option 2</option><option value='3'>Recursos Humanos</option></select></div><div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'><input type='number' name='CupoArea' id='cupo' class='cupo' value='' placeholder='Cupo'></div></div></div><br>";
+                             "<br><div class='container'><div class='row text-left'><div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'><select class='custom-select'><option value='' disabled selected>Elige el área</option><option value='1'>1. Despacho del auditor Superior</option><option value='2'>2. Normatividad</option><option value='3'>3. Especial Estatal</option><option value='4'>4. Especial Municipal</option><option value='5'>5. Planeacion</option><option value='6'>6. Investigacion</option><option value='7'>7. Substanciacion</option><option value='8'>8. Unidad Gral. de Asuntos Jurídicos</option><option value='9'>9. Direccion Administrativa</option></select></div><div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'><input type='number' name='CupoArea' id='cupo' class='cupo' value='' placeholder='Cupo'></div></div></div><br>";
                             }
                             document.getElementById("demo").innerHTML = text;
                             });
@@ -115,10 +115,10 @@
                     </div>
                     
                 </div>
+                <button type="button" class="btn btn-success btn-lg float-right">Crear Curso</button>
                 </form>
             </div>
             </div>
-
     </div>
     </div>
 
