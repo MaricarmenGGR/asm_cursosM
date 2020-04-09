@@ -36,6 +36,6 @@ Route::get('/cursos2', function () {
     return view('cursos.curso2');
 })->name('cursos2')->middleware('auth');
 
-/*Route:: get('/crearCurso',function(){
-    return view('cursos.createcurso');
-});*/
+Route:: get('/userView',function(){
+    return view('usuarios.homeUser');
+});
