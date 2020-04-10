@@ -150,6 +150,10 @@
         <button class="btn btn-outline-light"><a href={{ route("createcurso.index") }} class="black-text d-flex justify-content-end">
                         <h5>Crear un nuevo curso</h5></a></button>
     </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right">
+        <button class="btn btn-outline-light"><a href={{ route("homeUser.index") }} class="black-text d-flex justify-content-end">
+                        <h5>Vista de Usuario</h5></a></button>
+    </div>
 </div>
 
 @endsection

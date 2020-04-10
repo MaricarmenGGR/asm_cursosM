@@ -72,333 +72,68 @@
                         <tbody>
                             <tr>
                             <th scope="row">1</th>
-                            <td>Presentacion</td>
-                            <td>12:00 Horas</td>
-                            <td>Contabilidad pdf</td>
+                            <td><input type="text" placeholder="Actividad"></td>
+                            <td><input type="time" placeholder="Hora"></td>
+                            <td><input type="text" placeholder="Material"></td>
                             </tr>
                         </tbody>
                         </table>
                         <button type="button" class="btn btn-secondary">Editar</button>
                     </div>
                     <div class="tab-pane fade" id="material" role="tabpanel" aria-labelledby="material-tab">
-                        <h1>Material</h1>
-
+                        <h1>MATERIAL</h1>
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="inputGroupFile02">
+                                <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Elija un archivo</label>
+                            </div>
+                            <div class="input-group-append">
+                                <button class="input-group-text" id="inputGroupFileAddon02">Subir</button>
+                            </div>
+                            </div>
                     </div>
 
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
                         <h1>Evaluación</h1>
+                        <canvas id="myChart" style="max-width: 500px;"></canvas>
+                            <div class="col-md-5">
+                                <canvas id="myChart"></canvas>
+                            </div>
+                    </div>
+                    <div class="tab-pane fade" id="asistencia" role="tabpanel" aria-labelledby="asistencia-tab">
+                        <h1>Asistencia</h1>
                         <br>
                         <br>
-                        <h5>(E) Excelente, (B) Bueno, (R) Regular, (D) Deficiente</h5>
-                    <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10 text-center">
-                    <h3 class="text-center">DEL INSTRUCTOR/CAPACITOR</h3>
-                        <thead class="thead-dark text-center">
+                        <h5>(A) Asistio, (F) Falta</h5>
+                        <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10 text-center">
+                        <thead class="thead-dark">
                             <tr>
                             <th scope="col">No.</th>
-                            <th scope="col">Pregunta</th>
-                            <th scope="col">Respuesta</th>
+                            <th scope="col">Apellido Paterno</th>
+                            <th scope="col">Apellido Materno</th>
+                            <th scope="col">Nombre(s)</th>
+                            <th scope="col">Asistencia</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                             <th scope="row">1</th>
-                            <td>Dominó el tema que impartió</td>
-                            <td>
+                            <td>Gonzalez</td>
+                            <td>Rodriguez</td>
+                            <td>Maricarmen Guadalupe</td>
+                            <th>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
+                                    <input type="radio" name="options" id="option1" checked> A
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
+                                    <input type="radio" name="options" id="option2"> F
                                 </label>
                                 </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">2</th>
-                            <td>Fomentó la participación del grupo</td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">3</th>
-                            <td>Ilustró el tema con casos prácticos</td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">4</th>
-                            <td>Dio a conocer los objetivos del curso</td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">5</th>
-                            <td>Aclaró dudas</td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
+                            </th>
                             </tr>
                         </tbody>
                         </table>
-                        <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10 text-center">
-                    <h3 class="text-center">DEL CURSO/TALLER</h3>
-                        <thead class="thead-dark text-center">
-                            <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">Pregunta</th>
-                            <th scope="col">Respuesta</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row">6</th>
-                            <td>Los temas impartidos, contienen un equilibrio teórico-práctico</td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">7</th>
-                            <td>Los materiales y manuales empleados fueron suficientes</td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">8</th>
-                            <td>El tiempo programado fue el adecuado para cumplir con el objetivo del curso</td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
-                            </tr>
-                        </tbody>
-                        </table>
-                        <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10 text-center">
-                    <h3 class="text-center">DE LA ORGANIZACIÓN DEL EVENTO</h3>
-                        <thead class="thead-dark text-center">
-                            <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">Pregunta</th>
-                            <th scope="col">Respuesta</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row">9</th>
-                            <td>Se entregó el material a tiempo </td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">10</th>
-                            <td>El funcionamiento del equipo audiovisual fue adecuado</td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">11</th>
-                            <td>El salón fue adecuado para el curso/taller</td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">12</th>
-                            <td>El salón fue adecuado para el curso/taller</td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">13</th>
-                            <td>La atención por parte del Departamento de Capacitación</td>
-                            <td>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> E
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> B
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> R
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option3"> D
-                                </label>
-                                </div>
-                            </td>
-                            </tr>
-                        </tbody>
-                        </table>
-
-                        <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Sugerencias y comentarios:</span>
-                        </div>
-                        <textarea class="form-control" aria-label="sugerencias"></textarea>
-                        </div>
-
-                        <button type="button" class="btn btn-secondary">Editar</button>
-                    
-                    </div>
-                    <div class="tab-pane fade" id="asistencia" role="tabpanel" aria-labelledby="asistencia-tab">
-                        <h1>Asistencia</h1>
                     </div>
                     <div class="tab-pane fade" id="invitacion" role="tabpanel" aria-labelledby="invitacion-tab">
                         <h1>INVITACIÓN</h1>
@@ -409,3 +144,4 @@
     </div>
 </div>
 @endsection
+

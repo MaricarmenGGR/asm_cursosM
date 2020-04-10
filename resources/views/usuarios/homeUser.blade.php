@@ -58,13 +58,14 @@
                             <h4 class="card-title">Nombre Curso </h4>
                         </div>
                         <div class="col-2">
-                            <a><i class="fas fa-cog"></i></a>
+                            <!--<a><i class="fas fa-cog"></i></a>-->
                         </div>
                     </div>
                     <hr>
                     <p class="card-text">
                         Descripción
                     </p> 
+                    <button type="button" class="btn float-right"><a href={{ route("userviewcurso.index") }} class="black-text d-flex justify-content-end">Ver Contenido</a></button>
                     <button type="button" class="btn btn-asm float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Inscribirse</button>
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -108,14 +109,14 @@
                             <h4 class="card-title">Nombre Curso </h4>
                         </div>
                         <div class="col-2">
-                            <a><i class="fas fa-cog"></i></a>
+                             <!--<a><i class="fas fa-cog"></i></a>-->
                         </div>
                     </div>
                     <hr>
                     <p class="card-text">
                         Descripción
                     </p>
-
+                    <button type="button" class="btn float-right"><a href={{ route("userviewcurso.index") }} class="black-text d-flex justify-content-end">Ver Contenido</a></button>
                     <button type="button" class="btn btn-asm float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Inscribirse</button>
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -159,14 +160,14 @@
                             <h4 class="card-title">Nombre Curso </h4>
                         </div>
                         <div class="col-2">
-                            <a><i class="fas fa-cog"></i></a>
+                             <!--<a><i class="fas fa-cog"></i></a>-->
                         </div>
                     </div>
                     <hr>
                     <p class="card-text">
                         Descripción
                     </p>
-
+                    <button type="button" class="btn float-right"><a href={{ route("userviewcurso.index") }} class="black-text d-flex justify-content-end">Ver Contenido</a></button>
                     <button type="button" class="btn btn-asm float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Inscribirse</button>
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -210,14 +211,14 @@
                             <h4 class="card-title">Nombre Curso </h4>
                         </div>
                         <div class="col-2">
-                            <a><i class="fas fa-cog"></i></a>
+                             <!--<a><i class="fas fa-cog"></i></a>-->
                         </div>
                     </div>
                     <hr>
                     <p class="card-text">
                         Descripción
                     </p>
-                        
+                    <button type="button" class="btn float-right"><a href={{ route("userviewcurso.index") }} class="black-text d-flex justify-content-end">Ver Contenido</a></button>
                     <button type="button" class="btn btn-asm float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Inscribirse</button>
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">

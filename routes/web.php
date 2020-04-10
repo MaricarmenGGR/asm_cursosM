@@ -24,6 +24,10 @@ Route::get('/cursos', 'CursosController@index')->name('cursos');
 
 Route::resource('createcurso','CrearCursosController');
 
+Route::resource('userviewcurso','UsuariosCursoController');
+
+Route::resource('homeUser','UsuariosHomeController');
+
 Route::resource('usuarios','UsuariosController');
 //Route::get('/usuarios', 'UsuariosController@index')->name('usuarios');
 //Route::get('/perfil', 'UsuariosController@perfil')->name('perfil');
@@ -35,7 +39,3 @@ Route::get('/cursos', function () {
 Route::get('/cursos2', function () {
     return view('cursos.curso2');
 })->name('cursos2')->middleware('auth');
-
-Route:: get('/userView',function(){
-    return view('usuarios.homeUser');
-});
