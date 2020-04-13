@@ -66,32 +66,26 @@
                         Descripción
                     </p> 
                     <button type="button" class="btn float-right"><a href={{ route("userviewcurso.index") }} class="black-text d-flex justify-content-end">Ver Contenido</a></button>
-                    <button type="button" class="btn btn-asm float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Inscribirse</button>
+                    <button type="button" class="btn btn-asm" data-toggle="modal" data-target="#exampleModal">
+                    Inscribirse
+                    </button>
+
+                    <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">DATOS PARA INSCRIPCIÓN</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Inscripción</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
-                            <div class="form-group">
-                                <label for="nombreCompleto" class="col-form-label">Nombre Completo:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">CURP:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">Correo:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">Area de inscripción:</label>
-                                <select class='custom-select'><option value='' disabled selected>Elige el área</option><option value='1'>1. Despacho del auditor Superior</option><option value='2'>2. Normatividad</option><option value='3'>3. Especial Estatal</option><option value='4'>4. Especial Municipal</option><option value='5'>5. Planeacion</option><option value='6'>6. Investigacion</option><option value='7'>7. Substanciacion</option><option value='8'>8. Unidad Gral. de Asuntos Jurídicos</option><option value='9'>9. Direccion Administrativa</option></select>
-                            </div>
-                            </form>
+                            ¿Quieres inscribirte al curso "$Nombre del curso"?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-asm">Aceptar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
+                            <button type="button" class="btn btn-success">SI</button>
                         </div>
                         </div>
                     </div>
@@ -117,32 +111,26 @@
                         Descripción
                     </p>
                     <button type="button" class="btn float-right"><a href={{ route("userviewcurso.index") }} class="black-text d-flex justify-content-end">Ver Contenido</a></button>
-                    <button type="button" class="btn btn-asm float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Inscribirse</button>
+                    <button type="button" class="btn btn-asm" data-toggle="modal" data-target="#exampleModal">
+                    Inscribirse
+                    </button>
+
+                    <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">DATOS PARA INSCRIPCIÓN</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Inscripción</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
-                            <div class="form-group">
-                                <label for="nombreCompleto" class="col-form-label">Nombre Completo:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">CURP:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">Correo:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">Area de inscripción:</label>
-                                <select class='custom-select'><option value='' disabled selected>Elige el área</option><option value='1'>1. Despacho del auditor Superior</option><option value='2'>2. Normatividad</option><option value='3'>3. Especial Estatal</option><option value='4'>4. Especial Municipal</option><option value='5'>5. Planeacion</option><option value='6'>6. Investigacion</option><option value='7'>7. Substanciacion</option><option value='8'>8. Unidad Gral. de Asuntos Jurídicos</option><option value='9'>9. Direccion Administrativa</option></select>
-                            </div>
-                            </form>
+                            ¿Quieres inscribirte al curso "$Nombre del curso"?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-asm">Aceptar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
+                            <button type="button" class="btn btn-success">SI</button>
                         </div>
                         </div>
                     </div>
@@ -168,32 +156,26 @@
                         Descripción
                     </p>
                     <button type="button" class="btn float-right"><a href={{ route("userviewcurso.index") }} class="black-text d-flex justify-content-end">Ver Contenido</a></button>
-                    <button type="button" class="btn btn-asm float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Inscribirse</button>
+                    <button type="button" class="btn btn-asm" data-toggle="modal" data-target="#exampleModal">
+                    Inscribirse
+                    </button>
+
+                    <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">DATOS PARA INSCRIPCIÓN</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Inscripción</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
-                            <div class="form-group">
-                                <label for="nombreCompleto" class="col-form-label">Nombre Completo:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">CURP:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">Correo:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">Area de inscripción:</label>
-                                <select class='custom-select'><option value='' disabled selected>Elige el área</option><option value='1'>1. Despacho del auditor Superior</option><option value='2'>2. Normatividad</option><option value='3'>3. Especial Estatal</option><option value='4'>4. Especial Municipal</option><option value='5'>5. Planeacion</option><option value='6'>6. Investigacion</option><option value='7'>7. Substanciacion</option><option value='8'>8. Unidad Gral. de Asuntos Jurídicos</option><option value='9'>9. Direccion Administrativa</option></select>
-                            </div>
-                            </form>
+                            ¿Quieres inscribirte al curso "$Nombre del curso"?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-asm">Aceptar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
+                            <button type="button" class="btn btn-success">SI</button>
                         </div>
                         </div>
                     </div>
@@ -219,32 +201,27 @@
                         Descripción
                     </p>
                     <button type="button" class="btn float-right"><a href={{ route("userviewcurso.index") }} class="black-text d-flex justify-content-end">Ver Contenido</a></button>
-                    <button type="button" class="btn btn-asm float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Inscribirse</button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-asm" data-toggle="modal" data-target="#exampleModal">
+                    Inscribirse
+                    </button>
+
+                    <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">DATOS PARA INSCRIPCIÓN</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Inscripción</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
-                            <div class="form-group">
-                                <label for="nombreCompleto" class="col-form-label">Nombre Completo:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">CURP:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">Correo:</label>
-                                <input type="text" class="form-control" id="nombreCompleto">
-                                <label for="nombreCompleto" class="col-form-label">Area de inscripción:</label>
-                                <select class='custom-select'><option value='' disabled selected>Elige el área</option><option value='1'>1. Despacho del auditor Superior</option><option value='2'>2. Normatividad</option><option value='3'>3. Especial Estatal</option><option value='4'>4. Especial Municipal</option><option value='5'>5. Planeacion</option><option value='6'>6. Investigacion</option><option value='7'>7. Substanciacion</option><option value='8'>8. Unidad Gral. de Asuntos Jurídicos</option><option value='9'>9. Direccion Administrativa</option></select>
-                            </div>
-                            </form>
+                            ¿Quieres inscribirte al curso "$Nombre del curso"?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-asm">Aceptar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
+                            <button type="button" class="btn btn-success">SI</button>
                         </div>
                         </div>
                     </div>
