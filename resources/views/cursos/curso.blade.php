@@ -82,23 +82,33 @@
                     </div>
                     <div class="tab-pane fade" id="material" role="tabpanel" aria-labelledby="material-tab">
                         <h1>MATERIAL</h1>
-                        <div class="input-group mb-3">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="inputGroupFile02">
-                                <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Elija un archivo</label>
-                            </div>
-                            <div class="input-group-append">
-                                <button class="input-group-text" id="inputGroupFileAddon02">Subir</button>
-                            </div>
-                            </div>
+                        <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Subir Archivo</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01"
+                            aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Seleccionar Archivo</label>
+                        </div>
+                        </div>
                     </div>
 
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
                         <h1>Evaluación</h1>
-                        <canvas id="myChart" style="max-width: 500px;"></canvas>
-                            <div class="col-md-5">
-                                <canvas id="myChart"></canvas>
-                            </div>
+                    <script src="https://code.highcharts.com/highcharts.js"></script>
+                    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+                    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+                    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+                    <figure class="highcharts-figure">
+                        <div id="container"></div>
+                        <p class="highcharts-description">
+                           Grafica de Ejemplo para los resultado de la evalucion del Ponente
+                        </p>
+                    </figure>
+                             
                     </div>
                     <div class="tab-pane fade" id="asistencia" role="tabpanel" aria-labelledby="asistencia-tab">
                         <h1>Asistencia</h1>
@@ -112,7 +122,8 @@
                             <th scope="col">Apellido Paterno</th>
                             <th scope="col">Apellido Materno</th>
                             <th scope="col">Nombre(s)</th>
-                            <th scope="col">Asistencia</th>
+                            <th scope="col">Asistencia de Entrada</th>
+                            <th scope="col">Asistencia de Salida</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,6 +133,18 @@
                             <td>Rodriguez</td>
                             <td>Maricarmen Guadalupe</td>
                             <th>
+                                <!-- Marcacion de los botones segun la asistencia marcada-->
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="options" id="option1" checked> A
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="options" id="option2"> F
+                                </label>
+                                </div>
+                            </th>
+                            <th>
+                                <!-- Marcacion de los botones segun la asistencia marcada-->
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label class="btn btn-secondary active">
                                     <input type="radio" name="options" id="option1" checked> A
@@ -137,11 +160,97 @@
                     </div>
                     <div class="tab-pane fade" id="invitacion" role="tabpanel" aria-labelledby="invitacion-tab">
                         <h1>INVITACIÓN</h1>
+                        <!--Podemos subir el oficio-->
+                        <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Subir Archivo</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01"
+                            aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Seleccionar Archivo</label>
+                        </div>
+                        </div>
+                        <br>
+                        <h3>Titular de área: Nombre del Titular del Area</h3><h3>Estatus:(Vista) o (No Vista)</h3>
+                        <br>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    Highcharts.chart('container', {
+
+title: {
+    text: 'Solar Employment Growth by Sector, 2010-2016'
+},
+
+subtitle: {
+    text: 'Source: thesolarfoundation.com'
+},
+
+yAxis: {
+    title: {
+        text: 'Number of Employees'
+    }
+},
+
+xAxis: {
+    accessibility: {
+        rangeDescription: 'Range: 2010 to 2017'
+    }
+},
+
+legend: {
+    layout: 'vertical',
+    align: 'right',
+    verticalAlign: 'middle'
+},
+
+plotOptions: {
+    series: {
+        label: {
+            connectorAllowed: false
+        },
+        pointStart: 2010
+    }
+},
+
+series: [{
+    name: 'Installation',
+    data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+}, {
+    name: 'Manufacturing',
+    data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+}, {
+    name: 'Sales & Distribution',
+    data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+}, {
+    name: 'Project Development',
+    data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+}, {
+    name: 'Other',
+    data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+}],
+
+responsive: {
+    rules: [{
+        condition: {
+            maxWidth: 500
+        },
+        chartOptions: {
+            legend: {
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom'
+            }
+        }
+    }]
+}
+
+});
+    </script>
 @endsection
 

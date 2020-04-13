@@ -1,4 +1,4 @@
-8@extends('layouts.menu')
+@extends('layouts.menu')
 @section('content')
 <div class="container-fluid">
     <div class="row">
