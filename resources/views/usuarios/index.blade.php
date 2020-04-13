@@ -1,14 +1,12 @@
 @extends('layouts.menu')
 @section('content')
 <div class="container-fluid">
-
-
     <div class="row">
         <div class="col-lg-12">
             <div class="card-tabs">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="users-tab" data-toggle="tab" role="tab" aria-controls="users" aria-selected="true">Usuarios</a>
+                        <a class="nav-item nav-link active" id="users-tab" data-toggle="tab" role="tab" aria-controls="users" aria-selected="true">Lista de Usuarios</a>
                     </div>
                 </nav>
 

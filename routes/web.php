@@ -21,18 +21,19 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/cursos', 'CursosController@index')->name('cursos');
-
-Route::resource('createcurso','CrearCursosController');
+Route::get('/verCurso', 'CursosController@show')->name('verCurso');
+Route::get('/crearCurso', 'CursosController@create')->name('crearCurso');
 
 Route::resource('userviewcurso','UsuariosCursoController');
 
 Route::resource('homeUser','UsuariosHomeController');
 
 Route::resource('usuarios','UsuariosController');
+Route::get('/verPerfil/{id}','UsuariosController@profile');
 //Route::get('/usuarios', 'UsuariosController@index')->name('usuarios');
 //Route::get('/perfil', 'UsuariosController@perfil')->name('perfil');
 /*
-Route::get('/cursos', function () {
+Route::get('/cursos', function () { 
     return view('cursos.curso');
 })->name('cursos')->middleware('auth');
 */

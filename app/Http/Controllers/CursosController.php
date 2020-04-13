@@ -17,7 +17,7 @@ class CursosController extends Controller
      */
     public function index()
     {
-        return view('cursos.curso');
+        return view('cursos.index');
     }
 
     /**
@@ -27,7 +27,7 @@ class CursosController extends Controller
      */
     public function create()
     {
-        //
+        return view('cursos.crear');
     }
 
     /**
@@ -47,9 +47,9 @@ class CursosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        return view('cursos.curso');
     }
 
     /**

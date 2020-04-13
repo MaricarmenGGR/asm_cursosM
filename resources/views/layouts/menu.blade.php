@@ -90,24 +90,28 @@
                             Inicio
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href={{ route("usuarios.index") }}>
-                            <i class="fas fa-users"></i>
-                            Usuarios
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-table"></i>
-                            Cursos
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
+                    @if( Auth::user()->role->id == 1 )
+                        <li class="nav-item">
+                                <a class="nav-link" href={{ route("usuarios.index") }}>
+                                    <i class="fas fa-users"></i>
+                                    Usuarios
+                                </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href={{ route("cursos") }}>
+                                <i class="fas fa-table"></i>
+                                Cursos
+                            </a>
+                        </li>
+                    @endif
+                    @if( Auth::user()->role->id == 2 )
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="/">
+                                <i class="fas fa-table"></i>
+                                Mis Cursos
+                            </a>
+                        </li>
+                    @endif
                 </ul>
                 <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item dropdown">
@@ -117,7 +121,7 @@
                         {{ Auth::user()->role->descripcion }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-                        <a class="dropdown-item" href={{route("usuarios.show",Auth::user())}} >Mi Perfil</a>
+                        <a class="dropdown-item" href={{action('UsuariosController@profile',Auth::user())}} >Mi Perfil</a>
                         <form class="form-inline" id="logout-form" action="{{ route('logout') }}" method="POST">
                             @csrf
                                 <button type="submit" style="border: 0;">

@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
+use Auth;
 
 class UsuariosController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin');
+        
+        $this->middleware('user')->only('profile');
     }
     /**
      * Display a listing of the resource.
@@ -59,6 +61,21 @@ class UsuariosController extends Controller
              'rol'=>$rol
             ]
         );
+    }
+
+    public function profile($id)
+    {
+        if(Auth::user()->id == $id){
+            $rol=Role::get();
+            $user=User::findOrFail($id);
+            return view('usuarios.show',
+                ['usuario'=>$user,
+                'rol'=>$rol
+                ]
+            );
+        } else {
+            return view('home');
+        }
     }
 
     /**

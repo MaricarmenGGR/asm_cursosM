@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class CheckAdmin
+class CheckUser
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check() && Auth::user()->role->id == 1){
+        if(Auth::check() && Auth::user()->role->id == 2){
             return $next($request);
         }
         return redirect('/');

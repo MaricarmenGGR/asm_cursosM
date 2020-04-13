@@ -57,7 +57,7 @@ text-align: center;
 
 }
 
-.btn-asm{background-color:#3f8d8d;color: #FFF;}
+.btn-asm{background-color:rgb(40, 146, 157);color: #FFF;}
 .btn-black:hover{color: #FFF;}
 
 
@@ -142,7 +142,7 @@ footer {
   text-align: center;
 }
 img {
-    max-width: 100%;
+	max-width: 100%;
     display:block;
 	margin:auto;
 }
@@ -291,7 +291,7 @@ nav a{
 }
 
 /* CARDS */
-.card{
+.card-cursos{
 	margin-top: 5%;
 	margin-bottom: 5%;
 	margin-left: 5%;
@@ -299,6 +299,10 @@ nav a{
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.card{
+	margin-left: 5%;
+	margin-right: 5%;
+}
 
 /* CURSO TABS */
 .card-tabs{

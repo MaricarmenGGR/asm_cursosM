@@ -27,35 +27,55 @@
 
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab"><h1>Información del Curso</h1>
-                    <div class="card text-white bg-secondary mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                    <div class="card-header">
-                    <p>
-                        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapsePonente" aria-expanded="false" aria-controls="collapsePonente">
-                           Ponente
-                        </button>
-                        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapsePeriodo" aria-expanded="false" aria-controls="collapsePeriodo">
-                           Periodo
-                        </button>
-                    </p>
-                    </div>
-                    <div class="collapse" id="collapsePonente">
-                    <div class="card-body">
-                            <h5 class="card-title">Ponente:</h5>
-                            <p class="card-text">Nombre del Ponente</p>
+
+                        <div id="accordion">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Información general curso
+                                    </button>
+                                </h5>
+                                </div>
+
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <button class="btn collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Horario
+                                    </button>
+                                </h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                    <button class="btn collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Información del ponente
+                                    </button>
+                                </h5>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                <div class="card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
-                    <div class="collapse" id="collapsePeriodo">
-                    <div class="card-body">
-                            <h5 class="card-title">Periodo:</h5>
-                            <p class="card-text">fecha de Inicio - fecha de Termino</p>
-                        </div>
-                    </div>
-                        <div class="card-body">
-                        <p class="card-text">Datos Extraidos de la BD</p>
-                        <button type="button" class="btn btn-secondary float-right">Editar</button>
-                        </div>
-                    </div>
-                </div>
+
                     <div class="tab-pane fade" id="programa" role="tabpanel" aria-labelledby="programa-tab">
                         <h1>Programa del curso</h1>
                         <br>
