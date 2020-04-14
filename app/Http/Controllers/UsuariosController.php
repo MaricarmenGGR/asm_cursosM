@@ -11,8 +11,9 @@ class UsuariosController extends Controller
 {
     public function __construct()
     {
-        
-        $this->middleware('user')->only('profile');
+        //$this->middleware(['admin','user']);
+        //$this->middleware('user')->only('profile');
+        //$this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
