@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'descripcion'=>'Trabajador'
         ]);
         DB::table('users')->insert([
-            'id'=>0,
+            'id'=>1,
             'name'=>'Carlos',
             'apPaterno'=>'Cedeno',
             'apMaterno'=>'Martinez',
@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'remember_token'=>null
         ]);
         DB::table('users')->insert([
-            'id'=>0,
+            'id'=>2,
             'name'=>'Maricarmen',
             'apPaterno'=>'X',
             'apMaterno'=>'X',
@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
             'remember_token'=>null
         ]);
         DB::table('users')->insert([
-            'id'=>0,
+            'id'=>3,
             'name'=>'Alexa',
             'apPaterno'=>'X',
             'apMaterno'=>'X',
