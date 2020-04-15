@@ -37,8 +37,8 @@ class CreateCursoUsuariosTable extends Migration
      */
     public function down()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+       
         Schema::dropIfExists('curso-usuarios');
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+
     }
 }
