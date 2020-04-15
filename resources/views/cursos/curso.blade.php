@@ -80,24 +80,26 @@
                         <h1>Programa del curso</h1>
                         <br>
                         <br>
-                    <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                        <thead class="thead-dark ">
-                            <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">Actividad</th>
-                            <th scope="col">Hora</th>
-                            <th scope="col">Material</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row">1</th>
-                            <td><input type="text" placeholder="Actividad"></td>
-                            <td><input type="time" placeholder="Hora"></td>
-                            <td><input type="text" placeholder="Material"></td>
-                            </tr>
-                        </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <thead class="thead-dark ">
+                                    <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Actividad</th>
+                                    <th scope="col">Hora</th>
+                                    <th scope="col">Material</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <th scope="row">1</th>
+                                    <td><input type="text" placeholder="Actividad"></td>
+                                    <td><input type="time" placeholder="Hora"></td>
+                                    <td><input type="text" placeholder="Material"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <button type="button" class="btn btn-secondary">Editar</button>
                     </div>
                     <div class="tab-pane fade" id="material" role="tabpanel" aria-labelledby="material-tab">
@@ -135,48 +137,50 @@
                         <br>
                         <br>
                         <h5>(A) Asistio, (F) Falta</h5>
-                        <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10 text-center">
-                        <thead class="thead-dark">
-                            <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">Apellido Paterno</th>
-                            <th scope="col">Apellido Materno</th>
-                            <th scope="col">Nombre(s)</th>
-                            <th scope="col">Asistencia de Entrada</th>
-                            <th scope="col">Asistencia de Salida</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row">1</th>
-                            <td>Gonzalez</td>
-                            <td>Rodriguez</td>
-                            <td>Maricarmen Guadalupe</td>
-                            <th>
-                                <!-- Marcacion de los botones segun la asistencia marcada-->
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> A
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> F
-                                </label>
-                                </div>
-                            </th>
-                            <th>
-                                <!-- Marcacion de los botones segun la asistencia marcada-->
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" checked> A
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2"> F
-                                </label>
-                                </div>
-                            </th>
-                            </tr>
-                        </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <thead class="thead-dark">
+                                    <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Apellido Paterno</th>
+                                    <th scope="col">Apellido Materno</th>
+                                    <th scope="col">Nombre(s)</th>
+                                    <th scope="col">Asistencia de Entrada</th>
+                                    <th scope="col">Asistencia de Salida</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <th scope="row">1</th>
+                                    <td>Gonzalez</td>
+                                    <td>Rodriguez</td>
+                                    <td>Maricarmen Guadalupe</td>
+                                    <th>
+                                        <!-- Marcacion de los botones segun la asistencia marcada-->
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary active">
+                                            <input type="radio" name="options" id="option1" checked> A
+                                        </label>
+                                        <label class="btn btn-secondary">
+                                            <input type="radio" name="options" id="option2"> F
+                                        </label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <!-- Marcacion de los botones segun la asistencia marcada-->
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary active">
+                                            <input type="radio" name="options" id="option1" checked> A
+                                        </label>
+                                        <label class="btn btn-secondary">
+                                            <input type="radio" name="options" id="option2"> F
+                                        </label>
+                                        </div>
+                                    </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="invitacion" role="tabpanel" aria-labelledby="invitacion-tab">
                         <h1>INVITACIÓN</h1>

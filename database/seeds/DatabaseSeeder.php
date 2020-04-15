@@ -25,38 +25,26 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('users')->insert([
             'id'=>1,
-            'name'=>'Carlos',
-            'apPaterno'=>'Cedeno',
-            'apMaterno'=>'Martinez',
+            'name'=>'Nombre',
+            'apPaterno'=>'Ap P',
+            'apMaterno'=>'Ap M',
             'role_id'=>1,
             'area_id'=>1,
-            'email'=>"carlos@admin.com",
+            'email'=>"admin@admin.com",
             'email_verified_at'=>null,
-            'password' => bcrypt('carlosadmin'),
+            'password' => bcrypt('admin1989'),
             'remember_token'=>null
         ]);
         DB::table('users')->insert([
             'id'=>2,
-            'name'=>'Maricarmen',
-            'apPaterno'=>'X',
-            'apMaterno'=>'X',
+            'name'=>'Usuario',
+            'apPaterno'=>'Usr ap',
+            'apMaterno'=>'Usr am',
             'role_id'=>1,
             'area_id'=>1,
-            'email'=>"maricarmen@admin.com",
+            'email'=>"user@user.com",
             'email_verified_at'=>null,
-            'password' => bcrypt('maricarmenadmin'),
-            'remember_token'=>null
-        ]);
-        DB::table('users')->insert([
-            'id'=>3,
-            'name'=>'Alexa',
-            'apPaterno'=>'X',
-            'apMaterno'=>'X',
-            'role_id'=>1,
-            'area_id'=>1,
-            'email'=>"alexa@admin.com",
-            'email_verified_at'=>null,
-            'password' => bcrypt('alexaadmin'),
+            'password' => bcrypt('user1989'),
             'remember_token'=>null
         ]);
 
