@@ -37,10 +37,10 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('users')->insert([
             'id'=>2,
-            'name'=>'Usuario',
+            'name'=>'Nombre',
             'apPaterno'=>'Usr ap',
             'apMaterno'=>'Usr am',
-            'role_id'=>1,
+            'role_id'=>2,
             'area_id'=>1,
             'email'=>"user@user.com",
             'email_verified_at'=>null,
