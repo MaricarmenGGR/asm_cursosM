@@ -11,6 +11,39 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //MODALIDAD SEED
+        DB::table('modalidades')->insert([
+            'id'=>1,
+            'nombre'=>'Presencial'
+        ]);
+        DB::table('modalidades')->insert([
+            'id'=>2,
+            'nombre'=>'En línea'
+        ]);
+
+        //STATUS SEED
+        DB::table('status')->insert([
+            'id'=>1,
+            'descripcion'=>'Planificando'
+        ]);
+        DB::table('status')->insert([
+            'id'=>2,
+            'descripcion'=>'En inscripciones'
+        ]);
+        DB::table('status')->insert([
+            'id'=>3,
+            'descripcion'=>'En curso'
+        ]);
+        DB::table('status')->insert([
+            'id'=>4,
+            'descripcion'=>'Terminado'
+        ]);
+        DB::table('status')->insert([
+            'id'=>5,
+            'descripcion'=>'Cancelado'
+        ]);
+
+
         //AREAS SEED
         DB::table('areas')->insert([
             'id'=>1,

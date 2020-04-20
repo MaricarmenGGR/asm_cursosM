@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <br>
             
-            <h2>&nbsp;&nbsp;Curso: $nombre_curso</h2>
+            <h2>&nbsp;&nbsp;Curso: {!! $curso->nombreCurso !!}</h2>
             
         </div>
     </div>

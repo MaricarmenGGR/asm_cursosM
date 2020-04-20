@@ -9,9 +9,9 @@ class Curso extends Model
 {
     protected $table = 'cursos';
     protected $fillable = [
-        'id','nombre','fecha_inicio','fecha_fin','horas','modalidad','lugar','ponente','info_ponente',
-        'status_id','publicar'
-    ];
+        'id','nombreCurso','modalidad_id','lugar','fechaInicio','fechaFin','descripcionCurso','horaIncio','horaFin','horasTotales',
+        'nombrePonente','infoPonente','status_id','publicar'
+    ]; 
     use SoftDeletes;
     protected $dates = ['deleted_at'];
 }

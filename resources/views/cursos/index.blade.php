@@ -26,19 +26,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($cursos as $curso)
+                                        <tr>
+                                            <td>{!! $curso->nombreCurso !!}</td>
+                                            <td>{!! $curso->fechaInicio !!}</td>
+                                            <td>{!! $curso->fechaFin !!}</td>
+                                            <td>{!! $curso->status_id !!}</td>
+                                            <td>{!! $curso->publicado !!}</td>
+                                            <td>
+                                                <p class="text-center">
+                                                    <a href={{route("cursos.show",$curso->id)}}><i class="fas fa-eye"></i></a>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
-                                    <tr>
-                                        <td>Curso 1</td>
-                                        <td>01/01/2020</td>
-                                        <td>01/01/2020</td>
-                                        <td>Planeando</td>
-                                        <td>NO</td>
-                                        <td>
-                                            <p class="text-center">
-                                                <a href={{route("verCurso")}}><i class="fas fa-eye"></i></a>
-                                            </p>
-                                        </td>
-                                    </tr>
 
                                     <tr>
                                         <td>Curso 2</td>
