@@ -27,6 +27,7 @@ class CreateCursoUsuariosTable extends Migration
             $table->boolean('acreditado')->default(0);
             $table->date('fecha_acreditado')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

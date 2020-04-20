@@ -11,10 +11,44 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //AREAS SEED
         DB::table('areas')->insert([
             'id'=>1,
-            'nombre'=>'Sistemas y Comuncaciones'
+            'nombre'=>'Despacho del Auditor Superior'
         ]);
+        DB::table('areas')->insert([
+            'id'=>2,
+            'nombre'=>'Normatividad'
+        ]);
+        DB::table('areas')->insert([
+            'id'=>3,
+            'nombre'=>'Especial Estatal'
+        ]);
+        DB::table('areas')->insert([
+            'id'=>4,
+            'nombre'=>'Especial Municipal'
+        ]);
+        DB::table('areas')->insert([
+            'id'=>5,
+            'nombre'=>'Planeación'
+        ]);
+        DB::table('areas')->insert([
+            'id'=>6,
+            'nombre'=>'Investigación'
+        ]);
+        DB::table('areas')->insert([
+            'id'=>7,
+            'nombre'=>'Substanciación'
+        ]);        DB::table('areas')->insert([
+            'id'=>8,
+            'nombre'=>'Unidad Gral de Asuntos Jurídicos'
+        ]);
+        DB::table('areas')->insert([
+            'id'=>9,
+            'nombre'=>'Dirección administrativa'
+        ]);
+
+        //ROLES SEED
         DB::table('roles')->insert([
             'id'=>1,
             'descripcion'=>'Administrador'
@@ -23,6 +57,8 @@ class DatabaseSeeder extends Seeder
             'id'=>2,
             'descripcion'=>'Trabajador'
         ]);
+
+        //USUARIOS SEED
         DB::table('users')->insert([
             'id'=>1,
             'name'=>'Nombre',
@@ -47,6 +83,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('user1989'),
             'remember_token'=>null
         ]);
+
 
     }
 }

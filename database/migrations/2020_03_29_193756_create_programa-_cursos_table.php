@@ -23,6 +23,7 @@ class CreateProgramaCursosTable extends Migration
             $table->string('actividad');
             $table->string('hora')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -28,8 +28,9 @@ class CreateCursosTable extends Migration
             $table->string('info_ponente')->nullable();
             $table->unsignedinteger('status_id')->default(1);
             $table->foreign('status_id')->references('id')->on('status');
-            $table->boolean('mostrar')->default(0);
+            $table->boolean('publicar')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

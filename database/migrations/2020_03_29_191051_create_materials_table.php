@@ -22,6 +22,7 @@ class CreateMaterialsTable extends Migration
             $table->foreign('curso_id')->references('id')->on('cursos');
             $table->string('url')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

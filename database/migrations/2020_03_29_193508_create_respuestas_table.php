@@ -28,6 +28,7 @@ class CreateRespuestasTable extends Migration
             $table->string('respuesta_4');
             $table->string('respuesta_5');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

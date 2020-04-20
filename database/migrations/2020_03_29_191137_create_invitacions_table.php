@@ -24,6 +24,7 @@ class CreateInvitacionsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->boolean('visto')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

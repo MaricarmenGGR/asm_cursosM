@@ -24,6 +24,7 @@ class CreateConstanciasTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->date('fecha_expedicion')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

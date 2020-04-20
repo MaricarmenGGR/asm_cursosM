@@ -26,6 +26,7 @@ class CreateCuestionariosTable extends Migration
             $table->string('pregunta_4')->default('¿ ?');
             $table->string('pregunta_5')->default('¿ ?');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -25,6 +25,7 @@ class CreateCursoAreasTable extends Migration
             $table->integer('capacidad');
             $table->integer('disponible')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
