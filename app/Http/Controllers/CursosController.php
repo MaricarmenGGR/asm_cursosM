@@ -87,7 +87,7 @@ class CursosController extends Controller
                 'curso_id' => $ultimaTupla->id,
                 'area_id' => $area,
                 'capacidad' => $cupo,
-                'disponicle' => $cupo
+                'disponible' => $cupo
             ]);
         }
         
@@ -103,8 +103,15 @@ class CursosController extends Controller
      */
     public function show($id)
     {
+        $areas = DB::table('curso-areas')
+        ->leftJoin('areas', 'curso-areas.area_id', '=', 'areas.id')
+        ->select('curso-areas.*', 'areas.*')
+        ->where('curso-areas.curso_id', '=', $id)
+        ->get();
+
         $vars = [
-            'curso' => Curso::findOrFail($id)
+            'curso' => Curso::findOrFail($id),
+            'areas' => $areas
         ];
         return view('cursos.curso', $vars);
     }

@@ -5,7 +5,9 @@
         <div class="col-lg-12">
             <br>
             
-            <h2>&nbsp;&nbsp;Curso: {!! $curso->nombreCurso !!}</h2>
+            <div class="text-center">
+                <h1>&nbsp;&nbsp;Curso: {!! $curso->nombreCurso !!}</h1>
+            </div>
             
         </div>
     </div>
@@ -26,8 +28,8 @@
                 </nav>
 
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab"><h1>Información del Curso</h1>
-
+                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab"><h2>Información del Curso</h2>
+                        <br>
                         <div id="accordion">
                             <div class="card">
                                 <div class="card-header" id="headingOne">
@@ -40,7 +42,7 @@
 
                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                {!! $curso->descripcionCurso !!}
                                 </div>
                                 </div>
                             </div>
@@ -54,7 +56,7 @@
                                 </div>
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                                 <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    {!! $curso->horaInicio !!} - {!! $curso->horaFin !!}
                                 </div>
                                 </div>
                             </div>
@@ -68,7 +70,8 @@
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                 <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    Nombre del ponente:  {!! $curso->nombrePonente !!} <br>
+                                    Curriculom:  {!! $curso->descripcionPonente !!}
                                 </div>
                                 </div>
                             </div>
@@ -197,6 +200,11 @@
                         </div>
                         <br>
                         <h3>Titular de área: Nombre del Titular del Area</h3><h3>Estatus:(Vista) o (No Vista)</h3>
+                        <br>
+                        <h3>AREAS</h3>
+                        @foreach($areas as $area)
+                            {!! $area->nombre !!} <br>
+                        @endforeach
                         <br>
                     </div>
                 </div>
