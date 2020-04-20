@@ -1,5 +1,10 @@
 @extends('layouts.menu')
 @section('content')
+<style>
+.hide{
+  display:none;
+}
+</style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -116,6 +121,27 @@
                             <br>
                             <h3>Áreas Invitadas</h3>
                             <hr>
+
+                            <div class="form-row">
+                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
+                                @foreach($areas as $area)
+                                    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="area_{!! $area->id !!}" name="area[]" onclick="showInput(this)">
+                                        <label class="form-check-label" for="defaultCheck1">
+                                            {!! $area->nombre !!}
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-group col-lg-6">
+                                        <input placeholder="Cupo" style="display: none;" type="number" class="form-control form-control-sm" id="cupo_{!! $area->id !!}" name="cupo[]" min=1>
+                                    </div>
+
+                                @endforeach
+                                </div>
+
+                            </div>
+
                             <div class="form-row">
                                 <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
                                     <div class="text-left">
@@ -129,37 +155,52 @@
                             </div>
 
                                 <script type="text/javascript">
+                                    function showInput(checkbox) {
+                                        var numero = checkbox.id;
+                                        var num = numero.split("_");
+                                        
+                                        if($(checkbox).prop('checked')) {
+                                            $('#cupo_'+num[1]).css('display','block');
+                                        } else {
+                                            $('#cupo_'+num[1]).css('display','none');
+                                            }
+                                    }
                                     $(document).ready(function(){
                                         $("#numero").change(function () {
-                                        var numeroAreas = parseInt( $("#numero").val());
-                                        var text = "";
-                                        var i;
-                                        for (i = 0; i <numeroAreas; i++) {
-                                        text +=
-                                            "<br>"+
-                                            "<div class='row text-left'>"+
-                                                "<div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'>"+
-                                                    "<select class='custom-select'>"+
-                                                        "<option value='' disabled selected>Elige el área</option>"+
-                                                        "<option value='1'>1. Despacho del auditor Superior</option>"+
-                                                        "<option value='2'>2. Normatividad</option>"+
-                                                        "<option value='3'>3. Especial Estatal</option>"+
-                                                        "<option value='4'>4. Especial Municipal</option>"+
-                                                        "<option value='5'>5. Planeacion</option>"+
-                                                        "<option value='6'>6. Investigacion</option>"+
-                                                        "<option value='7'>7. Substanciacion</option>"+
-                                                        "<option value='8'>8. Unidad Gral. de Asuntos Jurídicos</option>"+
-                                                        "<option value='9'>9. Direccion Administrativa</option>"+
-                                                    "</select>"+
-                                                "</div>"+
-                                                "<div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'>"+
-                                                    "<input type='number' name='CupoArea' id='cupo' class='form-control' value='' placeholder='Cupo'>"+
-                                                "</div>"+
-                                            "</div>";
-                                        }
-                                        document.getElementById("demo").innerHTML = text;
+                                            var numeroAreas = parseInt( $("#numero").val());
+                                            var text = "";
+                                            var i;
+                                            for (i = 0; i <numeroAreas; i++) {
+                                            text +=
+                                                "<br>"+
+                                                "<div class='row text-left'>"+
+                                                    "<div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'>"+
+                                                        "<select class='custom-select'>"+
+                                                            "<option value='' disabled selected>Elige el área</option>"+
+                                                            "<option value='1'>1. Despacho del auditor Superior</option>"+
+                                                            "<option value='2'>2. Normatividad</option>"+
+                                                            "<option value='3'>3. Especial Estatal</option>"+
+                                                            "<option value='4'>4. Especial Municipal</option>"+
+                                                            "<option value='5'>5. Planeacion</option>"+
+                                                            "<option value='6'>6. Investigacion</option>"+
+                                                            "<option value='7'>7. Substanciacion</option>"+
+                                                            "<option value='8'>8. Unidad Gral. de Asuntos Jurídicos</option>"+
+                                                            "<option value='9'>9. Direccion Administrativa</option>"+
+                                                        "</select>"+
+                                                    "</div>"+
+                                                    "<div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'>"+
+                                                        "<input type='number' name='CupoArea' id='cupo' class='form-control' value='' placeholder='Cupo'>"+
+                                                    "</div>"+
+                                                "</div>";
+                                            }
+                                            document.getElementById("demo").innerHTML = text;
                                         });
+
+
+
                                     });
+                                    
+
                                 </script>
 
                             <br>

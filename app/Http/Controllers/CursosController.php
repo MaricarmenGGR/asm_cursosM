@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Area;
+use Illuminate\Support\Facades\DB;
 
 class CursosController extends Controller
 {
@@ -27,7 +30,8 @@ class CursosController extends Controller
      */
     public function create()
     {
-        return view('cursos.crear');
+        $areas = Area::get();
+        return view('cursos.crear',compact('areas'));
     }
 
     /**
