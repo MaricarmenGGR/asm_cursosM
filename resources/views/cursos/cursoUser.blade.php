@@ -5,7 +5,9 @@
         <div class="col-lg-12">
             <br>
             
-            <h2>&nbsp;&nbsp;Curso: $nombre_curso</h2>
+            <div class="text-center">
+                <h1>&nbsp;&nbsp;Curso: {!! $curso->nombreCurso !!}</h1>
+            </div>
             
         </div>
     </div>
@@ -16,15 +18,16 @@
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                         
                             <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
+                            @if( Auth::user()->estaInscrito($curso->id) )
                             <a class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa y Material</a>
                             <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
-                        
+                            @endif
                     </div>
                 </nav>
 
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
-                        <h1>Información del Curso</h1>
+                        <h2>Información del Curso</h2>
                         <br>
                         <div id="accordion">
                             <div class="card">
@@ -70,11 +73,49 @@
                                 </div>
                                 </div>
                             </div>
+                            <br>
+                            @if( ! Auth::user()->estaInscrito($curso->id) )
+                                <div class="row">
+                                    <div class="col-lg-2"></div>
+                                    <div class="col-lg-8">
+                                        <button type="button" class="btn btn-block btn-asm" data-toggle="modal" data-target="#modalInscripcion{{$curso->id}}">
+                                            Inscribirme
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-1"></div>
+                                </div>
+                                <!-- MODAL -->
+                                <div class="modal fade" id="modalInscripcion{{$curso->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Inscripción</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Desea inscribirse al curso {{$curso->nombreCurso}}?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">NO</button>
+                                                <!--<a href={{action('CursosController@inscribirse',$curso->id)}} class="btn btn-success">SÍ</a>-->
+                                                <form method="post" action="/inscribirse">
+                                                    @csrf
+                                                    <input type="number" name="idCurso" value="{{$curso->id}}" hidden>
+                                                    <button type="submit" class="btn btn-sm btn-success">SÍ</button>
+                                                </form>
+                                                
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
                     </div>
                     <div class="tab-pane fade" id="programa" role="tabpanel" aria-labelledby="programa-tab">
-                        <h1>Programa del curso</h1>
+                        <h2>Programa del curso</h2>
                         <br>
                         <br>
                     <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10">
@@ -98,7 +139,7 @@
                     </div>
 
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
-                        <h1>Evaluación</h1>
+                        <h2>Evaluación</h2>
                         <br>
                         <br>
                         <h5>(E) Excelente, (B) Bueno, (R) Regular, (D) Deficiente</h5>

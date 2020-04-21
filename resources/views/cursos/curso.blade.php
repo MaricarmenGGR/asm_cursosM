@@ -23,7 +23,6 @@
                             <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
                             <a class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
                             <a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
-                        
                     </div>
                 </nav>
 
@@ -148,39 +147,46 @@
                                     <th scope="col">Apellido Paterno</th>
                                     <th scope="col">Apellido Materno</th>
                                     <th scope="col">Nombre(s)</th>
+                                    <th scope="col">Área</th>
                                     <th scope="col">Asistencia de Entrada</th>
                                     <th scope="col">Asistencia de Salida</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                    <th scope="row">1</th>
-                                    <td>Gonzalez</td>
-                                    <td>Rodriguez</td>
-                                    <td>Maricarmen Guadalupe</td>
-                                    <th>
-                                        <!-- Marcacion de los botones segun la asistencia marcada-->
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-secondary active">
-                                            <input type="radio" name="options" id="option1" checked> A
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                            <input type="radio" name="options" id="option2"> F
-                                        </label>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <!-- Marcacion de los botones segun la asistencia marcada-->
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-secondary active">
-                                            <input type="radio" name="options" id="option1" checked> A
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                            <input type="radio" name="options" id="option2"> F
-                                        </label>
-                                        </div>
-                                    </th>
-                                    </tr>
+                                    @php $count = 1 @endphp
+                                    @foreach($inscritos as $inscrito)
+                                        
+                                        <tr>
+                                            <th scope="row">{!! $count !!}</th>
+                                            <td>{!! $inscrito->apPaterno !!}</td>
+                                            <td>{!! $inscrito->apMaterno !!}</td>
+                                            <td>{!! $inscrito->name !!}</td>
+                                            <td>{!! $inscrito->nombre !!}</td>
+                                            <th>
+                                                <!-- Marcacion de los botones segun la asistencia marcada-->
+                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-secondary active">
+                                                    <input type="radio" name="options" id="option1" checked> A
+                                                </label>
+                                                <label class="btn btn-secondary">
+                                                    <input type="radio" name="options" id="option2"> F
+                                                </label>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <!-- Marcacion de los botones segun la asistencia marcada-->
+                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-secondary active">
+                                                    <input type="radio" name="options" id="option1" checked> A
+                                                </label>
+                                                <label class="btn btn-secondary">
+                                                    <input type="radio" name="options" id="option2"> F
+                                                </label>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        @php $count++ @endphp
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

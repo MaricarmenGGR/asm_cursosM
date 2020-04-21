@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Curso;
+use App\Curso_Usuario;
 
-class UsuariosCursoController extends Controller
+class CursosUsuarioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +16,7 @@ class UsuariosCursoController extends Controller
      */
     public function index()
     {
-        return view('usuarios.cursosUser');
+        
     }
 
     /**
@@ -45,7 +48,10 @@ class UsuariosCursoController extends Controller
      */
     public function show($id)
     {
-        //
+        $vars = [
+            'curso' => Curso::findOrFail($id),
+        ];
+        return view('cursos.cursoUser', $vars);
     }
 
     /**
@@ -80,5 +86,19 @@ class UsuariosCursoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // PARA INSCRIBIRSE
+    public function inscribirse(Request $request){
+        //'id','user_id','curso_id','status_id','acreditado','fecha_acreditado'
+        
+        Curso_Usuario::create([
+            'user_id' => Auth::user()->id,
+            'curso_id' => $request->idCurso,
+            'status_id' => 1,
+            'acreditado' => 0,
+            'fecha_acreditado' => null
+        ]);
+        return redirect()->route('cursosUsuario.show',$request->idCurso);
     }
 }

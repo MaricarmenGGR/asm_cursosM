@@ -13,7 +13,7 @@ class CreateCursoAreasTable extends Migration
      */
     public function up()
     {
-        Schema::create('curso-areas', function (Blueprint $table) {
+        Schema::create('curso_areas', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset='utf8';
             $table->collation = 'utf8_unicode_ci';

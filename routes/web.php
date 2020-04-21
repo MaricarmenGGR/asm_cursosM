@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+
 */
 
 
@@ -20,14 +21,15 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//////////////////////////// RUTAS CURSOS ////////////////////////////////
+//////////////////////////// RUTAS CURSOS (ADMINS) ////////////////////////////////
 Route::resource('cursos','CursosController');
 Route::get('/cursos', 'CursosController@index')->name('cursos');
 Route::get('/verCurso', 'CursosController@show')->name('verCurso');
 Route::get('/crearCurso', 'CursosController@create')->name('crearCurso');
-Route::post('/inscribirse', 'CursosController@inscribirse');
 
-Route::resource('userviewcurso','UsuariosCursoController');
+//////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////
+Route::resource('cursosUsuario','CursosUsuarioController');
+Route::post('/inscribirse', 'CursosUsuarioController@inscribirse');
 
 Route::resource('homeUser','UsuariosHomeController');
 

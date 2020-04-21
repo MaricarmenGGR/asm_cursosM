@@ -13,7 +13,7 @@ class CreateInvitacionAreasTable extends Migration
      */
     public function up()
     {
-        Schema::create('invitacion-areas', function (Blueprint $table) {
+        Schema::create('invitacion_areas', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset='utf8';
             $table->collation = 'utf8_unicode_ci';

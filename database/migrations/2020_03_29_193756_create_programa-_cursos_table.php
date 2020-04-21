@@ -13,7 +13,7 @@ class CreateProgramaCursosTable extends Migration
      */
     public function up()
     {
-        Schema::create('programa-cursos', function (Blueprint $table) {
+        Schema::create('programa_cursos', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset='utf8';
             $table->collation = 'utf8_unicode_ci';

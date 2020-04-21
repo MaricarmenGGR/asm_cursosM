@@ -15,8 +15,8 @@ class CursosController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        //$this->middleware('admin');
+        //$this->middleware('auth');
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -105,15 +105,23 @@ class CursosController extends Controller
      */
     public function show($id)
     {
-        $areas = DB::table('curso-areas')
-        ->leftJoin('areas', 'curso-areas.area_id', '=', 'areas.id')
-        ->select('curso-areas.*', 'areas.*')
-        ->where('curso-areas.curso_id', '=', $id)
+        $areas = DB::table('curso_areas')
+        ->leftJoin('areas', 'curso_areas.area_id', '=', 'areas.id')
+        ->select('curso_areas.*', 'areas.*')
+        ->where('curso_areas.curso_id', '=', $id)
+        ->get();
+
+        $inscritos = DB::table('users')
+        ->leftJoin('curso_usuarios', 'curso_usuarios.user_id', '=', 'users.id')
+        ->leftJoin('areas', 'areas.id', '=', 'users.area_id')
+        ->select('curso_usuarios.*', 'users.*', 'areas.*')
+        ->where('curso_usuarios.curso_id', '=', $id)
         ->get();
 
         $vars = [
             'curso' => Curso::findOrFail($id),
-            'areas' => $areas
+            'areas' => $areas,
+            'inscritos' => $inscritos
         ];
         return view('cursos.curso', $vars);
     }
@@ -150,18 +158,5 @@ class CursosController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function inscribirse(Request $request){
-        //'id','user_id','curso_id','status_id','acreditado','fecha_acreditado'
-        
-        Curso_Usuario::create([
-            'user_id' => Auth::user()->id,
-            'curso_id' => $request->idCurso,
-            'status_id' => 1,
-            'acreditado' => 0,
-            'fecha_acreditado' => null
-        ]);
-        print_r("adfsdfas");
     }
 }

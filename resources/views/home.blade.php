@@ -139,16 +139,24 @@
                         <hr>
                         <p class="card-text">
                             {!! $curso->descripcionCurso !!}
-                        </p> 
-                        <a href="{{ route('userviewcurso.index') }}" class="black-text d-flex justify-content-end">
+                        </p>
+                        @if( ! Auth::user()->estaInscrito($curso->id) )
+                        <a href="{{ route('cursosUsuario.show',$curso->id) }}" class="black-text d-flex justify-content-end">
                             <h5>Ver más <i class="fas fa-angle-double-right"></i></h5>
                         </a>
+                        @endif
                         <br>
                         <div class="row">
                             <div class="col-lg-12">
+                                @if( ! Auth::user()->estaInscrito($curso->id) )
                                 <button type="button" class="btn btn-block btn-asm" data-toggle="modal" data-target="#modalInscripcion{{$curso->id}}">
                                     Inscribirme
                                 </button>
+                                @else
+                                <a href="{{ route('cursosUsuario.show',$curso->id) }}" class="btn btn-block btn-asm">
+                                    Entrar al curso
+                                </a>
+                                @endif
                             </div>
                         </div>
 
@@ -168,13 +176,12 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
-                                    <!--<a href={{action('CursosController@inscribirse',$curso->id)}} class="btn btn-success">SÍ</a>-->
+                                    
                                     <form method="post" action="/inscribirse">
                                         @csrf
                                         <input type="number" name="idCurso" value="{{$curso->id}}" hidden>
                                         <button type="submit" class="btn btn-success">SÍ</button>
                                     </form>
-                                    
                             </div>
                             </div>
                         </div>

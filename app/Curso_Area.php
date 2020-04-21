@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Curso_Area extends Model
 {
-    protected $table = 'curso-areas';
+    protected $table = 'curso_areas';
     protected $fillable = [
         'id','curso_id','area_id','capacidad','disponible'
     ];

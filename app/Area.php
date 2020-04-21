@@ -13,4 +13,11 @@ class Area extends Model
     ];
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+
+    public function obtenerNombre($id){
+        $result = DB::table('areas')
+        ->where('id', '=', $id)
+        ->get();
+        return $result->nombre;
+    }
 }

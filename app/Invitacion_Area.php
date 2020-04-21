@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Invitacion_Area extends Model
 {
-    protected $table = 'invitacion-areas';
+    protected $table = 'invitacion_areas';
     protected $fillable = [
         'id','curso_id','user_id','enterado'
     ];

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Curso;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
@@ -47,6 +48,13 @@ class User extends Authenticatable
     }
 
     public function estaInscrito($id){
-
+        $result = DB::table('curso_usuarios')
+        ->where('curso_id', '=', $id)
+        ->where('user_id', '=', Auth::user()->id)
+        ->get();
+        
+        if (!$result->isEmpty()) return true;
+        else return false;
+        //SELECT * FROM curso_usuarios WHERE curso_id = 1 AND user_id = 2
     }
 }

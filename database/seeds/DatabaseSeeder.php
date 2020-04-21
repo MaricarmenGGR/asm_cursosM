@@ -42,6 +42,15 @@ class DatabaseSeeder extends Seeder
             'id'=>5,
             'descripcion'=>'Cancelado'
         ]);
+        //STATUS DE INSCRIPCION
+        DB::table('status')->insert([
+            'id'=>6,
+            'descripcion'=>'Aceptado'
+        ]);
+        DB::table('status')->insert([
+            'id'=>7,
+            'descripcion'=>'Rechazado'
+        ]);
 
 
         //AREAS SEED
@@ -116,7 +125,42 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('user1989'),
             'remember_token'=>null
         ]);
-
+        DB::table('users')->insert([
+            'id'=>3,
+            'name'=>'User 1',
+            'apPaterno'=>'Usr ap',
+            'apMaterno'=>'Usr am',
+            'role_id'=>2,
+            'area_id'=>3,
+            'email'=>"user1@user.com",
+            'email_verified_at'=>null,
+            'password' => bcrypt('user1989'),
+            'remember_token'=>null
+        ]);
+        DB::table('users')->insert([
+            'id'=>4,
+            'name'=>'User 2',
+            'apPaterno'=>'Usr ap',
+            'apMaterno'=>'Usr am',
+            'role_id'=>2,
+            'area_id'=>3,
+            'email'=>"user2@user.com",
+            'email_verified_at'=>null,
+            'password' => bcrypt('user1989'),
+            'remember_token'=>null
+        ]);
+        DB::table('users')->insert([
+            'id'=>5,
+            'name'=>'User 3',
+            'apPaterno'=>'Usr ap',
+            'apMaterno'=>'Usr am',
+            'role_id'=>2,
+            'area_id'=>4,
+            'email'=>"user3@user.com",
+            'email_verified_at'=>null,
+            'password' => bcrypt('user1989'),
+            'remember_token'=>null
+        ]);
 
     }
 }
