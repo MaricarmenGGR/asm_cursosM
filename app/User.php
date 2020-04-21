@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Curso;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -42,5 +44,9 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App\Role');
         //return $this->belongsTo('App\Role','role_id','id');
+    }
+
+    public function estaInscrito($id){
+
     }
 }

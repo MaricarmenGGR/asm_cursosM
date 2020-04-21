@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Area;
 use App\Curso;
 use App\Curso_Area;
+use App\Curso_Usuario;
 use App\Modalidad;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +15,8 @@ class CursosController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('auth');
+        //$this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -148,5 +150,18 @@ class CursosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function inscribirse(Request $request){
+        //'id','user_id','curso_id','status_id','acreditado','fecha_acreditado'
+        
+        Curso_Usuario::create([
+            'user_id' => Auth::user()->id,
+            'curso_id' => $request->idCurso,
+            'status_id' => 1,
+            'acreditado' => 0,
+            'fecha_acreditado' => null
+        ]);
+        print_r("adfsdfas");
     }
 }

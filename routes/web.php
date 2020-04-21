@@ -25,6 +25,7 @@ Route::resource('cursos','CursosController');
 Route::get('/cursos', 'CursosController@index')->name('cursos');
 Route::get('/verCurso', 'CursosController@show')->name('verCurso');
 Route::get('/crearCurso', 'CursosController@create')->name('crearCurso');
+Route::post('/inscribirse', 'CursosController@inscribirse');
 
 Route::resource('userviewcurso','UsuariosCursoController');
 
