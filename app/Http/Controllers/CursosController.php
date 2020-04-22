@@ -26,8 +26,12 @@ class CursosController extends Controller
     public function index()
     {
         $cursos = Curso::get();
+        /*$cursos = DB::table('cursos')
+        ->leftJoin('curso_areas', 'curso_areas.curso_id', '=', 'cursos.id')
+        ->select('curso_areas.area_id', 'curso_areas.curso_id', 'cursos.*')
+        ->get();*/
         $vars = [ 
-            'cursos' => $cursos
+            'cursos' => $cursos,
         ];
         return view('cursos.index',$vars);
     }

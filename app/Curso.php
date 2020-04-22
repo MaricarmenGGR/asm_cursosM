@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Curso extends Model
 {
@@ -14,4 +15,14 @@ class Curso extends Model
     ]; 
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+
+    public function verificarArea($curso, $area){ //Validar si el area enviada esta invitada al curso
+        $result = DB::table('curso_areas')
+        ->where('curso_id', '=', $curso)
+        ->where('area_id', '=', $area)
+        ->get();
+
+        if (!$result->isEmpty()) return true;
+        else return false;
+    }
 }
