@@ -37,7 +37,7 @@ class CreateCursoAreasTable extends Migration
     public function down()
     {
         
-        Schema::dropIfExists('curso-areas');
+        Schema::dropIfExists('curso_areas');
         
     }
 }

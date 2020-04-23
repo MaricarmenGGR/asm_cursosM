@@ -35,7 +35,7 @@ class CreateProgramaCursosTable extends Migration
     public function down()
     {
         
-        Schema::dropIfExists('programa-cursos');
+        Schema::dropIfExists('programa_cursos');
         
     }
 }

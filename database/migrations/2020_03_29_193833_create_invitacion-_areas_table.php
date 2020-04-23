@@ -36,7 +36,7 @@ class CreateInvitacionAreasTable extends Migration
     public function down()
     {
         
-        Schema::dropIfExists('invitacion-areas');
+        Schema::dropIfExists('invitacion_areas');
 
     }
 }
