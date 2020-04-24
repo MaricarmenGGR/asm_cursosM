@@ -138,7 +138,25 @@ class CursosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $areas = DB::table('curso_areas')
+        ->leftJoin('areas', 'curso_areas.area_id', '=', 'areas.id')
+        ->select('curso_areas.*', 'areas.*')
+        ->where('curso_areas.curso_id', '=', $id)
+        ->get();
+
+        $inscritos = DB::table('users')
+        ->leftJoin('curso_usuarios', 'curso_usuarios.user_id', '=', 'users.id')
+        ->leftJoin('areas', 'areas.id', '=', 'users.area_id')
+        ->select('curso_usuarios.*', 'users.*', 'areas.*')
+        ->where('curso_usuarios.curso_id', '=', $id)
+        ->get();
+
+        $vars = [
+            'curso' => Curso::findOrFail($id),
+            'areas' => $areas,
+            'inscritos' => $inscritos
+        ];
+        return view('cursos.edit', $vars);
     }
 
     /**
@@ -148,9 +166,30 @@ class CursosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Curso $curso)
     {
-        //
+        $curso->Fill($request->all());
+        $curso->save();
+        $id = $curso->id;
+        $areas = DB::table('curso_areas')
+        ->leftJoin('areas', 'curso_areas.area_id', '=', 'areas.id')
+        ->select('curso_areas.*', 'areas.*')
+        ->where('curso_areas.curso_id', '=', $id)
+        ->get();
+
+        $inscritos = DB::table('users')
+        ->leftJoin('curso_usuarios', 'curso_usuarios.user_id', '=', 'users.id')
+        ->leftJoin('areas', 'areas.id', '=', 'users.area_id')
+        ->select('curso_usuarios.*', 'users.*', 'areas.*')
+        ->where('curso_usuarios.curso_id', '=', $id)
+        ->get();
+
+        $vars = [
+            'curso' => Curso::findOrFail($id),
+            'areas' => $areas,
+            'inscritos' => $inscritos
+        ];
+        return view('cursos.curso', $vars);
     }
 
     /**

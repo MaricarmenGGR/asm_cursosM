@@ -41,11 +41,17 @@
 
                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                        <textarea class="form-control disabled" disabled="true" name="textarea" cols="50" id="entrada">{!! $curso->descripcionCurso !!}</textarea>
+                                        <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
+                                        @method('PUT')
+                                        @csrf
+                                        <textarea class="form-control" name="descripcionCurso" cols="50" id="entrada">{!! $curso->descripcionCurso !!}</textarea>
                                         <br>
-                                        <a href="/cursos/{{$curso->id}}/edit" class="btn btn-asm float-right" id="editInfo">Editar</a>
+                                        <button type="submit" class="btn btn-asm float-right" id="editInfo">Actualizar</button>
+                                        
                                         <br>
-                                       <!-- <script>
+                                        </form>
+                                       
+                                        <!--<script>
                                             function habilitar(){
                                                 var nombre = document.getElementById('editInfo');
                                                 if(nombre.innerHTML == "Editar"){
@@ -71,10 +77,15 @@
                                 </div>
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                                 <div class="card-body">
-                                    {{ $curso->horaIncio}} - {{$curso->horaFin}}
-                                    <br>
-                                        <a href="/cursos/{{$curso->id}}/edit" class="btn btn-asm float-right" id="editInfo">Editar</a>
+                                <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
+                                        @method('PUT')
+                                        @csrf
+                                        <input class="form-control" name="horaIncio" cols="50" type="time" value="{{ $curso->horaIncio}}">
+                                        <input class="form-control" name="horaFin" cols="50" type="time" value="{{ $curso->horaFin}}"> 
                                         <br>
+                                        <button type="submit" class="btn btn-asm float-right" id="editInfo">Actualizar</button>
+                                        <br>
+                                        </form>
                                 </div>
                                 </div>
                             </div>
@@ -88,11 +99,19 @@
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                 <div class="card-body">
-                                        <textarea class="form-control disabled" disabled="true" name="textareaPonente" cols="50" id="entradaPonente">{!! $curso->nombrePonente !!}: {{$curso->infoPonente}}</textarea>
+                                        <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
+                                        @method('PUT')
+                                        @csrf
+                                        <label>Nombre Completo del Ponente</label>
+                                        <textarea class="form-control" name="nombrePonente" cols="50" id="entradaPonente">{!! $curso->nombrePonente !!}</textarea>
+                                        <label>Información del Ponente</label>
+                                        <textarea class="form-control" name="infoPonente" cols="50">: {{$curso->infoPonente}}</textarea>
                                         <br>
-                                        <a href="/cursos/{{$curso->id}}/edit" class="btn btn-asm float-right" id="editInfo">Editar</a>
+                                        <button type="submit" class="btn btn-asm float-right" id="editInfoPonente">Actualizar</button>
+                                        
                                         <br>
-                                       <!-- <script>
+                                        </form>
+                                        <!--<script>
                                             function habilitarPonente(){
                                                 var nombre = document.getElementById('editInfoPonente');
                                                 if(nombre.innerHTML == "Editar"){
@@ -107,7 +126,6 @@
                                         </script>-->
                                 </div>
                                 </div>
-                                
                             </div>
                             <div class="card">
                                 <div class="card-header" id="headingFour">
@@ -119,18 +137,34 @@
                                 </div>
                                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                                 <div class="card-body">
-                                    
+                                        <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
+                                        @method('PUT')
+                                        @csrf
                                         <label>Fecha de Inicio</label>
                                         <input class="form-control" name="fechaInicio" cols="50" id="entradaPonente" type="date" value = "{!! $curso->fechaInicio !!}">
                                         <label>Fecha de Termino</label>
                                         <input class="form-control" name="fechaFin" cols="50" type="date" value = "{!! $curso->fechaFin !!}">
                                         <br>
-                                        <a href="/cursos/{{$curso->id}}/edit" class="btn btn-asm float-right" id="editInfo">Editar</a>
+                                        <button type="submit" class="btn btn-asm float-right" id="editInfoFechas">Actualizar</button>
+                                        
                                         <br>
+                                        </form>
+                                        <!--<script>
+                                            function habilitarPonente(){
+                                                var nombre = document.getElementById('editInfoPonente');
+                                                if(nombre.innerHTML == "Editar"){
+                                                    //Logica de Guardar
+                                                    document.getElementById('entradaPonente').disabled=false;
+                                                    document.getElementById('editInfoPonente').innerHTML = "Guardar";
+                                                }else if(nombre.innerHTML == "Guardar"){
+                                                    document.getElementById('entradaPonente').disabled=true;
+                                                    document.getElementById('editInfoPonente').innerHTML = "Editar";
+                                                }
+                                                }
+                                        </script>-->
                                 </div>
                                 </div>
                             </div>
-
                         </div>
 
                     </div>
