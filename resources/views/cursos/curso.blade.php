@@ -1,5 +1,15 @@
 @extends('layouts.menu')
-@section('content')
+<!--@section('content')
+@section('styles')
+./public/bootstarp-fileinput/css/fileinput-rtl.min.css
+<link href="public/bootstarp-fileinput/css/fileinput-rtl.min.css" rel="stylesheet" type="text/css"/>
+@endsection
+
+@section('scriptsPlugins')
+    <script src="public/bootstarp-fileinput/js/fileinput.min.js" type="text/javascript"></script>
+    <script src="public/bootstarp-fileinput/js/locales/es.js" type="text/javascript"></script>
+    <script src="public/bootstarp-fileinput/js/themes/fas/theme.min.js" type="text/javascript"></script>
+@endsection-->
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -41,10 +51,19 @@
 
                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                        <textarea class="form-control disabled" disabled="true" name="textarea" cols="50" id="entrada">{!! $curso->descripcionCurso !!}</textarea>
+                                    <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
+                                        @method('PUT')
+                                        @csrf
+                                        <textarea class="form-control" name="descripcionCurso" cols="50" id="entrada">{!! $curso->descripcionCurso !!}</textarea>
                                         <br>
-                                        <a href="/cursos/{{$curso->id}}/edit" class="btn btn-asm float-right" id="editInfo">Editar</a>
+                                        <button type="submit" class="btn btn-asm float-right" id="editInfo">Actualizar</button>
+                                        
                                         <br>
+                                    </form>
+                                        <!--<textarea class="form-control disabled" disabled="true" name="textarea" cols="50" id="entrada">{!! $curso->descripcionCurso !!}</textarea>
+                                        <br>
+                                        <a href="/cursos/{{$curso->id}}" class="btn btn-asm float-right" id="editInfo" onclick="">Editar</a>
+                                        <br>-->
                                        <!-- <script>
                                             function habilitar(){
                                                 var nombre = document.getElementById('editInfo');
@@ -71,10 +90,18 @@
                                 </div>
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                                 <div class="card-body">
+                                    Horario Actual: 
                                     {{ $curso->horaIncio}} - {{$curso->horaFin}}
                                     <br>
-                                        <a href="/cursos/{{$curso->id}}/edit" class="btn btn-asm float-right" id="editInfo">Editar</a>
+                                    <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
+                                        @method('PUT')
+                                        @csrf
+                                        <input class="form-control" name="horaIncio" cols="50" type="time" value="{{ $curso->horaIncio}}">
+                                        <input class="form-control" name="horaFin" cols="50" type="time" value="{{ $curso->horaFin}}"> 
                                         <br>
+                                        <button type="submit" class="btn btn-asm float-right" id="editInfo">Actualizar</button>
+                                        <br>
+                                        </form>
                                 </div>
                                 </div>
                             </div>
@@ -88,10 +115,10 @@
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                 <div class="card-body">
-                                        <textarea class="form-control disabled" disabled="true" name="textareaPonente" cols="50" id="entradaPonente">{!! $curso->nombrePonente !!}: {{$curso->infoPonente}}</textarea>
+                                       <!-- <textarea class="form-control disabled" disabled="true" name="textareaPonente" cols="50" id="entradaPonente">{!! $curso->nombrePonente !!}: {{$curso->infoPonente}}</textarea>
                                         <br>
                                         <a href="/cursos/{{$curso->id}}/edit" class="btn btn-asm float-right" id="editInfo">Editar</a>
-                                        <br>
+                                        <br>-->
                                        <!-- <script>
                                             function habilitarPonente(){
                                                 var nombre = document.getElementById('editInfoPonente');
@@ -105,6 +132,18 @@
                                                 }
                                                 }
                                         </script>-->
+                                        <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
+                                            @method('PUT')
+                                            @csrf
+                                            <label>Nombre Completo del Ponente</label>
+                                            <textarea class="form-control" name="nombrePonente" cols="50" id="entradaPonente">{!! $curso->nombrePonente !!}</textarea>
+                                            <label>Información del Ponente</label>
+                                            <textarea class="form-control" name="infoPonente" cols="50">{{$curso->infoPonente}}</textarea>
+                                            <br>
+                                            <button type="submit" class="btn btn-asm float-right" id="editInfoPonente">Actualizar</button>
+                                            
+                                            <br>
+                                        </form>
                                 </div>
                                 </div>
                                 
@@ -120,13 +159,25 @@
                                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                                 <div class="card-body">
                                     
-                                        <label>Fecha de Inicio</label>
+                                        <!--<label>Fecha de Inicio</label>
                                         <input class="form-control" name="fechaInicio" cols="50" id="entradaPonente" type="date" value = "{!! $curso->fechaInicio !!}">
                                         <label>Fecha de Termino</label>
                                         <input class="form-control" name="fechaFin" cols="50" type="date" value = "{!! $curso->fechaFin !!}">
                                         <br>
                                         <a href="/cursos/{{$curso->id}}/edit" class="btn btn-asm float-right" id="editInfo">Editar</a>
+                                        <br>-->
+                                        <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
+                                        @method('PUT')
+                                        @csrf
+                                        <label>Fecha de Inicio</label>
+                                        <input class="form-control" name="fechaInicio" cols="50" id="entradaPonente" type="date" value = "{!! $curso->fechaInicio !!}">
+                                        <label>Fecha de Termino</label>
+                                        <input class="form-control" name="fechaFin" cols="50" type="date" value = "{!! $curso->fechaFin !!}">
                                         <br>
+                                        <button type="submit" class="btn btn-asm float-right" id="editInfoFechas">Actualizar</button>
+                                        
+                                        <br>
+                                        </form>
                                 </div>
                                 </div>
                             </div>
@@ -163,16 +214,30 @@
                     </div>
                     <div class="tab-pane fade" id="material" role="tabpanel" aria-labelledby="material-tab">
                         <h1>MATERIAL</h1>
-                        <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupFileAddon01">Subir Archivo</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01"
-                            aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile01">Seleccionar Archivo</label>
-                        </div>
-                        </div>
+                        <label for="input-res-1">File Gallery</label>
+                            <div class="file-loading">
+                                <input id="input-res-1" name="input-res-1[]" type="file" multiple>
+                            </div>
+                            <script>
+                            $(document).ready(function() {
+                                $("#input-res-1").fileinput({
+                                    uploadUrl: "/site/upload-file-chunks",
+                                    enableResumableUpload: true,
+                                    maxFileCount: 5,
+                                    theme: 'fas',
+                                    deleteUrl: '/site/file-delete',
+                                    fileActionSettings: {
+                                        showZoom: function(config) {
+                                            if (config.type === 'pdf' || config.type === 'image') {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }
+                                });
+                            });
+                            </script>
+                        
                     </div>
 
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">

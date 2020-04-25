@@ -30,6 +30,7 @@ class CreateCursosTable extends Migration
             $table->integer('horasTotales')->nullable();
             $table->string('nombrePonente')->nullable();
             $table->string('infoPonente')->nullable();
+            $table->string('imagenCurso');
             $table->unsignedinteger('status_id')->default(1);
             $table->foreign('status_id')->references('id')->on('status');
             $table->boolean('publicar')->default(0);

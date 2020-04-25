@@ -8,7 +8,7 @@
             @foreach($cursos as $curso)
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="card h-60 card-cursos">
-                        <img class="card-img-top" src="../img/lala.jpg" height="200" alt="Card image cap">
+                        <img class="card-img-top" src="../uploads/{{$curso->imagenCurso}}" height="200" alt="Card image cap">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-10">

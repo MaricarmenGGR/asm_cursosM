@@ -10,6 +10,7 @@ use App\Curso_Area;
 use App\Curso_Usuario;
 use App\Modalidad;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CursosController extends Controller
 {
@@ -60,6 +61,15 @@ class CursosController extends Controller
      */
     public function store(Request $request)
     {
+       /* $image = $request->imagenCurso;*/
+        if ($request->hasFile('imagenCurso')) {
+            $imagePath = $request->file('imagenCurso');
+            $imageName = time() . '.' . $imagePath ->getClientOriginalExtension();
+
+            $imagePath ->move('uploads', $imageName );
+            /*$image->imagenCurso = $imageName;*/
+        };
+
         Curso::create([
             'nombreCurso' => $request->nombreCurso,
             'modalidad_id' => $request->modalidad,
@@ -72,6 +82,7 @@ class CursosController extends Controller
             'horasTotales' => $request->horasTotales,
             'nombrePonente' => $request->nombrePonente,
             'infoPonente' => $request->infoPonente,
+            'imagenCurso'=>$imageName,
             'status_id' => 1,
             'publicar' => 0
         ]);
@@ -98,7 +109,6 @@ class CursosController extends Controller
         }
         
         return redirect()->route('cursos.show',$ultimaTupla->id);
-
     }
 
     /**
