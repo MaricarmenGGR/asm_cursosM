@@ -7,11 +7,11 @@
         <div class="row">
             @foreach($cursos as $curso)
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <div class="card h-60 card-cursos">
+                    <div class="card card-cursos">
                         <img class="card-img-top" src="../uploads/{{$curso->imagenCurso}}" height="200" alt="Card image cap">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-10">
+                                <div>
                                     <h4 class="card-title">{!! $curso->nombreCurso !!}</h4>
                                 </div>
                                 
@@ -31,12 +31,12 @@
             
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <a href={{ route("crearCurso") }} style="text-decoration:none; color: rgb(40, 146, 157);" >
-                        <div class="card h-60 card-cursos">
+                        <div class="card card-cursos">
+                            
                             <div class="card-body"></div>
-                            <div class="card-body"></div>
-                            <img src="../img/nuevo_curso.png" height="190" alt="Card image cap">
+                            <img src="../img/nuevo_curso.png" height="150" alt="Card image cap">
                             <div class="card-body"> <div style="text-align: center;"> <p style="font-size: 140%;">Nuevo Curso</p></div> </div>
-                            <div class="card-body"></div>
+                            
                         </div>
                     </a>
                 </div>

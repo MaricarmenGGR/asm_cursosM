@@ -16,6 +16,11 @@
         }
 }
 
+.row{
+	margin-right: 0px; 
+    margin-left: 0px;
+}
+
 .inicio{
 font-size: 25px;
 text-align: center;

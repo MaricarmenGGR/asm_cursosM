@@ -50,6 +50,20 @@
                                         
                                         <br>
                                         </form>
+                                       
+                                        <!--<script>
+                                            function habilitar(){
+                                                var nombre = document.getElementById('editInfo');
+                                                if(nombre.innerHTML == "Editar"){
+                                                    //Logica de Guardar
+                                                    document.getElementById('entrada').disabled=false;
+                                                    document.getElementById('editInfo').innerHTML = "Guardar";
+                                                }else if(nombre.innerHTML == "Guardar"){
+                                                    document.getElementById('entrada').disabled=true;
+                                                    document.getElementById('editInfo').innerHTML = "Editar";
+                                                }
+                                                }
+                                        </script>-->
                                 </div>
                                 </div>
                             </div>
