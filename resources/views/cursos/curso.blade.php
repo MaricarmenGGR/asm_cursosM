@@ -1,5 +1,6 @@
 @extends('layouts.menu')
-<!--@section('content')
+@section('content')
+<!--
 @section('styles')
 ./public/bootstarp-fileinput/css/fileinput-rtl.min.css
 <link href="public/bootstarp-fileinput/css/fileinput-rtl.min.css" rel="stylesheet" type="text/css"/>
@@ -214,30 +215,24 @@
                     </div>
                     <div class="tab-pane fade" id="material" role="tabpanel" aria-labelledby="material-tab">
                         <h1>MATERIAL</h1>
-                        <label for="input-res-1">File Gallery</label>
-                            <div class="file-loading">
-                                <input id="input-res-1" name="input-res-1[]" type="file" multiple>
+                        <form  method="POST" action="{{ route('materiales.store') }}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div>
+                                Lista de Materiales 
                             </div>
-                            <script>
-                            $(document).ready(function() {
-                                $("#input-res-1").fileinput({
-                                    uploadUrl: "/site/upload-file-chunks",
-                                    enableResumableUpload: true,
-                                    maxFileCount: 5,
-                                    theme: 'fas',
-                                    deleteUrl: '/site/file-delete',
-                                    fileActionSettings: {
-                                        showZoom: function(config) {
-                                            if (config.type === 'pdf' || config.type === 'image') {
-                                                return true;
-                                            }
-                                            return false;
-                                        }
-                                    }
-                                });
-                            });
-                            </script>
-                        
+
+                            <div class="file-field">
+                                <div class="btn btn-asm">
+                                <span>Escoger un Archivo</span>
+                                <input type="file" name="url">
+                                <input value="{{$curso->id}}" name="curso_id">
+                                </div>
+                            </div>
+                            <br>
+                               <button type="submit" class="btn btn-asm float-right" id="subeMaterial">Subir</button>
+                            <br>
+                        </form>
+                        <br/>
                     </div>
 
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
