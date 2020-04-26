@@ -225,7 +225,7 @@
                                 <div class="btn btn-asm">
                                 <span>Escoger un Archivo</span>
                                 <input type="file" name="url">
-                                <input value="{{$curso->id}}" name="curso_id">
+                                <input type="hidden" value="{{$curso->id}}" name="curso_id">
                                 </div>
                             </div>
                             <br>
