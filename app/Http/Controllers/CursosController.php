@@ -212,4 +212,15 @@ class CursosController extends Controller
     {
         //
     }
+
+    public function getCInfo($id){
+        $curso = Curso::findOrFail($id);
+        return response()->json($curso);
+    }
+    public function updateCInfo(Request $request, $id){
+        $curso = Curso::find($id);
+        $curso->descripcionCurso = $request->input('descripcionCurso');
+        $curso->update();
+        return response()->json($curso);
+    }
 }

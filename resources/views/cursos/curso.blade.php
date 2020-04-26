@@ -17,7 +17,8 @@
             <br>
             
             <div class="text-center">
-                <h1>&nbsp;&nbsp;Curso: {!! $curso->nombreCurso !!}</h1>
+                <h1 id="nombreCurso">&nbsp;&nbsp;Curso: {!! $curso->nombreCurso !!} <i class="fas fa-pencil-alt"></h1></i>
+                <input id="idCurso" type="number" hidden value="{{ $curso->id }}">
             </div>
             
         </div>
@@ -27,8 +28,7 @@
             <div class="card-tabs" style="margin-top: 1%;">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        
-                            <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
+                            <a onclick="viewInfo(@php echo $curso->id @endphp)" class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             <a class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
                             <a class="nav-item nav-link" id="material-tab" data-toggle="tab" href="#material" role="tab" aria-controls="material" aria-selected="false">Material</a>
                             <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
@@ -52,32 +52,16 @@
 
                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                    <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
-                                        @method('PUT')
-                                        @csrf
-                                        <textarea class="form-control" name="descripcionCurso" cols="50" id="entrada">{!! $curso->descripcionCurso !!}</textarea>
+                                    <form id="infoForm">
+                                        {{ csrf_field() }}
+                                        <p id="pInfo">{!! $curso->descripcionCurso !!}<p>
+                                        <textarea class="form-control" id="descripcionCurso" name="descripcionCurso" cols="50" hidden>{!! $curso->descripcionCurso !!}</textarea>
                                         <br>
-                                        <button type="submit" class="btn btn-asm float-right" id="editInfo">Actualizar</button>
-                                        
+                                        <a class="btn btn-asm float-right" id="editInfo" onclick="editInfo(@php echo $curso->id @endphp)" style="color: white;">Actualizar</a>
+                                        <button type="submit" class="btn btn-asm float-right" id="updateInfo" hidden>Guardar</button>
+                                        <a class="btn btn-secondary float-right" id="cancelInfo" onclick="cancelInfo()" hidden style="margin-right: 5px; color: white;">Cancelar</a>
                                         <br>
                                     </form>
-                                        <!--<textarea class="form-control disabled" disabled="true" name="textarea" cols="50" id="entrada">{!! $curso->descripcionCurso !!}</textarea>
-                                        <br>
-                                        <a href="/cursos/{{$curso->id}}" class="btn btn-asm float-right" id="editInfo" onclick="">Editar</a>
-                                        <br>-->
-                                       <!-- <script>
-                                            function habilitar(){
-                                                var nombre = document.getElementById('editInfo');
-                                                if(nombre.innerHTML == "Editar"){
-                                                    //Logica de Guardar
-                                                    document.getElementById('entrada').disabled=false;
-                                                    document.getElementById('editInfo').innerHTML = "Guardar";
-                                                }else if(nombre.innerHTML == "Guardar"){
-                                                    document.getElementById('entrada').disabled=true;
-                                                    document.getElementById('editInfo').innerHTML = "Editar";
-                                                }
-                                                }
-                                        </script>-->
                                 </div>
                                 </div>
                             </div>
@@ -116,23 +100,6 @@
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                 <div class="card-body">
-                                       <!-- <textarea class="form-control disabled" disabled="true" name="textareaPonente" cols="50" id="entradaPonente">{!! $curso->nombrePonente !!}: {{$curso->infoPonente}}</textarea>
-                                        <br>
-                                        <a href="/cursos/{{$curso->id}}/edit" class="btn btn-asm float-right" id="editInfo">Editar</a>
-                                        <br>-->
-                                       <!-- <script>
-                                            function habilitarPonente(){
-                                                var nombre = document.getElementById('editInfoPonente');
-                                                if(nombre.innerHTML == "Editar"){
-                                                    //Logica de Guardar
-                                                    document.getElementById('entradaPonente').disabled=false;
-                                                    document.getElementById('editInfoPonente').innerHTML = "Guardar";
-                                                }else if(nombre.innerHTML == "Guardar"){
-                                                    document.getElementById('entradaPonente').disabled=true;
-                                                    document.getElementById('editInfoPonente').innerHTML = "Editar";
-                                                }
-                                                }
-                                        </script>-->
                                         <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
                                             @method('PUT')
                                             @csrf
@@ -234,21 +201,20 @@
                         </form>
                         <br/>
                     </div>
-
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
                         <h1>Evaluación</h1>
-                    <script src="https://code.highcharts.com/highcharts.js"></script>
-                    <script src="https://code.highcharts.com/modules/series-label.js"></script>
-                    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-                    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-                    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <script src="https://code.highcharts.com/modules/series-label.js"></script>
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+                        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-                    <figure class="highcharts-figure">
-                        <div id="container"></div>
-                        <p class="highcharts-description">
-                           Grafica de Ejemplo para los resultado de la evalucion del Ponente
-                        </p>
-                    </figure>
+                        <figure class="highcharts-figure">
+                            <div id="container"></div>
+                            <p class="highcharts-description">
+                            Grafica de Ejemplo para los resultado de la evalucion del Ponente
+                            </p>
+                        </figure>
                              
                     </div>
                     <div class="tab-pane fade" id="asistencia" role="tabpanel" aria-labelledby="asistencia-tab">
@@ -335,6 +301,107 @@
         </div>
     </div>
 </div>
+
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+/*<a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
+<a class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
+<a class="nav-item nav-link" id="material-tab" data-toggle="tab" href="#material" role="tab" aria-controls="material" aria-selected="false">Material</a>
+<a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
+<a class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
+<a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
+*/    
+    function viewInfo(id){
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/getCInfo/"+id,
+            success: function(data){
+                alert(data.nombreCurso);
+                
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            }
+        });
+    }
+
+    function editInfo(id){
+        document.getElementById("updateInfo").removeAttribute("hidden"); 
+        document.getElementById("cancelInfo").removeAttribute("hidden"); 
+        document.getElementById("editInfo").setAttribute("hidden", true);
+        document.getElementById("pInfo").setAttribute("hidden", true);
+        document.getElementById("descripcionCurso").removeAttribute("hidden"); 
+    }
+
+
+$('#infoForm').on('submit', function(e){
+    var id = $('#idCurso').val();
+    e.preventDefault()
+    $.ajax({
+        type: 'PUT',
+        url: "/updateCInfo/"+id,
+        dataType: "json",
+        data: $('#infoForm').serialize(),
+        success: function(response){
+            alert('saved');
+            viewInfo(id);
+        },
+        error: function(error){
+            console.log(error)
+        }
+    });
+
+});
+
+    /*
+    function updateInfo(id){
+        var descripcionCurso = $('#descripcionCurso').val();
+        
+        $.ajax({
+            type: 'PUT',
+            dataType: "json",
+            url: "/updateCInfo/"+id,
+            data: {descripcionCurso:descripcionCurso},
+            success: function(data){
+                alert(data);
+                viewInfo(id);
+                //$('#botton').hide();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            }
+            
+        });
+        
+
+    }*/
+
+    /*
+    function deteleInfo(){
+        $.ajax([
+            type: 'DELETE',
+            dataType: "json",
+            url: "/updateInfo/"+id,
+            data: {name:name, name2:name2},
+            success: function(data){
+                alert(data);
+                viewInfo();
+                //$('#botton').hide();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            }
+            
+        ]);
+    }*/
+
+</script>
+
 <script>
     Highcharts.chart('container', {
 
