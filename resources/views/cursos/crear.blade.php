@@ -20,8 +20,8 @@
 
                         <h3>Información de Curso</h3>
                         <hr> 
-                        <form  method="post" action=" {{ route('cursos.store') }}">
-                            @csrf
+                        <form  method="POST" action=" {{ route('cursos.store') }}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
                             <div class="form-row">
                                 <div class="form-group col-lg-7" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
@@ -117,7 +117,15 @@
                                     <textarea class="form-control" id="infoPonente" rows="3" name="infoPonente" placeholder="Información, curriculum del ponente"></textarea>
                                 </div>
                             </div>
-
+                            <br>
+                            <h3>Imagen del Curso</h3>
+                            <hr>
+                            <div class="form-row">
+                                <div class="form-group col-lg-12" style="padding: 0 2% 0 2%">
+                                    <label>Imagen del curso</label><br>
+                                    <input type="file" name="imagenCurso">
+                                </div>
+                            </div>
                             <br>
                             <h3>Áreas Invitadas</h3>
                             <hr>
@@ -144,9 +152,9 @@
 
                             <div class="form-row">
                                 <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
-                                    <div class="text-left">
+                                    <!--<div class="text-left">
                                         <label>Número de áreas a invitar</label>
-                                    </div>
+                                    </div>-->
                                     <!--<input class="form-control" type="number" name="numero" id="numero" value="">-->
                                 </div>
                                 <div class="form-group col-lg-8" style="padding: 0 2% 0 2%">
@@ -205,10 +213,11 @@
                                 </script>
 
                             <br>
+
                             <div class="row">
                                 <div class="col-lg-3"></div>
                                 <div class="col-lg-6">
-                                    <button type="submit" class="btn btn-asm btn-block">Crear Curso</button>
+                                    <button type="submit" name="submit" class="btn btn-asm btn-block">Crear Curso</button>
                                 </div>
                                 <div class="col-lg-3"></div>
                             </div>
