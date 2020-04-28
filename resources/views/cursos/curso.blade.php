@@ -17,7 +17,24 @@
             <br>
             
             <div class="text-center">
-                <h1 id="nombreCurso">&nbsp;&nbsp;Curso: {!! $curso->nombreCurso !!} <i class="fas fa-pencil-alt"></h1></i>
+                
+                    <h1>
+                        <p class="d-inline" id="pNombre">{!! $curso->nombreCurso !!} </p>
+                        <a class="btn d-inline" id="editNombre" onclick="editNombre()"><i class="fas fa-pencil-alt"></a></i> 
+                    </h1>
+                
+                <div class="row">
+                    <div class="col-lg-4"></div>
+                    <form id="nombreForm" class="form-inline">
+                        {{ csrf_field() }}
+                        <div class="form-group mx-sm-3 mb-2">
+                            <input type="text" class="form-control" id="nombreCurso" name="nombreCurso" value="{{$curso->nombreCurso}}" placeholder="Nombre del curso" hidden>
+                        </div>
+                        <button id="updateNombre" type="submit" class="btn btn-asm mb-2" hidden>Guardar</button>
+                        <a id="cancelNombre" class="btn btn-secondary mb-2" style="margin-left: 5px; color: white;" hidden onclick="cancelNombre()">Cancelar</a>
+                    </form>
+                </div>
+
                 <input id="idCurso" type="number" hidden value="{{ $curso->id }}">
             </div>
             
@@ -28,7 +45,7 @@
             <div class="card-tabs" style="margin-top: 1%;">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                            <a onclick="viewInfo(@php echo $curso->id @endphp)" class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
+                            <a onclick="viewInfoCurso(@php echo $curso->id @endphp)" class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             <a class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
                             <a class="nav-item nav-link" id="material-tab" data-toggle="tab" href="#material" role="tab" aria-controls="material" aria-selected="false">Material</a>
                             <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
@@ -47,46 +64,52 @@
                                     <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     Información general curso
                                     </button>
+                                    <a class="btn" onclick="editInfo()"><i class="fas fa-pencil-alt"></i></a>
                                 </h5>
                                 </div>
 
                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
+                                    <p id="pInfo">{!! $curso->descripcionCurso !!}<p>
                                     <form id="infoForm">
                                         {{ csrf_field() }}
-                                        <p id="pInfo">{!! $curso->descripcionCurso !!}<p>
-                                        <textarea class="form-control" id="descripcionCurso" name="descripcionCurso" cols="50" hidden>{!! $curso->descripcionCurso !!}</textarea>
-                                        <br>
-                                        <a class="btn btn-asm float-right" id="editInfo" onclick="editInfo(@php echo $curso->id @endphp)" style="color: white;">Actualizar</a>
-                                        <button type="submit" class="btn btn-asm float-right" id="updateInfo" hidden>Guardar</button>
-                                        <a class="btn btn-secondary float-right" id="cancelInfo" onclick="cancelInfo()" hidden style="margin-right: 5px; color: white;">Cancelar</a>
-                                        <br>
+                                        <div class="form-row">
+                                            <textarea class="form-control" id="descripcionCurso" name="descripcionCurso" cols="50" hidden style="margin-bottom: 15px;">{!! $curso->descripcionCurso !!}</textarea>
+                                        </div>
+
+                                        <div class="form-inline">
+                                            <label> Modalidad: &nbsp; </label> 
+                                            <label id="pModalidad">{!! $curso->modalidad !!}</label>
+                                            <select class="custom-select" name="modalidad_id" id="modalidad" style="margin-bottom: 5px;" hidden>
+                                                @foreach($modalidades as $modalidad)
+                                                    @if( $modalidad->id == $curso->modalidad_id )
+                                                        <option value="{!! $modalidad->id !!}" selected>{!! $modalidad->nombre !!}</option>
+                                                    @else
+                                                        <option value="{!! $modalidad->id !!}">{!! $modalidad->nombre !!}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-inline">
+                                            <label> Lugar:&nbsp;</label> 
+                                            <label id="pLugar">{!! $curso->lugar !!}</label>
+                                            <input hidden type="text" class="form-control" id="lugar" name="lugar" value="{!! $curso->lugar !!}" style="margin-bottom: 5px;">
+                                        </div>
+
+                                        <div class="form-inline">
+                                            <label>Del:&nbsp;</label>
+                                            <label id="pFechaInicio">{!! $curso->fechaInicio !!}</label>
+                                            <input hidden type="date" class="form-control" id="fechaInicio" name="fechaInicio" value="{!! $curso->fechaInicio !!}" style="margin-bottom: 5px;">
+                                            <label>&nbsp;al:&nbsp;</label>
+                                            <label id="pFechaFin">{!! $curso->fechaFin !!}</label>
+                                            <input hidden type="date" class="form-control" id="fechaFin" name="fechaFin" value="{!! $curso->fechaFin !!}" style="margin-bottom: 5px;">
+                                        </div>
+                                        
+                                        <a class="btn btn-secondary float-right" id="cancelInfo" onclick="cancelInfo()" hidden style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px; color: white;">Cancelar</a>
+                                        <button type="submit" class="btn btn-asm float-right" id="updateInfo" hidden style="margin-top: 10px; margin-bottom: 10px;">Guardar</button>
+
                                     </form>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                    <button class="btn collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Horario
-                                    </button>
-                                </h5>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                <div class="card-body">
-                                    Horario Actual: 
-                                    {{ $curso->horaIncio}} - {{$curso->horaFin}}
-                                    <br>
-                                    <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
-                                        @method('PUT')
-                                        @csrf
-                                        <input class="form-control" name="horaIncio" cols="50" type="time" value="{{ $curso->horaIncio}}">
-                                        <input class="form-control" name="horaFin" cols="50" type="time" value="{{ $curso->horaFin}}"> 
-                                        <br>
-                                        <button type="submit" class="btn btn-asm float-right" id="editInfo">Actualizar</button>
-                                        <br>
-                                        </form>
                                 </div>
                                 </div>
                             </div>
@@ -96,26 +119,62 @@
                                     <button class="btn collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                     Información del ponente
                                     </button>
+                                    <a class="btn" onclick="editPonente()"><i class="fas fa-pencil-alt"></i></a>
                                 </h5>
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                 <div class="card-body">
-                                        <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
-                                            @method('PUT')
-                                            @csrf
-                                            <label>Nombre Completo del Ponente</label>
-                                            <textarea class="form-control" name="nombrePonente" cols="50" id="entradaPonente">{!! $curso->nombrePonente !!}</textarea>
-                                            <label>Información del Ponente</label>
-                                            <textarea class="form-control" name="infoPonente" cols="50">{{$curso->infoPonente}}</textarea>
-                                            <br>
-                                            <button type="submit" class="btn btn-asm float-right" id="editInfoPonente">Actualizar</button>
-                                            
-                                            <br>
+                                        <h4><p id="pNomP">{!! $curso->nombrePonente !!}<p></h4>
+                                        <p id="pInfP">{!! $curso->infoPonente !!}<p>
+                                        <form id="ponenteForm" class="form-group">
+                                            {{ csrf_field() }}
+                                            <label id="LnombrePonente" hidden>Nombre Completo del Ponente</label>
+                                            <input type="text" class="form-control" name="nombrePonente" id="nombrePonente" value="{!! $curso->nombrePonente !!}" placeholder="Nombre completo del ponente" hidden style="margin-bottom: 5px;">
+                                            <label id="LinfoPonente" hidden>Información del Ponente</label>
+                                            <textarea class="form-control" id="infoPonente" name="infoPonente" cols="50" placeholder="Información del ponente" hidden>{{$curso->infoPonente}}</textarea>
+                                            <a class="btn btn-secondary float-right" id="cancelP" onclick="cancelPonente()" hidden style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px; color: white;">Cancelar</a>
+                                            <button type="submit" class="btn btn-asm float-right" id="updateP" hidden style="margin-top: 10px; margin-bottom: 10px;">Guardar</button>
                                         </form>
                                 </div>
                                 </div>
                                 
                             </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <button class="btn collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Horario
+                                    </button>
+                                    <a class="btn" onclick="editHorario()"><i class="fas fa-pencil-alt"></i></a>
+                                </h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body">
+                                    <form id="horarioForm" class="form-group ">
+                                        {{ csrf_field() }}
+                                        <div class="form-inline">
+                                            <label>Horario actual:&nbsp;</label>
+                                            <input hidden class="form-control" id="horaInicio" name="horaInicio" type="time" value="{{ $curso->horaInicio}}">
+                                            <label id="pHoraInicio">{{ $curso->horaInicio}}</label>
+                                            <label>&nbsp;-&nbsp;</label>
+                                            <input hidden class="form-control" id="horaFin" name="horaFin" type="time" value="{{ $curso->horaFin}}"> 
+                                            <label id="pHoraFin">{{ $curso->horaFin}}</label>
+                                        </div>
+
+
+                                        <div class="form-inline">
+                                        
+                                        <label>Horas Totales:&nbsp;</label>
+                                        <label id="pHorasTotales">{{ $curso->horasTotales}}</label>
+                                        <input hidden class="form-control" id="horasTotales" name="horasTotales" type="number" value="{{ $curso->horasTotales}}">
+                                        <a class="btn btn-secondary" id="cancelH" onclick="cancelHorario()" hidden style="margin-top: 10px; margin-bottom: 10px; margin-left: 15px; margin-right: 5px; color: white;">Cancelar</a>
+                                        <button type="submit" class="btn btn-asm" id="updateH" hidden style="margin-top: 10px; margin-bottom: 10px;">Guardar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                </div>
+                            </div>
+                            <!--
                             <div class="card">
                                 <div class="card-header" id="headingFour">
                                 <h5 class="mb-0">
@@ -126,14 +185,6 @@
                                 </div>
                                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                                 <div class="card-body">
-                                    
-                                        <!--<label>Fecha de Inicio</label>
-                                        <input class="form-control" name="fechaInicio" cols="50" id="entradaPonente" type="date" value = "{!! $curso->fechaInicio !!}">
-                                        <label>Fecha de Termino</label>
-                                        <input class="form-control" name="fechaFin" cols="50" type="date" value = "{!! $curso->fechaFin !!}">
-                                        <br>
-                                        <a href="/cursos/{{$curso->id}}/edit" class="btn btn-asm float-right" id="editInfo">Editar</a>
-                                        <br>-->
                                         <form class="form-group" method="POST" action="/cursos/{{$curso->id}}">
                                         @method('PUT')
                                         @csrf
@@ -149,7 +200,7 @@
                                 </div>
                                 </div>
                             </div>
-
+                            -->
                         </div>
 
                     </div>
@@ -308,55 +359,260 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-/*<a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
-<a class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
-<a class="nav-item nav-link" id="material-tab" data-toggle="tab" href="#material" role="tab" aria-controls="material" aria-selected="false">Material</a>
-<a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
-<a class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
-<a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
-*/    
-    function viewInfo(id){
+    function viewInfoCurso(id){
         $.ajax({
             type: "GET",
             dataType: "json",
             url: "/getCInfo/"+id,
             success: function(data){
-                alert(data.nombreCurso);
-                
+                console.log(data);
+                document.getElementById("pNombre").innerHTML=data.nombreCurso
+                $("#nombreCurso").val(data.nombreCurso);
+
+                document.getElementById("pInfo").innerHTML=data.descripcionCurso
+                document.getElementById("pModalidad").innerHTML=data.modalidad
+                document.getElementById("pLugar").innerHTML=data.lugar
+                document.getElementById("pFechaInicio").innerHTML=data.fechaInicio
+                document.getElementById("pFechaFin").innerHTML=data.fechaFin
+                $("#descripcionCurso").val(data.descripcionCurso);
+                $("#lugar").val(data.lugar);
+                $("#fechaInicio").val(data.fechaInicio);
+                $("#fechaFin").val(data.fechaFin);
+
+
+                document.getElementById("pNomP").innerHTML=data.nombrePonente
+                document.getElementById("pInfP").innerHTML=data.infoPonente
+                $("#nombrePonente").val(data.nombrePonente);
+                $("#infoPonente").val(data.infoPonente);
+
+                document.getElementById("pHoraInicio").innerHTML=data.horaInicio
+                document.getElementById("pHoraFin").innerHTML=data.horaFin
+                document.getElementById("pHorasTotales").innerHTML=data.horasTotales
+                $("#horaInicio").val(data.horaInicio);
+                $("#horaFin").val(data.horaFin);
+                $("#horasTotales").val(data.horasTotales);
+
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) { 
                 alert("Status: " + textStatus); alert("Error: " + errorThrown); 
             }
         });
     }
-
-    function editInfo(id){
-        document.getElementById("updateInfo").removeAttribute("hidden"); 
-        document.getElementById("cancelInfo").removeAttribute("hidden"); 
-        document.getElementById("editInfo").setAttribute("hidden", true);
-        document.getElementById("pInfo").setAttribute("hidden", true);
-        document.getElementById("descripcionCurso").removeAttribute("hidden"); 
+    //EDITAR NOMBRE DEL CURSO
+    function editNombre(){
+        document.getElementById("updateNombre").removeAttribute("hidden"); 
+        document.getElementById("cancelNombre").removeAttribute("hidden");
+        document.getElementById("nombreCurso").removeAttribute("hidden"); 
+        document.getElementById("pNombre").classList.remove('d-inline');
+        document.getElementById("pNombre").classList.add('d-none');
+        document.getElementById("editNombre").classList.remove('btn');
+        document.getElementById("editNombre").classList.remove('d-inline');
+        document.getElementById("editNombre").classList.add('d-none');
+        
     }
-
-
-$('#infoForm').on('submit', function(e){
-    var id = $('#idCurso').val();
-    e.preventDefault()
-    $.ajax({
-        type: 'PUT',
-        url: "/updateCInfo/"+id,
-        dataType: "json",
-        data: $('#infoForm').serialize(),
-        success: function(response){
-            alert('saved');
-            viewInfo(id);
-        },
-        error: function(error){
-            console.log(error)
-        }
+    function cancelNombre(){
+        document.getElementById("updateNombre").setAttribute("hidden", true);
+        document.getElementById("cancelNombre").setAttribute("hidden", true);
+        document.getElementById("nombreCurso").setAttribute("hidden", true);
+        document.getElementById("pNombre").classList.remove('d-none');
+        document.getElementById("pNombre").classList.add('d-inline');
+        document.getElementById("editNombre").classList.remove('d-none');
+        document.getElementById("editNombre").classList.add('btn');
+        document.getElementById("editNombre").classList.add('d-inline');
+        
+    }
+    $('#nombreForm').on('submit', function(e){
+        var id = $('#idCurso').val();
+        e.preventDefault()
+        $.ajax({
+            type: 'PUT',
+            url: "/updateCInfo/"+id,
+            dataType: "json",
+            data: $('#nombreForm').serialize(),
+            success: function(response){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se han guardado los cambios',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                cancelNombre();
+                viewInfoCurso(id);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ha ocurrido un error',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+        });
     });
 
-});
+    // EDITAR INFORMACION DEL CURSO
+    function editInfo(){
+        document.getElementById("updateInfo").removeAttribute("hidden"); 
+        document.getElementById("cancelInfo").removeAttribute("hidden");
+
+        document.getElementById("pInfo").setAttribute("hidden", true);
+        document.getElementById("pModalidad").setAttribute("hidden", true);
+        document.getElementById("pLugar").setAttribute("hidden", true);
+        document.getElementById("pFechaInicio").setAttribute("hidden", true);
+        document.getElementById("pFechaFin").setAttribute("hidden", true);
+
+        document.getElementById("descripcionCurso").removeAttribute("hidden");
+        document.getElementById("modalidad").removeAttribute("hidden");
+        document.getElementById("lugar").removeAttribute("hidden");
+        document.getElementById("fechaInicio").removeAttribute("hidden");
+        document.getElementById("fechaFin").removeAttribute("hidden");
+    }
+    function cancelInfo(){
+        document.getElementById("updateInfo").setAttribute("hidden", true);
+        document.getElementById("cancelInfo").setAttribute("hidden", true);
+
+        document.getElementById("pInfo").removeAttribute("hidden"); 
+        document.getElementById("pModalidad").removeAttribute("hidden"); 
+        document.getElementById("pLugar").removeAttribute("hidden"); 
+        document.getElementById("pFechaInicio").removeAttribute("hidden"); 
+        document.getElementById("pFechaFin").removeAttribute("hidden"); 
+
+        document.getElementById("descripcionCurso").setAttribute("hidden", true);
+        document.getElementById("modalidad").setAttribute("hidden", true);
+        document.getElementById("lugar").setAttribute("hidden", true);
+        document.getElementById("fechaInicio").setAttribute("hidden", true);
+        document.getElementById("fechaFin").setAttribute("hidden", true);
+    }
+    $('#infoForm').on('submit', function(e){
+        var id = $('#idCurso').val();
+        e.preventDefault()
+        $.ajax({
+            type: 'PUT',
+            url: "/updateCInfo/"+id,
+            dataType: "json",
+            data: $('#infoForm').serialize(),
+            success: function(response){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se han guardado los cambios',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                cancelInfo();
+                viewInfoCurso(id);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ha ocurrido un error',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+        });
+    });
+
+    // EDITAR INFORMACION DEL PONENTE
+    function editPonente(){
+        document.getElementById("updateP").removeAttribute("hidden"); 
+        document.getElementById("cancelP").removeAttribute("hidden"); 
+        document.getElementById("pNomP").setAttribute("hidden", true);
+        document.getElementById("pInfP").setAttribute("hidden", true);
+        document.getElementById("LnombrePonente").removeAttribute("hidden");
+        document.getElementById("LinfoPonente").removeAttribute("hidden");
+        document.getElementById("nombrePonente").removeAttribute("hidden"); 
+        document.getElementById("infoPonente").removeAttribute("hidden"); 
+    }
+    function cancelPonente(){
+        document.getElementById("updateP").setAttribute("hidden", true);
+        document.getElementById("cancelP").setAttribute("hidden", true);
+        document.getElementById("pNomP").removeAttribute("hidden"); 
+        document.getElementById("pInfP").removeAttribute("hidden");
+        document.getElementById("LnombrePonente").setAttribute("hidden", true);
+        document.getElementById("LinfoPonente").setAttribute("hidden", true);
+        document.getElementById("nombrePonente").setAttribute("hidden", true);
+        document.getElementById("infoPonente").setAttribute("hidden", true);
+    }
+    $('#ponenteForm').on('submit', function(e){
+        var id = $('#idCurso').val();
+        e.preventDefault()
+        $.ajax({
+            type: 'PUT',
+            url: "/updateCInfo/"+id,
+            dataType: "json",
+            data: $('#ponenteForm').serialize(),
+            success: function(response){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se han guardado los cambios',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                cancelPonente()
+                viewInfoCurso(id);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ha ocurrido un error',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+        });
+    });
+
+    // EDITAR HORARIO
+    function editHorario(){
+        document.getElementById("updateH").removeAttribute("hidden"); 
+        document.getElementById("cancelH").removeAttribute("hidden"); 
+        document.getElementById("pHoraInicio").setAttribute("hidden", true);
+        document.getElementById("pHoraFin").setAttribute("hidden", true);
+        document.getElementById("pHorasTotales").setAttribute("hidden", true);
+        document.getElementById("horaInicio").removeAttribute("hidden"); 
+        document.getElementById("horaFin").removeAttribute("hidden"); 
+        document.getElementById("horasTotales").removeAttribute("hidden"); 
+    }
+    function cancelHorario(){
+        document.getElementById("updateH").setAttribute("hidden", true);
+        document.getElementById("cancelH").setAttribute("hidden", true);
+        document.getElementById("pHoraInicio").removeAttribute("hidden"); 
+        document.getElementById("pHoraFin").removeAttribute("hidden");
+        document.getElementById("pHorasTotales").removeAttribute("hidden");
+        document.getElementById("horaInicio").setAttribute("hidden", true);
+        document.getElementById("horaFin").setAttribute("hidden", true);
+        document.getElementById("horasTotales").setAttribute("hidden", true);
+    }
+    $('#horarioForm').on('submit', function(e){
+        var id = $('#idCurso').val();
+        e.preventDefault()
+        $.ajax({
+            type: 'PUT',
+            url: "/updateCInfo/"+id,
+            dataType: "json",
+            data: $('#horarioForm').serialize(),
+            success: function(response){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se han guardado los cambios',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                cancelHorario()
+                viewInfoCurso(id);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ha ocurrido un error',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+        });
+    });
+
+
 
     /*
     function updateInfo(id){

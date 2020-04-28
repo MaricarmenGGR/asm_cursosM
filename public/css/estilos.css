@@ -251,17 +251,10 @@ h6{
 }
 p{
 	font-family: 'arial';
-	font-size: 14px;
-	line-height: 20px;
 }
 a{
 	text-decoration: none;
 	font-family: arial;
-}
-span {
-    font-family: 'arial';
-    font-size: 14px;
-    line-height: 20px;
 }
 
 hr {

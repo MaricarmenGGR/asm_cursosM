@@ -24,12 +24,12 @@ class CreateCursosTable extends Migration
             $table->string('lugar')->nullable();
             $table->date('fechaInicio')->nullable();
             $table->date('fechaFin')->nullable();
-            $table->string('descripcionCurso')->nullable();
-            $table->time('horaIncio')->nullable();
+            $table->longText('descripcionCurso')->nullable();
+            $table->time('horaInicio')->nullable();
             $table->time('horaFin')->nullable();
             $table->integer('horasTotales')->nullable();
             $table->string('nombrePonente')->nullable();
-            $table->string('infoPonente')->nullable();
+            $table->longText('infoPonente')->nullable();
             $table->string('imagenCurso');
             $table->unsignedinteger('status_id')->default(1);
             $table->foreign('status_id')->references('id')->on('status');

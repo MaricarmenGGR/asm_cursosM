@@ -5,12 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use App\Curso;
 
 class Curso extends Model
 {
     protected $table = 'cursos';
     protected $fillable = [
-        'id','nombreCurso','modalidad_id','lugar','fechaInicio','fechaFin','descripcionCurso','horaIncio','horaFin','horasTotales',
+        'id','nombreCurso','modalidad_id','lugar','fechaInicio','fechaFin','descripcionCurso','horaInicio','horaFin','horasTotales',
         'nombrePonente','infoPonente','imagenCurso','status_id','publicar'
     ]; 
     use SoftDeletes;

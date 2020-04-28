@@ -81,7 +81,7 @@
                                     <div class="text-center">
                                         <label>Hora de entrada</label>
                                     </div>
-                                    <input type="time" class="form-control" id="horaInicio" name="horaIncio" placeholder="Nombre del Curso">
+                                    <input type="time" class="form-control" id="horaInicio" name="horaInicio" placeholder="Nombre del Curso">
                                 </div>
                                 
                                 <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">

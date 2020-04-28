@@ -77,7 +77,7 @@ class CursosController extends Controller
             'fechaInicio' => $request->fechaInicio,
             'fechaFin' => $request->fechaFin,
             'descripcionCurso' => $request->descripcionCurso,
-            'horaIncio' => $request->horaIncio,
+            'horaInicio' => $request->horaInicio,
             'horaFin' => $request->horaFin,
             'horasTotales' => $request->horasTotales,
             'nombrePonente' => $request->nombrePonente,
@@ -132,10 +132,12 @@ class CursosController extends Controller
         ->where('curso_usuarios.curso_id', '=', $id)
         ->get();
 
+        $curso = Curso::findOrFail($id);
         $vars = [
-            'curso' => Curso::findOrFail($id),
+            'curso' => $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre),
             'areas' => $areas,
-            'inscritos' => $inscritos
+            'inscritos' => $inscritos,
+            'modalidades' => Modalidad::get()
         ];
         return view('cursos.curso', $vars);
     }
@@ -215,12 +217,12 @@ class CursosController extends Controller
 
     public function getCInfo($id){
         $curso = Curso::findOrFail($id);
+        $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre );
         return response()->json($curso);
     }
     public function updateCInfo(Request $request, $id){
         $curso = Curso::find($id);
-        $curso->descripcionCurso = $request->input('descripcionCurso');
-        $curso->update();
+        $curso->update($request->all());
         return response()->json($curso);
     }
 }

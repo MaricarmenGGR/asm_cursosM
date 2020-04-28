@@ -100,13 +100,11 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">NO</button>
-                                                <!--<a href={{action('CursosController@inscribirse',$curso->id)}} class="btn btn-success">SÍ</a>-->
                                                 <form method="post" action="/inscribirse">
                                                     @csrf
                                                     <input type="number" name="idCurso" value="{{$curso->id}}" hidden>
                                                     <button type="submit" class="btn btn-sm btn-success">SÍ</button>
-                                                </form>
-                                                
+                                                </form>  
                                         </div>
                                         </div>
                                     </div>
