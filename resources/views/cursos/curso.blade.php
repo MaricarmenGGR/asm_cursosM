@@ -234,9 +234,9 @@
                                 <tbody>
                                 <tr>
                                     <td class="pt-3-half" contenteditable="true">{{$curso->id}}</td>
-                                    <td class="pt-3-half" contenteditable="true">Actividad</td>
-                                    <td class="pt-3-half" contenteditable="true">Hora</td>
-                                    <td class="pt-3-half" contenteditable="true">Material</td>
+                                    <td class="pt-3-half" contenteditable="true"><input type="text"></td>
+                                    <td class="pt-3-half" contenteditable="true"><input type="time"></td>
+                                    <td class="pt-3-half" contenteditable="true"><input type="text"></td>
                                     <td class="pt-3-half">
                                     <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
                                             aria-hidden="true"></i></a></span>
@@ -253,7 +253,9 @@
                             </div>
                         </div>
                         </div>
-                        <button type="button" class="btn btn-secondary">Editar</button>
+                        <br>
+                        <button type="button" class="btn btn-secondary float-right">Guardar</button>
+                        <br>
                         <script>
                         const $tableID = $('#table');
                         const $BTN = $('#export-btn');
@@ -261,11 +263,10 @@
 
                         const newTr = `
                         <tr class="hide">
-                        <td class="pt-3-half" contenteditable="true">Example</td>
-                        <td class="pt-3-half" contenteditable="true">Example</td>
-                        <td class="pt-3-half" contenteditable="true">Example</td>
-                        <td class="pt-3-half" contenteditable="true">Example</td>
-                        <td class="pt-3-half" contenteditable="true">Example</td>
+                        <td class="pt-3-half" contenteditable="true">{{$curso->id}}</td>
+                        <td class="pt-3-half" contenteditable="true"><input></td>
+                        <td class="pt-3-half" contenteditable="true"><input></td>
+                        <td class="pt-3-half" contenteditable="true"><input></td>
                         <td class="pt-3-half">
                             <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
                             <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
@@ -283,7 +284,7 @@
 
                             $('tbody').append(newTr);
                         }
-
+                        //Clona una que existe
                         $tableID.find('table').append($clone);
                         });
 
@@ -309,7 +310,7 @@
                         $row.next().after($row.get(0));
                         });
 
-                        // A few jQuery helpers for exporting only
+                        //jQuery para exportar solo
                         jQuery.fn.pop = [].pop;
                         jQuery.fn.shift = [].shift;
 
