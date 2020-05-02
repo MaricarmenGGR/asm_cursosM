@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //////////////////////////// RUTAS CURSOS (ADMINS) ////////////////////////////////
 Route::resource('cursos','CursosController');
 Route::resource('materiales','MaterialCursoController');
+Route::resource('programas','ProgramaCursoController');
 Route::get('/cursos', 'CursosController@index')->name('cursos');
 Route::get('/verCurso', 'CursosController@show')->name('verCurso');
 Route::get('/crearCurso', 'CursosController@create')->name('crearCurso');

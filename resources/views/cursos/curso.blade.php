@@ -209,17 +209,26 @@
                         <h1>Programa del curso</h1>
                         <br>
                         <br>
-                        <div>
-                            FORMULARIO?
+                        <form method="POST" action="{{ route('programas.store') }}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                        <div class="form-group col-lg-12" style="padding: 0 2% 0 2%">
+                        <input type="hidden" value="{{$curso->id}}" name="curso_id">
+                        <input type="text" class="form-control" id="actividad" name="actividad" placeholder="Actividad" required>
+                        <input type="time" class="form-control" id="hora" name="hora" placeholder="Hora" required>
+                        <input type="text" class="form-control" id="material" name="material" placeholder="Nombre del Material" required>
+                        <br>
+                        <button type="submit" class="btn btn-asm float-right" id="subirActividadDelCurso">Guardar</button>
+                        <br>
                         </div>
+                        </form>
                         <br>
                         <!-- Editable table -->
                         <div class="card">
                         <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Programa</h3>
                         <div class="card-body">
                             <div id="table" class="table-editable">
-                            <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+                            <!--<span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>-->
                             <table class="table table-bordered table-responsive-md table-striped text-center">
                                 <thead>
                                 <tr>
@@ -234,9 +243,9 @@
                                 <tbody>
                                 <tr>
                                     <td class="pt-3-half" contenteditable="true">{{$curso->id}}</td>
-                                    <td class="pt-3-half" contenteditable="true"><input type="text"></td>
-                                    <td class="pt-3-half" contenteditable="true"><input type="time"></td>
-                                    <td class="pt-3-half" contenteditable="true"><input type="text"></td>
+                                    <td class="pt-3-half" contenteditable="true"></td>
+                                    <td class="pt-3-half" contenteditable="true">Lecturaforeach</td>
+                                    <td class="pt-3-half" contenteditable="true">Lecturaforeach</td>
                                     <td class="pt-3-half">
                                     <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
                                             aria-hidden="true"></i></a></span>
@@ -253,9 +262,7 @@
                             </div>
                         </div>
                         </div>
-                        <br>
-                        <button type="button" class="btn btn-secondary float-right">Guardar</button>
-                        <br>
+                        
                         <script>
                         const $tableID = $('#table');
                         const $BTN = $('#export-btn');
@@ -350,7 +357,7 @@
                         <form  method="POST" action="{{ route('materiales.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div>
-                                Lista de Materiales
+                            LISTA
                             </div>
 
                             <div class="file-field ">
