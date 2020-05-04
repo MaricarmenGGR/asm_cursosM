@@ -100,7 +100,15 @@ class ProgramaCursoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $actividades = DB::table('programa_cursos')
+        ->where('id', '=',$id)
+        ->delete(); 
+       // $actividades->delete($id);
+        
+        //Programa_Curso::destroy($id);
+        return response()->json(
+           ["mensaje"=> $actividades]
+        );
     }
 
     public function listar($id){

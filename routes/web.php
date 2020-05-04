@@ -33,6 +33,7 @@ Route::get('/crearCurso', 'CursosController@create')->name('crearCurso');
 Route::get('/getCInfo/{id}', 'CursosController@getCInfo');
 Route::put('/updateCInfo/{id}', 'CursosController@updateCInfo');
 Route::get('/listar/{id}','ProgramaCursoController@listar');
+Route::delete('/borrarAct/{id}','ProgramaCursoController@destroy');
 
 
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////

@@ -714,12 +714,36 @@ function verTabla(id){
         '<span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>'+
         '</td>'+
         '<td>'+
-        '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Borrar</button></span>'+
+        '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarAct(this);">Borrar</button></span>'+
         '</td>'+
         '</tr>')
         });
     });
 }
+
+function EliminarAct(btn){
+    var actividad = $('#actividad').val();
+    var ruta = "/borrarAct/"+btn.value;
+    var token = '{{csrf_token()}}';
+    var curso_id = btn.value;
+    $.ajax({
+        url:ruta,
+        headers:{'X-CSRF-TOKEN':token},
+        type:'delete',
+        dataType : 'json',
+        success: function(response){
+    Swal.fire({
+        icon: 'success',
+        title: 'Actividad Eliminada',
+        showConfirmButton: false,
+        timer: 1500
+    });
+    verTabla(curso_id)
+        }
+    });
+}
+
+
 </script>
 
 <script>
