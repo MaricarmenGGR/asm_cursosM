@@ -720,7 +720,7 @@ function verTabla(id){
         });
     });
 }
-
+//Borrar Actividades
 function EliminarAct(btn){
     var actividad = $('#actividad').val();
     var ruta = "/borrarAct/"+btn.value;
