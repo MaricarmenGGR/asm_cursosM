@@ -103,8 +103,11 @@ class ProgramaCursoController extends Controller
         //
     }
 
-    public function listar(){
-        $actividades = Programa_Curso::all();
+    public function listar($id){
+        $actividades = DB::table('programa_cursos')
+        ->where('curso_id', '=',$id)
+        ->select('*')
+        ->get();
         return response()->json(
             $actividades->toArray()
         );

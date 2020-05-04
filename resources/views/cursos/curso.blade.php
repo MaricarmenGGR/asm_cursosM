@@ -1,24 +1,10 @@
 @extends('layouts.menu')
 @section('content')
-
-<!--
-@section('styles')
-./public/bootstarp-fileinput/css/fileinput-rtl.min.css
-<link href="public/bootstarp-fileinput/css/fileinput-rtl.min.css" rel="stylesheet" type="text/css"/>
-@endsection
-
-@section('scriptsPlugins')
-    <script src="public/bootstarp-fileinput/js/fileinput.min.js" type="text/javascript"></script>
-    <script src="public/bootstarp-fileinput/js/locales/es.js" type="text/javascript"></script>
-    <script src="public/bootstarp-fileinput/js/themes/fas/theme.min.js" type="text/javascript"></script>
-@endsection-->
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
             <br>
-
             <div class="text-center">
-
                     <h1>
                         <p class="d-inline" id="pNombre">{!! $curso->nombreCurso !!} </p>
                         <a class="btn d-inline" id="editNombre" onclick="editNombre()"><i class="fas fa-pencil-alt"></a></i>
@@ -47,8 +33,8 @@
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                             <a onclick="viewInfoCurso(@php echo $curso->id @endphp)" class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
-                            <a onclick="verTabla()" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
-                            <a class="nav-item nav-link" id="material-tab" data-toggle="tab" href="#material" role="tab" aria-controls="material" aria-selected="false">Material</a>
+                            <a onclick="verTabla(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
+                            <a class="nav-item nav-link" id="materiales-tab"   data-toggle="tab" href="#materiales"   role="tab" aria-controls="materiales" aria-selected="false">Material</a>
                             <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
                             <a class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
                             <a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
@@ -252,41 +238,10 @@
                         </div>
                         </div>
                     </div>
-                    <script>
-                        function verTabla(){
-                        $(document).ready(function(){
-                            var tablaDatos = $("#actividadesPrograma");
-                            var ruta ="/listar";
-                            
-                            $.get(ruta, function(response){
-                                $(response).each(function(key,value){
-                                    tablaDatos.append(
-                        '<tr class="hide">'+
-                        '<td class="pt-3-half" contenteditable="true">'+value.curso_id+'</td>'+
-                        '<td class="pt-3-half" contenteditable="true">'+value.actividad+'</td>'+
-                        '<td class="pt-3-half" contenteditable="true">'+value.hora+'</td>'+
-                        '<td class="pt-3-half" contenteditable="true">'+value.material+'</td>'+
-                        '<td class="pt-3-half">'+
-                            '<span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>'+
-                            '<span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>'+
-                        '</td>'+
-                        '<td>'+
-                            '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>'+
-                        '</td>'+
-                        '</tr>')
-                                });
-                            });
-                        });
-                    }
-                    </script>
-                    <div class="tab-pane fade" id="material" role="tabpanel" aria-labelledby="material-tab">
+                    <div class="tab-pane fade" id="materiales" role="tabpanel" aria-labelledby="materiales-tab">
                         <h1>MATERIAL</h1>
                         <form  method="POST" action="{{ route('materiales.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            <div>
-                            LISTA
-                            </div>
-
                             <div class="file-field ">
                                 <div class="btn btn-asm col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <span>Escoger un Archivo</span>
@@ -705,7 +660,7 @@
     }*/
 
 </script>
-<!--Agregar y leer de Programas con AJAX-->
+<!--Agregar y leer de Actividades de Programa con AJAX-->
 <script>
     $("#subirActividadDelCurso").click(function (e) {
     e.preventDefault();
@@ -726,7 +681,7 @@
         showConfirmButton: false,
         timer: 1500
     });
-    verTabla()
+    verTabla(curso_id)
     },
     error: function(XMLHttpRequest, textStatus, errorThrown){
     Swal.fire({
@@ -739,7 +694,32 @@
       
   });
 });
-
+</script>
+<script>
+function verTabla(id){
+    $.ajax({
+        url:'/listar/'+id,
+        type:'get',
+    }).done(function(res){
+        var tablaDatos = $("#actividadesPrograma");
+        $(res).each(function(key,value){
+        tablaDatos.append(
+        '<tr class="hide">'+
+        '<td class="pt-3-half" contenteditable="true">'+value.curso_id+'</td>'+
+        '<td class="pt-3-half" contenteditable="true">'+value.actividad+'</td>'+
+        '<td class="pt-3-half" contenteditable="true">'+value.hora+'</td>'+
+        '<td class="pt-3-half" contenteditable="true">'+value.material+'</td>'+
+        '<td class="pt-3-half">'+
+        '<span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>'+
+        '<span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>'+
+        '</td>'+
+        '<td>'+
+        '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Borrar</button></span>'+
+        '</td>'+
+        '</tr>')
+        });
+    });
+}
 </script>
 
 <script>
