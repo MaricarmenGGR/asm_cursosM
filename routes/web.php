@@ -32,6 +32,7 @@ Route::get('/crearCurso', 'CursosController@create')->name('crearCurso');
 //CRUD AJAX
 Route::get('/getCInfo/{id}', 'CursosController@getCInfo');
 Route::put('/updateCInfo/{id}', 'CursosController@updateCInfo');
+Route::get('/listar','ProgramaCursoController@listar');
 
 
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////

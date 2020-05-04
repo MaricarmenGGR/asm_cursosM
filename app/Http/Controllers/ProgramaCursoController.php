@@ -14,6 +14,8 @@ use App\Programa_Curso;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+use function GuzzleHttp\Promise\all;
+
 class ProgramaCursoController extends Controller
 {
     /**
@@ -44,13 +46,16 @@ class ProgramaCursoController extends Controller
      */
     public function store(Request $request)
     {
-        Programa_Curso::create([
-            'curso_id' =>$request->curso_id,
-            'actividad' => $request->actividad,
-            'hora'=>$request->hora,
-            'material'=>$request->material
-        ]);
-        return redirect()->route('cursos.show',$request->curso_id);
+        if($request->ajax()){
+            return response()->json([
+                Programa_Curso::create([
+                    'curso_id' =>$request->curso_id,
+                    'actividad' => $request->actividad,
+                    'hora'=>$request->hora,
+                    'material'=>$request->material
+                ])
+            ]);
+        }
     }
 
     /**
@@ -96,5 +101,12 @@ class ProgramaCursoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function listar(){
+        $actividades = Programa_Curso::all();
+        return response()->json(
+            $actividades->toArray()
+        );
     }
 }
