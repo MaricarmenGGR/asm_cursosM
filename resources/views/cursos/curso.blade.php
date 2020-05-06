@@ -34,7 +34,7 @@
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                             <a onclick="viewInfoCurso(@php echo $curso->id @endphp)" class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             <a onclick="verTabla(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
-                            <a class="nav-item nav-link" id="materiales-tab"   data-toggle="tab" href="#materiales"   role="tab" aria-controls="materiales" aria-selected="false">Material</a>
+                            <a onclick="verMateriales(@php echo $curso->id @endphp)"class="nav-item nav-link" id="materiales-tab"   data-toggle="tab" href="#materiales"   role="tab" aria-controls="materiales" aria-selected="false">Material</a>
                             <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
                             <a class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
                             <a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
@@ -252,6 +252,26 @@
                             <br>
                         </form>
                         <br/>
+                        <div class="card">
+                        <h3 class="card-header text-center font-weight-bold text-uppercase py-3">Materiales del Curso</h3>
+                        <div class="card-body">
+                            <div id="table" class="table-editable">
+                            
+                            <table class="table table-bordered table-responsive-md table-striped text-center" id="materialesCurso">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Curso</th>
+                                    <th class="text-center">Material</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                
+                                </tbody>
+                            
+                            </table>
+                            </div>
+                        </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
                         <h1>Evaluación</h1>
@@ -716,6 +736,24 @@ function verTabla(id){
         });
     });
 }
+function verMateriales(id){
+    $.ajax({
+        url:'/verMateriales/'+id,
+        type:'get',
+    }).done(function(res){
+        var tablaDatos = $("#materialesCurso");
+        $(res).each(function(key,value){
+        tablaDatos.append(
+        '<tr class="hide">'+
+        '<td class="pt-3-half" contenteditable="true">'+value.curso_id+'</td>'+
+        '<td class="pt-3-half" contenteditable="true">'+value.url+'</td>'+
+        '<td>'+
+        '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarMaterial(this);">Borrar</button></span>'+
+        '</td>'+
+        '</tr>')
+        });
+    });
+}
 //Borrar Actividades
 function EliminarAct(btn){
     var actividad = $('#actividad').val();
@@ -738,8 +776,26 @@ function EliminarAct(btn){
         }
     });
 }
-
-
+function EliminarMaterial(btn){
+    var ruta = "/borrarMaterial/"+btn.value;
+    var token = '{{csrf_token()}}';
+    var curso_id = $('#curso_id');
+    $.ajax({
+        url:ruta,
+        headers:{'X-CSRF-TOKEN':token},
+        type:'delete',
+        dataType : 'json',
+        success: function(response){
+    Swal.fire({
+        icon: 'success',
+        title: 'Archivo Eliminado',
+        showConfirmButton: false,
+        timer: 1500
+    });
+    verMateriales(curso_id)
+        }
+    });
+}
 </script>
 
 <script>

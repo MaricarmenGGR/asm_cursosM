@@ -10,7 +10,9 @@ use App\Curso_Area;
 use App\Curso_Usuario;
 use App\Material;
 use App\Modalidad;
+use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use SebastianBergmann\Environment\Console;
 
 class MaterialCursoController extends Controller
@@ -71,7 +73,8 @@ class MaterialCursoController extends Controller
     }*/
 
         foreach($request->file('url') as $archivo){
-            $fileName = time() . '.' . $archivo->extension();
+           // $fileName = time() . '.' . $archivo->extension();
+            $fileName = $archivo->getClientOriginalName();
             $archivo->move('materials', $fileName );
             Material::create([
                 'curso_id' =>$request->curso_id,
@@ -142,6 +145,39 @@ class MaterialCursoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $nombreMaterial = DB::table('materiales')
+        ->where('id','=',$id)
+        ->select('url')
+        ->get();
+        $archivo = ($nombreMaterial[0]->url);
+        $nombreArchivo = strval($archivo);
+        unlink('materials/'.$nombreArchivo);
+        //Borrar de La carpeta de Materials
+       // File::delete('materials', $nombreMaterial);
+       //Storage::disk()->delete('materials/'+$nombreMaterial);
+       //$files = glob('materials/'+$archivo); //obtenemos todos los nombres de los ficheros
+       // foreach($files as $file){
+         //   $ruta = 'materials/'+$nombreArchivo;
+               // if(is_file($file))
+                //unlink($file);
+            
+        //}
+
+        $material = DB::table('materiales')
+        ->where('id', '=',$id)
+        ->delete(); 
+        return response()->json(
+           ["mensaje"=> $material]
+        );
+        return "se borro";
+    }
+    public function verMateriales($id){
+        $actividades = DB::table('materiales')
+        ->where('curso_id', '=',$id)
+        ->select('*')
+        ->get();
+        return response()->json(
+            $actividades->toArray()
+        );
     }
 }
