@@ -11,6 +11,7 @@ use App\Curso_Usuario;
 use App\Material;
 use App\Modalidad;
 use Illuminate\Support\Facades\DB;
+use SebastianBergmann\Environment\Console;
 
 class MaterialCursoController extends Controller
 {
@@ -56,22 +57,29 @@ class MaterialCursoController extends Controller
      */
     public function store(Request $request)
     {
-        //$ultimaTupla = DB::table('cursos')->latest('id')->first(); 
-        /* $image = $request->imagenCurso;*/
-       
-        if ($request->hasFile('url')) {
+        /*if ($request->hasFile('url')) {
             $filePath = $request->file('url');
             $fileName = time() . '.' . $filePath ->getClientOriginalExtension();
 
             $filePath ->move('materials', $fileName );
-            /*$image->imagenCurso = $imageName;*/
         
         Material::create([
             'curso_id' =>$request->curso_id,
             'url' => $fileName
         ]);
         return redirect()->route('cursos.show',$request->curso_id);
-    };
+    }*/
+
+        foreach($request->file('url') as $archivo){
+            $fileName = time() . '.' . $archivo->extension();
+            $archivo->move('materials', $fileName );
+            Material::create([
+                'curso_id' =>$request->curso_id,
+                'url' => $fileName
+            ]);
+        }
+        return redirect()->route('cursos.show',$request->curso_id);
+           
     }
 
     /**

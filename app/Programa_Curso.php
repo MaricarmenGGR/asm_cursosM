@@ -9,7 +9,7 @@ class Programa_Curso extends Model
 {
     protected $table = 'programa_cursos';
     protected $fillable = [
-        'id','curso_id','actividad','hora','material'
+        'id','curso_id','actividad','hora'
     ];
     use SoftDeletes;
     protected $dates = ['deleted_at'];

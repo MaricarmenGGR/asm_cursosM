@@ -200,11 +200,10 @@
                         <form id="actividadNewForm" class="form-group">
                             {{ csrf_field() }}
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                        <div class="form-group col-lg-12" style="padding: 0 2% 0 2%">
+                        <div class="form-group col-lg-12" style="padding: 0 5% 0 5%">
                         <input type="hidden" value="{{$curso->id}}" id="curso_id" name="curso_id">
-                        <input type="text" class="form-control" id="actividad" name="actividad" placeholder="Actividad" required>
+                        <textarea type="text" class="form-control" id="actividad" name="actividad" placeholder="Actividad" required></textarea>
                         <input type="time" class="form-control" id="hora" name="hora" placeholder="Hora" required>
-                        <input type="text" class="form-control" id="material" name="material" placeholder="Nombre del Material" required>
                         <br>
                         <button class="btn btn-asm float-right" id="subirActividadDelCurso">Guardar</button>
                         <br>
@@ -224,7 +223,6 @@
                                     <th class="text-center">Identificador de Curso</th>
                                     <th class="text-center">Actividad</th>
                                     <th class="text-center">Hora</th>
-                                    <th class="text-center">Material</th>
                                     <th class="text-center">Ordenar</th>
                                     <th class="text-center">Borrar</th>
                                 </tr>
@@ -242,10 +240,10 @@
                         <h1>MATERIAL</h1>
                         <form  method="POST" action="{{ route('materiales.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            <div class="file-field ">
+                            <div class="file-field">
                                 <div class="btn btn-asm col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <span>Escoger un Archivo</span>
-                                <input type="file" name="url">
+                                <span>Selecciona los archivos</span>
+                                <input type="file" class="form-control" id="url" multiple name="url[]">
                                 <input type="hidden" value="{{$curso->id}}" name="curso_id">
                                 </div>
                             </div>
@@ -667,9 +665,8 @@
     var curso_id = $('#curso_id').val();
     var actividad = $('#actividad').val();
     var hora = $('#hora').val();
-    var material = $('#material').val();
     var token = '{{csrf_token()}}';
-    var data={_token:token,curso_id:curso_id,actividad:actividad,hora:hora,material:material};
+    var data={_token:token,curso_id:curso_id,actividad:actividad,hora:hora};
     $.ajax({
     type: "post",
     url: "{{ route('programas.store') }}",
@@ -708,7 +705,6 @@ function verTabla(id){
         '<td class="pt-3-half" contenteditable="true">'+value.curso_id+'</td>'+
         '<td class="pt-3-half" contenteditable="true">'+value.actividad+'</td>'+
         '<td class="pt-3-half" contenteditable="true">'+value.hora+'</td>'+
-        '<td class="pt-3-half" contenteditable="true">'+value.material+'</td>'+
         '<td class="pt-3-half">'+
         '<span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>'+
         '<span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>'+
