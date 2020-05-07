@@ -107,6 +107,8 @@ class CursosController extends Controller
                 'disponible' => $cupo
             ]);
         }
+
+        
         
         return redirect()->route('cursos.show',$ultimaTupla->id);
     }

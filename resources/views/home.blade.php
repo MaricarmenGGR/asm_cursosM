@@ -77,7 +77,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     @if( ! Auth::user()->estaInscrito($curso->id) && $curso->hayCupo($curso->id, Auth::user()->area_id) )
-                                    <button type="button" class="btn btn-block btn-asm" data-toggle="modal" data-target="#modalInscripcion{{$curso->id}}">
+                                    <button type="button" class="btn btn-block btn-asm" onclick="inscripcion({{$curso->id}})">
                                         Inscribirme
                                     </button>
                                     @elseif( Auth::user()->estaInscrito($curso->id) )
@@ -91,6 +91,12 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <form id="frmInscribirse_{{$curso->id}}" method="post" action="/inscribirse">
+                                @csrf
+                                <input type="number" name="idCurso" value="{{$curso->id}}" hidden>
+                            </form>
+                            <input type="text" id="nombreCurso_{{$curso->id}}" value="{{$curso->nombreCurso}}" hidden>
 
 
                             <!-- Modal -->
@@ -108,12 +114,6 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
-                                        
-                                        <form method="post" action="/inscribirse">
-                                            @csrf
-                                            <input type="number" name="idCurso" value="{{$curso->id}}" hidden>
-                                            <button type="submit" class="btn btn-success">SÍ</button>
-                                        </form>
                                 </div>
                                 </div>
                             </div>
@@ -125,6 +125,23 @@
         @endforeach
         </div>
     </div>
+    <script>
+        function inscripcion(id_curso){
+            Swal.fire({
+                title: '¿Desea inscribirse a '+$("#nombreCurso_"+id_curso).val()+"?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'No',
+                confirmButtonText: 'Sí'
+                }).then((result) => {
+                if (result.value) { 
+                    $("#frmInscribirse_"+id_curso).submit();
+                }
+            })
+        }
+    </script>
 @endif
 
 @endsection

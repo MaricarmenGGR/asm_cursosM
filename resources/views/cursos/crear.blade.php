@@ -17,10 +17,10 @@
 
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
-
-                        <h3>Información de Curso</h3>
-                        <hr> 
                         <form  method="POST" action=" {{ route('cursos.store') }}" enctype="multipart/form-data">
+                            <h3>Información de Curso</h3>
+                            <hr> 
+                        
                             {{ csrf_field() }}
                             <div class="form-row">
                                 <div class="form-group col-lg-7" style="padding: 0 2% 0 2%">
@@ -122,14 +122,15 @@
                             <hr>
                             <div class="form-row">
                                 <div class="form-group col-lg-12" style="padding: 0 2% 0 2%">
-                                    <label>Imagen del curso</label><br>
-                                    <input type="file" name="imagenCurso">
+                                    <input type="file" name="imagenCurso" accept="image/*" onchange="loadFile(event)">
+                                    <div class="text-left">
+                                        <img id="output" src="" />
+                                    </div>
                                 </div>
                             </div>
                             <br>
                             <h3>Áreas Invitadas</h3>
                             <hr>
-
                             <div class="form-row">
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                 @foreach($areas as $area)
@@ -142,75 +143,21 @@
                                     </div>
                                     
                                     <div class="form-group col-lg-6">
-                                        <input placeholder="Cupo" style="display: none;" type="number" class="form-control form-control-sm" id="cupo_{!! $area->id !!}" name="cupo[]" min=1>
+                                        <input placeholder="Cupo" style="display: none;" type="number" class="form-control form-control-sm" id="cupo_{!! $area->id !!}" name="cupo[]" min=1 onfocus="this.oldvalue = this.value;" onchange="cupoTotal(this); this.oldvalue = this.value;">
                                     </div>
 
                                 @endforeach
                                 </div>
-
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
-                                    <!--<div class="text-left">
-                                        <label>Número de áreas a invitar</label>
-                                    </div>-->
-                                    <!--<input class="form-control" type="number" name="numero" id="numero" value="">-->
-                                </div>
-                                <div class="form-group col-lg-8" style="padding: 0 2% 0 2%">
-                                    <div id="demo" style="padding: 1% 0 0 0;"></div>
+                                <div class="form-group col-lg-4 form-inline" style="padding: 0 2% 0 2%">
+                                    <div class="">
+                                        <label>Total de invitados &nbsp;&nbsp;&nbsp;</label>
+                                    </div>
+                                    <input type="number" class="form-control" id="totalCupos" value=0 readonly>
                                 </div>
                             </div>
-
-                                <script type="text/javascript">
-                                    function showInput(checkbox) {
-                                        var numero = checkbox.id;
-                                        var num = numero.split("_");
-                                        
-                                        if($(checkbox).prop('checked')) {
-                                            $('#cupo_'+num[1]).css('display','block');
-                                        } else {
-                                            $('#cupo_'+num[1]).css('display','none');
-                                            $('#cupo_'+num[1]).val("")
-                                        }
-                                    }
-                                    $(document).ready(function(){
-                                        $("#numero").change(function () {
-                                            var numeroAreas = parseInt( $("#numero").val());
-                                            var text = "";
-                                            var i;
-                                            for (i = 0; i <numeroAreas; i++) {
-                                            text +=
-                                                "<br>"+
-                                                "<div class='row text-left'>"+
-                                                    "<div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'>"+
-                                                        "<select class='custom-select'>"+
-                                                            "<option value='' disabled selected>Elige el área</option>"+
-                                                            "<option value='1'>1. Despacho del auditor Superior</option>"+
-                                                            "<option value='2'>2. Normatividad</option>"+
-                                                            "<option value='3'>3. Especial Estatal</option>"+
-                                                            "<option value='4'>4. Especial Municipal</option>"+
-                                                            "<option value='5'>5. Planeacion</option>"+
-                                                            "<option value='6'>6. Investigacion</option>"+
-                                                            "<option value='7'>7. Substanciacion</option>"+
-                                                            "<option value='8'>8. Unidad Gral. de Asuntos Jurídicos</option>"+
-                                                            "<option value='9'>9. Direccion Administrativa</option>"+
-                                                        "</select>"+
-                                                    "</div>"+
-                                                    "<div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'>"+
-                                                        "<input type='number' name='CupoArea' id='cupo' class='form-control' value='' placeholder='Cupo'>"+
-                                                    "</div>"+
-                                                "</div>";
-                                            }
-                                            document.getElementById("demo").innerHTML = text;
-                                        });
-
-
-
-                                    });
-                                    
-
-                                </script>
 
                             <br>
 
@@ -233,4 +180,73 @@
 
     </div>
 </div>
+
+<script type="text/javascript">
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+    
+    function showInput(checkbox) {
+        var numero = checkbox.id;
+        var num = numero.split("_");
+        
+        if($(checkbox).prop('checked')) {
+            $('#cupo_'+num[1]).css('display','block');
+            $('#cupo_'+num[1]).attr("required", true);
+        } else {
+            $('#cupo_'+num[1]).css('display','none');
+            $('#cupo_'+num[1]).attr("required", false);
+            $('#totalCupos').val( $('#totalCupos').val() - $('#cupo_'+num[1]).val() );
+            $('#cupo_'+num[1]).val("");
+        }
+    }
+    function cupoTotal(input) {
+        
+        if( input.value > 0 ){
+            //invTotal = invTotal - Number(input.value);
+            
+            var valorAct = Number( $('#totalCupos').val() ) - Number(input.oldvalue) + Number(input.value);
+            $('#totalCupos').val(valorAct);
+        } else {
+            alert('El valor debe ser mayor a 0');
+        }
+    }
+    $(document).ready(function(){
+        $("#numero").change(function () {
+            var numeroAreas = parseInt( $("#numero").val());
+            var text = "";
+            var i;
+            for (i = 0; i < numeroAreas; i++) {
+            text +=
+                "<br>"+
+                "<div class='row text-left'>"+
+                    "<div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'>"+
+                        "<select class='custom-select'>"+
+                            "<option value='' disabled selected>Elige el área</option>"+
+                            "<option value='1'>1. Despacho del auditor Superior</option>"+
+                            "<option value='2'>2. Normatividad</option>"+
+                            "<option value='3'>3. Especial Estatal</option>"+
+                            "<option value='4'>4. Especial Municipal</option>"+
+                            "<option value='5'>5. Planeacion</option>"+
+                            "<option value='6'>6. Investigacion</option>"+
+                            "<option value='7'>7. Substanciacion</option>"+
+                            "<option value='8'>8. Unidad Gral. de Asuntos Jurídicos</option>"+
+                            "<option value='9'>9. Direccion Administrativa</option>"+
+                        "</select>"+
+                    "</div>"+
+                    "<div class='col-lg-6 col-md-6 col-sm-6 col-xs-6 input-field'>"+
+                        "<input type='number' name='CupoArea' id='cupo' class='form-control' value='' placeholder='Cupo'>"+
+                    "</div>"+
+                "</div>";
+            }
+            document.getElementById("demo").innerHTML = text;
+        });
+
+
+
+    });
+    
+
+</script>
 @endsection

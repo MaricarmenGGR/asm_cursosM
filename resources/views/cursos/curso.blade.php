@@ -245,7 +245,7 @@
                             <div class="file-field ">
                                 <div class="btn btn-asm col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <span>Escoger un Archivo</span>
-                                <input type="file" name="url">
+                                <input type="file" name="url" accept='image/*'>
                                 <input type="hidden" value="{{$curso->id}}" name="curso_id">
                                 </div>
                             </div>
@@ -356,6 +356,7 @@
     </div>
 </div>
 
+<!--Modificar Info del Curso-->
 <script>
     $.ajaxSetup({
         headers: {
@@ -614,52 +615,8 @@
             }
         });
     });
-
-
-
-    /*
-    function updateInfo(id){
-        var descripcionCurso = $('#descripcionCurso').val();
-
-        $.ajax({
-            type: 'PUT',
-            dataType: "json",
-            url: "/updateCInfo/"+id,
-            data: {descripcionCurso:descripcionCurso},
-            success: function(data){
-                alert(data);
-                viewInfo(id);
-                //$('#botton').hide();
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert("Status: " + textStatus); alert("Error: " + errorThrown);
-            }
-
-        });
-
-
-    }*/
-
-    /*
-    function deteleInfo(){
-        $.ajax([
-            type: 'DELETE',
-            dataType: "json",
-            url: "/updateInfo/"+id,
-            data: {name:name, name2:name2},
-            success: function(data){
-                alert(data);
-                viewInfo();
-                //$('#botton').hide();
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert("Status: " + textStatus); alert("Error: " + errorThrown);
-            }
-
-        ]);
-    }*/
-
 </script>
+
 <!--Agregar y leer de Actividades de Programa con AJAX-->
 <script>
     $("#subirActividadDelCurso").click(function (e) {
