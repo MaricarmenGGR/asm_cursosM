@@ -27,7 +27,7 @@ class Curso extends Model
         else return false;
     }
 
-    public function verificarCupo($curso, $area){ //Validar si hay cupo
+    public function hayCupo($curso, $area){ //Validar si hay cupo
         $result = DB::table('curso_areas')
         ->where('curso_id', '=', $curso)
         ->where('area_id', '=', $area)

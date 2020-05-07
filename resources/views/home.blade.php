@@ -76,18 +76,18 @@
                             <br>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    @if( ! Auth::user()->estaInscrito($curso->id) && $curso->verificarCupo($curso->id, Auth::user()->area_id) )
+                                    @if( ! Auth::user()->estaInscrito($curso->id) && $curso->hayCupo($curso->id, Auth::user()->area_id) )
                                     <button type="button" class="btn btn-block btn-asm" data-toggle="modal" data-target="#modalInscripcion{{$curso->id}}">
                                         Inscribirme
                                     </button>
-                                    @elseif( ! $curso->verificarCupo($curso->id, Auth::user()->area_id) )
-                                    <button disabled type="button" class="btn btn-block btn-asm">
-                                        Cupo lleno
-                                    </button>
-                                    @else
+                                    @elseif( Auth::user()->estaInscrito($curso->id) )
                                     <a href="{{ route('cursosUsuario.show',$curso->id) }}" class="btn btn-block btn-asm">
                                         Entrar al curso
                                     </a>
+                                    @elseif( ! $curso->hayCupo($curso->id, Auth::user()->area_id) )
+                                    <button disabled type="button" class="btn btn-block btn-asm">
+                                        Cupo lleno
+                                    </button>
                                     @endif
                                 </div>
                             </div>
