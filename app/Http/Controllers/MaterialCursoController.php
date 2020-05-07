@@ -72,16 +72,23 @@ class MaterialCursoController extends Controller
         return redirect()->route('cursos.show',$request->curso_id);
     }*/
 
+    if($request->ajax()){
         foreach($request->file('url') as $archivo){
-           // $fileName = time() . '.' . $archivo->extension();
-            $fileName = $archivo->getClientOriginalName();
-            $archivo->move('materials', $fileName );
-            Material::create([
-                'curso_id' =>$request->curso_id,
-                'url' => $fileName
-            ]);
-        }
-        return redirect()->route('cursos.show',$request->curso_id);
+            // $fileName = time() . '.' . $archivo->extension();
+             $fileName = $archivo->getClientOriginalName();
+             $archivo->move('materials', $fileName );
+             Material::create([
+                 'curso_id' =>$request->curso_id,
+                 'url' => $fileName
+             ]);
+         }
+        return response()->json(
+            [ Material::where('curso_id','=',$request->curso_id) ] 
+        );
+    }
+
+
+        //return redirect()->route('cursos.show',$request->curso_id);
            
     }
 

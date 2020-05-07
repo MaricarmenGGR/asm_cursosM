@@ -238,12 +238,12 @@
                     </div>
                     <div class="tab-pane fade" id="materiales" role="tabpanel" aria-labelledby="materiales-tab">
                         <h1>MATERIAL</h1>
-                        <form  method="POST" action="{{ route('materiales.store') }}" enctype="multipart/form-data">
+                        <form id="materialNewForm" method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="file-field">
                                 <div class="btn btn-asm col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <span>Selecciona los archivos</span>
-                                <input type="file" class="form-control" id="url" multiple name="url[]" accept='image/*'>
+                                <input type="file" class="form-control" id="url" multiple name="url[]">
                                 <input type="hidden" value="{{$curso->id}}" name="curso_id">
                                 </div>
                             </div>
@@ -704,14 +704,13 @@ function EliminarAct(btn){
         type:'delete',
         dataType : 'json',
         success: function(response){
-    Swal.fire({
-        icon: 'success',
-        title: 'Actividad Eliminada',
-        showConfirmButton: false,
-        timer: 1500
-    });
-   
-    verTabla(curso_id)
+            Swal.fire({
+                icon: 'success',
+                title: 'Actividad Eliminada',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            verTabla(curso_id)
         }
     });
 }
@@ -721,8 +720,41 @@ function eliminarTabla(){
     tablaDatos.empty();
 }
 </script>
+
 <!--Crud Materiales con AJAX-->
 <script>
+
+$( '#materialNewForm' ).submit( function( e ) {
+    e.preventDefault();
+    var curso_id = $('#curso_id').val();
+    $.ajax( {
+        url: '{{ route("materiales.store") }}',
+        type: 'POST',
+        data: new FormData( this ),
+        processData: false,
+        contentType: false,
+        success: function(response){
+        Swal.fire({
+            icon: 'success',
+            title: 'Se agregon los materiales',
+            showConfirmButton: false,
+            timer: 1500
+        });
+        eliminarTablaMaterial()
+        verMateriales(curso_id)
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+        Swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un error',
+            showConfirmButton: false,
+            timer: 2000
+            });
+        }
+
+    } );
+    
+  } );
 
 function verMateriales(id){
     $.ajax({
@@ -760,6 +792,7 @@ function EliminarMaterial(btn){
         showConfirmButton: false,
         timer: 1500
     });
+    eliminarTablaMaterial();
     verMateriales(curso_id)
         }
     });
