@@ -33,8 +33,8 @@
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                             <a onclick="viewInfoCurso(@php echo $curso->id @endphp)" class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
-                            <a onclick="verTabla(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
-                            <a class="nav-item nav-link" id="materiales-tab"   data-toggle="tab" href="#materiales"   role="tab" aria-controls="materiales" aria-selected="false">Material</a>
+                            <a onclick="eliminarTabla();verTabla(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
+                            <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp)"class="nav-item nav-link" id="materiales-tab"   data-toggle="tab" href="#materiales"   role="tab" aria-controls="materiales" aria-selected="false">Material</a>
                             <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
                             <a class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
                             <a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
@@ -200,11 +200,10 @@
                         <form id="actividadNewForm" class="form-group">
                             {{ csrf_field() }}
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                        <div class="form-group col-lg-12" style="padding: 0 2% 0 2%">
+                        <div class="form-group col-lg-12" style="padding: 0 5% 0 5%">
                         <input type="hidden" value="{{$curso->id}}" id="curso_id" name="curso_id">
-                        <input type="text" class="form-control" id="actividad" name="actividad" placeholder="Actividad" required>
+                        <textarea type="text" class="form-control" id="actividad" name="actividad" placeholder="Actividad" required></textarea>
                         <input type="time" class="form-control" id="hora" name="hora" placeholder="Hora" required>
-                        <input type="text" class="form-control" id="material" name="material" placeholder="Nombre del Material" required>
                         <br>
                         <button class="btn btn-asm float-right" id="subirActividadDelCurso">Guardar</button>
                         <br>
@@ -224,7 +223,6 @@
                                     <th class="text-center">Identificador de Curso</th>
                                     <th class="text-center">Actividad</th>
                                     <th class="text-center">Hora</th>
-                                    <th class="text-center">Material</th>
                                     <th class="text-center">Ordenar</th>
                                     <th class="text-center">Borrar</th>
                                 </tr>
@@ -242,10 +240,10 @@
                         <h1>MATERIAL</h1>
                         <form  method="POST" action="{{ route('materiales.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            <div class="file-field ">
+                            <div class="file-field">
                                 <div class="btn btn-asm col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <span>Escoger un Archivo</span>
-                                <input type="file" name="url" accept='image/*'>
+                                <span>Selecciona los archivos</span>
+                                <input type="file" class="form-control" id="url" multiple name="url[]" accept='image/*'>
                                 <input type="hidden" value="{{$curso->id}}" name="curso_id">
                                 </div>
                             </div>
@@ -254,6 +252,26 @@
                             <br>
                         </form>
                         <br/>
+                        <div class="card">
+                        <h3 class="card-header text-center font-weight-bold text-uppercase py-3">Materiales del Curso</h3>
+                        <div class="card-body">
+                            <div id="table" class="table-editable">
+                            
+                            <table class="table table-bordered table-responsive-md table-striped text-center" id="materialesCurso">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Curso</th>
+                                    <th class="text-center">Material</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                
+                                </tbody>
+                            
+                            </table>
+                            </div>
+                        </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
                         <h1>Evaluación</h1>
@@ -624,9 +642,8 @@
     var curso_id = $('#curso_id').val();
     var actividad = $('#actividad').val();
     var hora = $('#hora').val();
-    var material = $('#material').val();
     var token = '{{csrf_token()}}';
-    var data={_token:token,curso_id:curso_id,actividad:actividad,hora:hora,material:material};
+    var data={_token:token,curso_id:curso_id,actividad:actividad,hora:hora};
     $.ajax({
     type: "post",
     url: "{{ route('programas.store') }}",
@@ -638,6 +655,7 @@
         showConfirmButton: false,
         timer: 1500
     });
+    eliminarTabla()
     verTabla(curso_id)
     },
     error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -651,8 +669,6 @@
       
   });
 });
-</script>
-<script>
 function verTabla(id){
     $.ajax({
         url:'/listar/'+id,
@@ -665,7 +681,6 @@ function verTabla(id){
         '<td class="pt-3-half" contenteditable="true">'+value.curso_id+'</td>'+
         '<td class="pt-3-half" contenteditable="true">'+value.actividad+'</td>'+
         '<td class="pt-3-half" contenteditable="true">'+value.hora+'</td>'+
-        '<td class="pt-3-half" contenteditable="true">'+value.material+'</td>'+
         '<td class="pt-3-half">'+
         '<span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>'+
         '<span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>'+
@@ -673,7 +688,7 @@ function verTabla(id){
         '<td>'+
         '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarAct(this);">Borrar</button></span>'+
         '</td>'+
-        '</tr>')
+        '</tr>');
         });
     });
 }
@@ -695,12 +710,64 @@ function EliminarAct(btn){
         showConfirmButton: false,
         timer: 1500
     });
+   
     verTabla(curso_id)
         }
     });
 }
 
+function eliminarTabla(){
+    var tablaDatos = $("#actividadesPrograma");
+    tablaDatos.empty();
+}
+</script>
+<!--Crud Materiales con AJAX-->
+<script>
 
+function verMateriales(id){
+    $.ajax({
+        url:'/verMateriales/'+id,
+        type:'get',
+    }).done(function(res){
+        var tablaDatos = $("#materialesCurso");
+        $(res).each(function(key,value){
+        tablaDatos.append(
+        '<tr class="hide">'+
+        '<td class="pt-3-half" contenteditable="true">'+value.curso_id+'</td>'+
+        '<td class="pt-3-half" contenteditable="true">'+value.url+'</td>'+
+        '<td>'+
+        '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarMaterial(this);">Borrar</button></span>'+
+        '</td>'+
+        '</tr>')
+            
+        });
+    });
+}
+
+function EliminarMaterial(btn){
+    var ruta = "/borrarMaterial/"+btn.value;
+    var token = '{{csrf_token()}}';
+    var curso_id = btn.value;
+    $.ajax({
+        url:ruta,
+        headers:{'X-CSRF-TOKEN':token},
+        type:'delete',
+        dataType : 'json',
+        success: function(response){
+    Swal.fire({
+        icon: 'success',
+        title: 'Archivo Eliminado',
+        showConfirmButton: false,
+        timer: 1500
+    });
+    verMateriales(curso_id)
+        }
+    });
+}
+function eliminarTablaMaterial(){
+    var tablaDatos = $("#materialesCurso");
+    tablaDatos.empty();
+}
 </script>
 
 <script>

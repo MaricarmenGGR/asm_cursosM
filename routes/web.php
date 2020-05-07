@@ -34,6 +34,8 @@ Route::get('/getCInfo/{id}', 'CursosController@getCInfo');
 Route::put('/updateCInfo/{id}', 'CursosController@updateCInfo');
 Route::get('/listar/{id}','ProgramaCursoController@listar');
 Route::delete('/borrarAct/{id}','ProgramaCursoController@destroy');
+Route::get('/verMateriales/{id}','MaterialCursoController@verMateriales');
+Route::delete('/borrarMaterial/{id}','MaterialCursoController@destroy');
 
 
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////

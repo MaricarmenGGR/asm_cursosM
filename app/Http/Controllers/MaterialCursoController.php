@@ -10,7 +10,10 @@ use App\Curso_Area;
 use App\Curso_Usuario;
 use App\Material;
 use App\Modalidad;
+use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use SebastianBergmann\Environment\Console;
 
 class MaterialCursoController extends Controller
 {
@@ -56,22 +59,30 @@ class MaterialCursoController extends Controller
      */
     public function store(Request $request)
     {
-        //$ultimaTupla = DB::table('cursos')->latest('id')->first(); 
-        /* $image = $request->imagenCurso;*/
-       
-        if ($request->hasFile('url')) {
+        /*if ($request->hasFile('url')) {
             $filePath = $request->file('url');
             $fileName = time() . '.' . $filePath ->getClientOriginalExtension();
 
             $filePath ->move('materials', $fileName );
-            /*$image->imagenCurso = $imageName;*/
         
         Material::create([
             'curso_id' =>$request->curso_id,
             'url' => $fileName
         ]);
         return redirect()->route('cursos.show',$request->curso_id);
-    };
+    }*/
+
+        foreach($request->file('url') as $archivo){
+           // $fileName = time() . '.' . $archivo->extension();
+            $fileName = $archivo->getClientOriginalName();
+            $archivo->move('materials', $fileName );
+            Material::create([
+                'curso_id' =>$request->curso_id,
+                'url' => $fileName
+            ]);
+        }
+        return redirect()->route('cursos.show',$request->curso_id);
+           
     }
 
     /**
@@ -134,6 +145,31 @@ class MaterialCursoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //borra del Directorio
+        $nombreMaterial = DB::table('materiales')
+        ->where('id','=',$id)
+        ->select('url')
+        ->get();
+        $archivo = ($nombreMaterial[0]->url);
+        $nombreArchivo = strval($archivo);
+        unlink('materials/'.$nombreArchivo);
+        //borra de BD
+        $material = DB::table('materiales')
+        ->where('id', '=',$id)
+        ->delete(); 
+        return response()->json(
+           //cuando retono algo no sale el banner pero si no lo hago sale 
+          
+        );
+        
+    }
+    public function verMateriales($id){
+        $actividades = DB::table('materiales')
+        ->where('curso_id', '=',$id)
+        ->select('*')
+        ->get();
+        return response()->json(
+            $actividades->toArray()
+        );
     }
 }
