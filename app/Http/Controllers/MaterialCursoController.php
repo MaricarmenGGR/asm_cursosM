@@ -145,6 +145,7 @@ class MaterialCursoController extends Controller
      */
     public function destroy($id)
     {
+        //borra del Directorio
         $nombreMaterial = DB::table('materiales')
         ->where('id','=',$id)
         ->select('url')
@@ -152,24 +153,15 @@ class MaterialCursoController extends Controller
         $archivo = ($nombreMaterial[0]->url);
         $nombreArchivo = strval($archivo);
         unlink('materials/'.$nombreArchivo);
-        //Borrar de La carpeta de Materials
-       // File::delete('materials', $nombreMaterial);
-       //Storage::disk()->delete('materials/'+$nombreMaterial);
-       //$files = glob('materials/'+$archivo); //obtenemos todos los nombres de los ficheros
-       // foreach($files as $file){
-         //   $ruta = 'materials/'+$nombreArchivo;
-               // if(is_file($file))
-                //unlink($file);
-            
-        //}
-
+        //borra de BD
         $material = DB::table('materiales')
         ->where('id', '=',$id)
         ->delete(); 
         return response()->json(
-           ["mensaje"=> $material]
+           //cuando retono algo no sale el banner pero si no lo hago sale 
+          
         );
-        return "se borro";
+        
     }
     public function verMateriales($id){
         $actividades = DB::table('materiales')

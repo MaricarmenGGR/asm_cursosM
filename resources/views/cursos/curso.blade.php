@@ -33,8 +33,8 @@
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                             <a onclick="viewInfoCurso(@php echo $curso->id @endphp)" class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
-                            <a onclick="verTabla(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
-                            <a onclick="verMateriales(@php echo $curso->id @endphp)"class="nav-item nav-link" id="materiales-tab"   data-toggle="tab" href="#materiales"   role="tab" aria-controls="materiales" aria-selected="false">Material</a>
+                            <a onclick="eliminarTabla();verTabla(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
+                            <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp)"class="nav-item nav-link" id="materiales-tab"   data-toggle="tab" href="#materiales"   role="tab" aria-controls="materiales" aria-selected="false">Material</a>
                             <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
                             <a class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
                             <a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
@@ -678,7 +678,7 @@
     }*/
 
 </script>
-<!--Agregar y leer de Actividades de Programa con AJAX-->
+<!--Crud Actividades de Programa con AJAX-->
 <script>
     $("#subirActividadDelCurso").click(function (e) {
     e.preventDefault();
@@ -698,6 +698,7 @@
         showConfirmButton: false,
         timer: 1500
     });
+    eliminarTabla()
     verTabla(curso_id)
     },
     error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -711,8 +712,6 @@
       
   });
 });
-</script>
-<script>
 function verTabla(id){
     $.ajax({
         url:'/listar/'+id,
@@ -732,25 +731,7 @@ function verTabla(id){
         '<td>'+
         '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarAct(this);">Borrar</button></span>'+
         '</td>'+
-        '</tr>')
-        });
-    });
-}
-function verMateriales(id){
-    $.ajax({
-        url:'/verMateriales/'+id,
-        type:'get',
-    }).done(function(res){
-        var tablaDatos = $("#materialesCurso");
-        $(res).each(function(key,value){
-        tablaDatos.append(
-        '<tr class="hide">'+
-        '<td class="pt-3-half" contenteditable="true">'+value.curso_id+'</td>'+
-        '<td class="pt-3-half" contenteditable="true">'+value.url+'</td>'+
-        '<td>'+
-        '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarMaterial(this);">Borrar</button></span>'+
-        '</td>'+
-        '</tr>')
+        '</tr>');
         });
     });
 }
@@ -772,14 +753,44 @@ function EliminarAct(btn){
         showConfirmButton: false,
         timer: 1500
     });
+   
     verTabla(curso_id)
         }
     });
 }
+
+function eliminarTabla(){
+    var tablaDatos = $("#actividadesPrograma");
+    tablaDatos.empty();
+}
+</script>
+<!--Crud Materiales con AJAX-->
+<script>
+
+function verMateriales(id){
+    $.ajax({
+        url:'/verMateriales/'+id,
+        type:'get',
+    }).done(function(res){
+        var tablaDatos = $("#materialesCurso");
+        $(res).each(function(key,value){
+        tablaDatos.append(
+        '<tr class="hide">'+
+        '<td class="pt-3-half" contenteditable="true">'+value.curso_id+'</td>'+
+        '<td class="pt-3-half" contenteditable="true">'+value.url+'</td>'+
+        '<td>'+
+        '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarMaterial(this);">Borrar</button></span>'+
+        '</td>'+
+        '</tr>')
+            
+        });
+    });
+}
+
 function EliminarMaterial(btn){
     var ruta = "/borrarMaterial/"+btn.value;
     var token = '{{csrf_token()}}';
-    var curso_id = $('#curso_id');
+    var curso_id = btn.value;
     $.ajax({
         url:ruta,
         headers:{'X-CSRF-TOKEN':token},
@@ -795,6 +806,10 @@ function EliminarMaterial(btn){
     verMateriales(curso_id)
         }
     });
+}
+function eliminarTablaMaterial(){
+    var tablaDatos = $("#materialesCurso");
+    tablaDatos.empty();
 }
 </script>
 
