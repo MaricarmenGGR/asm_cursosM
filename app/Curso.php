@@ -26,4 +26,15 @@ class Curso extends Model
         if (!$result->isEmpty()) return true;
         else return false;
     }
+
+    public function verificarCupo($curso, $area){ //Validar si hay cupo
+        $result = DB::table('curso_areas')
+        ->where('curso_id', '=', $curso)
+        ->where('area_id', '=', $area)
+        ->where('disponible', '>', 0)
+        ->get();
+
+        if (!$result->isEmpty()) return true;
+        else return false; //esta lleno
+    }
 }

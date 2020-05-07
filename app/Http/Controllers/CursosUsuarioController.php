@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Curso;
 use App\Curso_Usuario;
+use App\Curso_Area;
 
 class CursosUsuarioController extends Controller
 {
@@ -99,6 +100,13 @@ class CursosUsuarioController extends Controller
             'acreditado' => 0,
             'fecha_acreditado' => null
         ]);
+        $cupo = Curso_Area::where('curso_id', '=', $request->idCurso)
+        ->where('area_id', '=', Auth::user()->area_id)
+        ->first();
+        
+        $cupo->disponible = $cupo->disponible - 1;
+        $cupo->update();
+
         return redirect()->route('cursosUsuario.show',$request->idCurso);
     }
 }

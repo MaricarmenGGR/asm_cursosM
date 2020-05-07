@@ -49,7 +49,7 @@
     <div class="container-fluid">
         <div class="row">
         @foreach($cursos as $curso)
-            @if($curso->verificarArea($curso->id, Auth::user()->area_id ) )
+            @if($curso->verificarArea($curso->id, Auth::user()->area_id ))
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="card card-cursos">
                         <img class="card-img-top" src="../uploads/{{$curso->imagenCurso}}" height="200" alt="Card image cap">
@@ -76,9 +76,13 @@
                             <br>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    @if( ! Auth::user()->estaInscrito($curso->id) )
+                                    @if( ! Auth::user()->estaInscrito($curso->id) && $curso->verificarCupo($curso->id, Auth::user()->area_id) )
                                     <button type="button" class="btn btn-block btn-asm" data-toggle="modal" data-target="#modalInscripcion{{$curso->id}}">
                                         Inscribirme
+                                    </button>
+                                    @elseif( ! $curso->verificarCupo($curso->id, Auth::user()->area_id) )
+                                    <button disabled type="button" class="btn btn-block btn-asm">
+                                        Cupo lleno
                                     </button>
                                     @else
                                     <a href="{{ route('cursosUsuario.show',$curso->id) }}" class="btn btn-block btn-asm">
