@@ -118,6 +118,24 @@
                             </a>
                         </li>
                     @endif
+                    <br>
+                    @if( Auth::user()->role->id == 2 )
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="https://www.asf.gob.mx/Default/Index">
+                                <img src="../img/asf_image.png" width="90px" height="30px" alt="asf_Icon">
+                                <!--Auditoria Superior de la Federacion-->
+                            </a>
+                        </li>
+                    @endif
+                    <br>
+                    @if( Auth::user()->role->id == 2 )
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="https://www.asf.gob.mx/Section/105_ICADEFIS">
+                            ICADEFIS
+                            </a>
+                        </li>
+                    @endif
+
                 </ul>
                 <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item dropdown">

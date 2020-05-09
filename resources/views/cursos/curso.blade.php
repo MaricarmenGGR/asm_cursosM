@@ -334,44 +334,33 @@
                                     <th scope="col">Apellido Paterno</th>
                                     <th scope="col">Apellido Materno</th>
                                     <th scope="col">Nombre(s)</th>
+                                    <th scope="col">CURP</th>
                                     <th scope="col">Área</th>
-                                    <th scope="col">Asistencia de Entrada</th>
-                                    <th scope="col">Asistencia de Salida</th>
+                                    <th scope="col">Hora de Entrada</th>
+                                    <th scope="col">Hora de Salida</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
-                                    
-
-                                        <tr>
+                                    <tr>
                                             <th scope="row"></th>
                                             <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
+                                            <td></td>
                                             <th>
                                                 <!-- Marcacion de los botones segun la asistencia marcada-->
                                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                <label class="btn btn-secondary active">
-                                                    <input type="radio" name="options" id="option1" checked> A
-                                                </label>
-                                                <label class="btn btn-secondary">
-                                                    <input type="radio" name="options" id="option2"> F
-                                                </label>
-                                                </div>
+                                                <input class="text-center" type="time" name="horaEntrada" id="horaEntrada">
+                                            </div>
                                             </th>
                                             <th>
                                                 <!-- Marcacion de los botones segun la asistencia marcada-->
                                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                <label class="btn btn-secondary active">
-                                                    <input type="radio" name="options" id="option1" checked> A
-                                                </label>
-                                                <label class="btn btn-secondary">
-                                                    <input type="radio" name="options" id="option2"> F
-                                                </label>
-                                                </div>
+                                                <input class="text-center" type="time" name="horaSalida" id="horaSalida">
+                                            </div>
                                             </th>
-                                        </tr>
+                                    </tr>
                                         
                                     
                                 </tbody>
