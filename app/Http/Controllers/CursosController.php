@@ -127,18 +127,17 @@ class CursosController extends Controller
         ->where('curso_areas.curso_id', '=', $id)
         ->get();
 
-        $inscritos = DB::table('users')
+        /*$inscritos = DB::table('users')
         ->leftJoin('curso_usuarios', 'curso_usuarios.user_id', '=', 'users.id')
         ->leftJoin('areas', 'areas.id', '=', 'users.area_id')
         ->select('curso_usuarios.*', 'users.*', 'areas.*')
         ->where('curso_usuarios.curso_id', '=', $id)
-        ->get();
+        ->get();*/
 
         $curso = Curso::findOrFail($id);
         $vars = [
             'curso' => $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre),
             'areas' => $areas,
-            'inscritos' => $inscritos,
             'modalidades' => Modalidad::get()
         ];
         return view('cursos.curso', $vars);

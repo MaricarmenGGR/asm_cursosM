@@ -5,6 +5,7 @@ html {
     height: 100%;
     /*background: #ededed;*/
     background: rgb(40, 146, 157);
+    font-family: 'Rubik';
 }
 
 .tarjeta {
@@ -33,13 +34,22 @@ html {
     background: rgb(40, 146, 157);  
     color: white; 
     border: 0 ;
-    border-radius: 0.25rem 0 0 0.25rem;
+    
 }
+
+.input-group input {
+    
+    border-radius: 0px 10px 10px 0px;
+    
+}
+
+
 .input_user,
 .input_pass:focus {
     box-shadow: none;
     outline: 0px;
 }
+
 /*
 .custom-select.is-invalid~.invalid-feedback, .custom-select.is-invalid~.invalid-tooltip, .form-control.is-invalid~.invalid-feedback, .form-control.is-invalid~.invalid-tooltip, .was-validated .custom-select:invalid~.invalid-feedback, .was-validated .custom-select:invalid~.invalid-tooltip, .was-validated .form-control:invalid~.invalid-feedback, .was-validated .form-control:invalid~.invalid-tooltip {
     border-color: none;

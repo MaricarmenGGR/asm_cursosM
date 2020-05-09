@@ -4,40 +4,38 @@
 <!-- VISTA COMO ADMINISTRADOR -->
 @if( Auth::user()->role->id == 1 )
     <div class="container-fluid">
-        <div class="row">
+        <div class="cartas-curso"> 
             @foreach($cursos as $curso)
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <div class="card card-cursos">
-                        <img class="card-img-top" src="../uploads/{{$curso->imagenCurso}}" height="200" alt="Card image cap">
-                        <div class="card-body">
-                            <div class="row">
-                                <div>
-                                    <h4 class="card-title">{!! $curso->nombreCurso !!}</h4>
-                                </div>
-                                
-                            </div>
-                            <hr>
-                            <p class="card-text">
-                                {!! $curso->descripcionCurso !!}
-                            </p>
-                                
-                            <a href="/cursos/{{$curso->id}}" class="black-text d-flex justify-content-end">
-                                <h5>Ver más <i class="fas fa-angle-double-right"></i></h5>
-                            </a>
-                        </div>
+            
+                <div class="carta-cursos">
+                    <div class="carta-curso_top">
+                        <img class="carta-curso_imagen" src="../uploads/{{$curso->imagenCurso}}">
                     </div>
+                    <div class="carta-curso_contenido">
+                        <div class="carta-curso_fecha justify-content-end">
+                                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+                                <time>{!! $curso->fechaInicio !!}</time>
+                        </div>
+                        <h4 class="card-title">{!! $curso->nombreCurso !!}</h4>
+                        <hr>
+                        <p style="font-size: 12px;text-align: justify;">
+                            {!! $curso->descripcionCurso !!}
+                        </p>
+                    </div>
+                    <a href="/cursos/{{$curso->id}}" class="black-text d-flex justify-content-start" style="text-decoration: inherit;">
+                        <h5>Editar&nbsp;<i class="fas fa-wrench"></i></h5>
+                    </a>
+                    <br>
                 </div>
             @endforeach
-            
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="carta-cursos">
                     <a href={{ route("crearCurso") }} style="text-decoration:none; color: rgb(40, 146, 157);" >
-                        <div class="card card-cursos">
-                            
-                            <div class="card-body"></div>
-                            <img src="../img/nuevo_curso.png" height="150" alt="Card image cap">
-                            <div class="card-body"> <div style="text-align: center;"> <p style="font-size: 140%;">Nuevo Curso</p></div> </div>
-                            
-                        </div>
+                    <div class="carta-curso_top">
+                        <img class="carta-curso_imagen" src="../img/nuevo_curso.png">
+                    </div>
+                    <div class="carta-curso_contenido">
+                        Nuevo Curso
+                    </div>
                     </a>
                 </div>
         </div>

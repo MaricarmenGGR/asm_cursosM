@@ -6,7 +6,7 @@
             <br>
             <div class="text-center">
                     <h1>
-                        <p class="d-inline" id="pNombre">{!! $curso->nombreCurso !!} </p>
+                        <p class="d-inline" id="pNombre" style="font-size: 27px;">{!! $curso->nombreCurso !!} </p>
                         <a class="btn d-inline" id="editNombre" onclick="editNombre()"><i class="fas fa-pencil-alt"></a></i>
                     </h1>
 
@@ -44,7 +44,7 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab"><h2>Información del Curso</h2>
                         <br>
-                        <div id="accordion">
+                        <div id="accordion" style="margin-right: 10%; margin-left: 10%;">
                             <div class="card">
                                 <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
@@ -193,84 +193,116 @@
                     </div>
 
                     <div class="tab-pane fade" id="programa" role="tabpanel" aria-labelledby="programa-tab">
-                        
-                        <h1>Programa del curso</h1>
-                        <br>
-                        <br>
-                        <form id="actividadNewForm" class="form-group">
-                            {{ csrf_field() }}
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-                        <div class="form-group col-lg-12" style="padding: 0 5% 0 5%">
-                        <input type="hidden" value="{{$curso->id}}" id="curso_id" name="curso_id">
-                        <textarea type="text" class="form-control" id="actividad" name="actividad" placeholder="Actividad" required></textarea>
-                        <input type="time" class="form-control" id="hora" name="hora" placeholder="Hora" required>
-                        <br>
-                        <button class="btn btn-asm float-right" id="subirActividadDelCurso">Guardar</button>
-                        <br>
-                        </div>
-                        </form>
-                        <br>
-                        <!-- Editable table -->
-                        <div class="card">
-                        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Programa</h3>
-                        <div class="card-body">
-                            <div id="table" class="table-editable">
-                            <!--<span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>-->
-                            <table class="table table-bordered table-responsive-md table-striped text-center" id="actividadesPrograma">
-                                <thead>
-                                <tr>
-                                    <th class="text-center">Identificador de Curso</th>
-                                    <th class="text-center">Actividad</th>
-                                    <th class="text-center">Hora</th>
-                                    <th class="text-center">Ordenar</th>
-                                    <th class="text-center">Borrar</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                
-                                </tbody>
-                            
-                            </table>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="materiales" role="tabpanel" aria-labelledby="materiales-tab">
-                        <h1>MATERIAL</h1>
-                        <form id="materialNewForm" method="POST" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <div class="file-field">
-                                <div class="btn btn-asm col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <span>Selecciona los archivos</span>
-                                <input type="file" class="form-control" id="url" multiple name="url[]">
-                                <input type="hidden" value="{{$curso->id}}" name="curso_id">
+                        <!--<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">-->
+                        <div class="row">
+                            <!-- Editable table -->
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <h4 class="card-header text-center font-weight-bold text-uppercase py-4">Listado de Actividades</h4>
+                                    <div class="card-body">
+                                        
+                                        <!--<span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                                                class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>-->
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered text-center" style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th class="text-center">Actividad</th>
+                                                    <th class="text-center">Hora</th>
+                                                    <th class="text-center">Ordenar</th>
+                                                    <th class="text-center">Borrar</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="actividadesPrograma">
+                                                
+                                                </tbody>
+                                            
+                                            </table>
+                                        </div>
+
+                                        
+                                    </div>
                                 </div>
                             </div>
-                            <br>
-                               <button type="submit" class="btn btn-asm float-right" id="subeMaterial">Subir</button>
-                            <br>
-                        </form>
-                        <br/>
-                        <div class="card">
-                        <h3 class="card-header text-center font-weight-bold text-uppercase py-3">Materiales del Curso</h3>
-                        <div class="card-body">
-                            <div id="table" class="table-editable">
-                            
-                            <table class="table table-bordered table-responsive-md table-striped text-center" id="materialesCurso">
-                                <thead>
-                                <tr>
-                                    <th class="text-center">Curso</th>
-                                    <th class="text-center">Material</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                
-                                </tbody>
-                            
-                            </table>
+
+                            <!-- Editable table -->
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <h4 class="card-header text-center font-weight-bold text-uppercase py-4">Nueva actividad</h4>
+                                    <div class="card-body">
+
+                                        <form id="actividadNewForm" class="form-group">
+                                            {{ csrf_field() }}
+                                            
+                                                <div class="form-group" style="padding: 0 2% 0 2%">
+                                                    <div class="text-left">
+                                                        <label>Descripción de la actividad</label>
+                                                    </div>
+                                                    <textarea type="text" class="form-control" id="actividad" name="actividad" placeholder="Actividad" required></textarea>
+                                                </div>
+                                                <div class="form-group" style="padding: 0 2% 0 2%">
+                                                    <div class="text-left">
+                                                        <label>Hora</label>
+                                                    </div>
+                                                    <input type="time" class="form-control" id="hora" name="hora" placeholder="Hora" required>
+                                                </div>
+                                            
+                                            <input type="hidden" value="{{$curso->id}}" id="curso_id" name="curso_id">
+                                            <div class="form-group">
+                                                <button class="btn btn-asm float-right" id="subirActividadDelCurso">Añadir</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="materiales" role="tabpanel" aria-labelledby="materiales-tab">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <h4 class="card-header text-center font-weight-bold text-uppercase py-3">Materiales del Curso</h4>
+                                    <div class="card-body">
+                                        <div id="table" class="table-editable">
+                                            <table class="table table-bordered table-responsive-md table-striped text-center" id="materialesCurso">
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center">Curso</th>
+                                                    <th class="text-center">Material</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                
+                                                </tbody>
+                                            
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <h4 class="card-header text-center font-weight-bold text-uppercase py-3">Subir Material</h4>
+                                    <div class="card-body">
+                                        <form id="materialNewForm" method="POST" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <div class="file-field">
+                                                
+                                                <span>Selecciona los archivos</span>
+                                                <input type="file" class="form-control" id="url" multiple name="url[]">
+                                                <input type="hidden" value="{{$curso->id}}" name="curso_id">
+                                                
+                                            </div>
+                                            <br>
+                                            <button type="submit" class="btn btn-asm float-right" id="subeMaterial">Subir</button>
+                                            <br>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
@@ -308,15 +340,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php $count = 1 @endphp
-                                    @foreach($inscritos as $inscrito)
+                                    
+                                    
 
                                         <tr>
-                                            <th scope="row">{!! $count !!}</th>
-                                            <td>{!! $inscrito->apPaterno !!}</td>
-                                            <td>{!! $inscrito->apMaterno !!}</td>
-                                            <td>{!! $inscrito->name !!}</td>
-                                            <td>{!! $inscrito->nombre !!}</td>
+                                            <th scope="row"></th>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <th>
                                                 <!-- Marcacion de los botones segun la asistencia marcada-->
                                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -340,8 +372,8 @@
                                                 </div>
                                             </th>
                                         </tr>
-                                        @php $count++ @endphp
-                                    @endforeach
+                                        
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -678,9 +710,9 @@ function verTabla(id){
         $(res).each(function(key,value){
         tablaDatos.append(
         '<tr class="hide">'+
-        '<td class="pt-3-half" contenteditable="true">'+value.curso_id+'</td>'+
-        '<td class="pt-3-half" contenteditable="true">'+value.actividad+'</td>'+
-        '<td class="pt-3-half" contenteditable="true">'+value.hora+'</td>'+
+        '<td class="pt-3-half">'+value.curso_id+'</td>'+
+        '<td class="pt-3-half">'+value.actividad+'</td>'+
+        '<td class="pt-3-half">'+value.hora+'</td>'+
         '<td class="pt-3-half">'+
         '<span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>'+
         '<span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>'+
@@ -765,8 +797,8 @@ function verMateriales(id){
         $(res).each(function(key,value){
         tablaDatos.append(
         '<tr class="hide">'+
-        '<td class="pt-3-half" contenteditable="true">'+value.curso_id+'</td>'+
-        '<td class="pt-3-half" contenteditable="true">'+value.url+'</td>'+
+        '<td class="pt-3-half">'+value.curso_id+'</td>'+
+        '<td class="pt-3-half">'+value.url+'</td>'+
         '<td>'+
         '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarMaterial(this);">Borrar</button></span>'+
         '</td>'+
@@ -877,92 +909,4 @@ responsive: {
     </script>
 
 
-<script>
-                        const $tableID = $('#table');
-                        const $BTN = $('#export-btn');
-                        const $EXPORT = $('#export');
-
-                        const newTr = `
-                        <tr class="hide">
-                        <td class="pt-3-half" contenteditable="true">{{$curso->id}}</td>
-                        <td class="pt-3-half" contenteditable="true"><input></td>
-                        <td class="pt-3-half" contenteditable="true"><input></td>
-                        <td class="pt-3-half" contenteditable="true"><input></td>
-                        <td class="pt-3-half">
-                            <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
-                            <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
-                        </td>
-                        <td>
-                            <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
-                        </td>
-                        </tr>`;
-
-                        $('.table-add').on('click', 'i', () => {
-
-                        const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
-
-                        if ($tableID.find('tbody tr').length === 0) {
-
-                            $('tbody').append(newTr);
-                        }
-                        //Clona una que existe
-                        $tableID.find('table').append($clone);
-                        });
-
-                        $tableID.on('click', '.table-remove', function () {
-
-                        $(this).parents('tr').detach();
-                        });
-
-                        $tableID.on('click', '.table-up', function () {
-
-                        const $row = $(this).parents('tr');
-
-                        if ($row.index() === 0) {
-                            return;
-                        }
-
-                        $row.prev().before($row.get(0));
-                        });
-
-                        $tableID.on('click', '.table-down', function () {
-
-                        const $row = $(this).parents('tr');
-                        $row.next().after($row.get(0));
-                        });
-
-                        //jQuery para exportar solo
-                        jQuery.fn.pop = [].pop;
-                        jQuery.fn.shift = [].shift;
-
-                        $BTN.on('click', () => {
-
-                        const $rows = $tableID.find('tr:not(:hidden)');
-                        const headers = [];
-                        const data = [];
-
-                        // Get the headers (add special header logic here)
-                        $($rows.shift()).find('th:not(:empty)').each(function () {
-
-                            headers.push($(this).text().toLowerCase());
-                        });
-
-                        // Turn all existing rows into a loopable array
-                        $rows.each(function () {
-                            const $td = $(this).find('td');
-                            const h = {};
-
-                            // Use the headers from earlier to name our hash keys
-                            headers.forEach((header, i) => {
-
-                            h[header] = $td.eq(i).text();
-                            });
-
-                            data.push(h);
-                        });
-
-                        // Output the result
-                        $EXPORT.text(JSON.stringify(data));
-                        });
-</script>
 @endsection
