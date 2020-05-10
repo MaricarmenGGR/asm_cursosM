@@ -76,10 +76,12 @@
                             <button type="button" class="btn btn-block btn-asm" onclick="inscripcion({{$curso->id}})">
                                 Inscribirme
                             </button>
+                            <br>
                             @elseif( Auth::user()->estaInscrito($curso->id) )
                             <a href="{{ route('cursosUsuario.show',$curso->id) }}" class="btn btn-block btn-asm">
                                 Entrar al curso
                             </a>
+                            <br>
                             @elseif( ! $curso->hayCupo($curso->id, Auth::user()->area_id) )
                             <button disabled type="button" class="btn btn-block btn-asm">
                                 Cupo lleno
