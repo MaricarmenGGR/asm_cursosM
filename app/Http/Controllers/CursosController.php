@@ -127,12 +127,7 @@ class CursosController extends Controller
         ->where('curso_areas.curso_id', '=', $id)
         ->get();
 
-        /*$inscritos = DB::table('users')
-        ->leftJoin('curso_usuarios', 'curso_usuarios.user_id', '=', 'users.id')
-        ->leftJoin('areas', 'areas.id', '=', 'users.area_id')
-        ->select('curso_usuarios.*', 'users.*', 'areas.*')
-        ->where('curso_usuarios.curso_id', '=', $id)
-        ->get();*/
+        /**/
 
         $curso = Curso::findOrFail($id);
         $vars = [
@@ -225,5 +220,17 @@ class CursosController extends Controller
         $curso = Curso::find($id);
         $curso->update($request->all());
         return response()->json($curso);
+    }
+
+    public function verAsistentes($id){
+        $asistentes = DB::table('users')
+        ->leftJoin('curso_usuarios', 'curso_usuarios.user_id', '=', 'users.id')
+        ->leftJoin('areas', 'areas.id', '=', 'users.area_id')
+        ->select('curso_usuarios.*', 'users.*', 'areas.*')
+        ->where('curso_usuarios.curso_id', '=', $id)
+        ->get();
+        return response()->json(
+            $asistentes->toArray()
+        );
     }
 }

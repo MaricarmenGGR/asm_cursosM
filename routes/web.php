@@ -36,7 +36,7 @@ Route::get('/listar/{id}','ProgramaCursoController@listar');
 Route::delete('/borrarAct/{id}','ProgramaCursoController@destroy');
 Route::get('/verMateriales/{id}','MaterialCursoController@verMateriales');
 Route::delete('/borrarMaterial/{id}','MaterialCursoController@destroy');
-
+Route::get('/verAsistentes/{id}', 'CursosController@verAsistentes');
 
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////
 Route::resource('cursosUsuario','CursosUsuarioController');

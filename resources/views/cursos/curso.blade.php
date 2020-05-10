@@ -36,19 +36,20 @@
                             <a onclick="eliminarTabla();verTabla(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
                             <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp)"class="nav-item nav-link" id="materiales-tab"   data-toggle="tab" href="#materiales"   role="tab" aria-controls="materiales" aria-selected="false">Material</a>
                             <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
-                            <a class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
+                            <a onclick="verAsistentes(@php echo $curso->id @endphp)" class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
                             <a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
                     </div>
                 </nav>
 
                 <div class="tab-content" id="nav-tabContent">
+                <!--INFO CURSO-->    
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab"><h2>Información del Curso</h2>
                         <br>
                         <div id="accordion" style="margin-right: 10%; margin-left: 10%;">
                             <div class="card">
-                                <div class="card-header" id="headingOne">
+                                <div class="card-header card-header_curso" id="headingOne">
                                 <h5 class="mb-0">
-                                    <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <button class="btn btn-accordion" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     Información general curso
                                     </button>
                                     <a class="btn" onclick="editInfo()"><i class="fas fa-pencil-alt"></i></a>
@@ -101,9 +102,9 @@
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card-header" id="headingThree">
+                                <div class="card-header card-header_curso" id="headingThree">
                                 <h5 class="mb-0">
-                                    <button class="btn collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <button class="btn btn-accordion collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                     Información del ponente
                                     </button>
                                     <a class="btn" onclick="editPonente()"><i class="fas fa-pencil-alt"></i></a>
@@ -127,9 +128,9 @@
 
                             </div>
                             <div class="card">
-                                <div class="card-header" id="headingTwo">
+                                <div class="card-header card-header_curso" id="headingTwo">
                                 <h5 class="mb-0">
-                                    <button class="btn collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <button class="btn btn-accordion collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     Horario
                                     </button>
                                     <a class="btn" onclick="editHorario()"><i class="fas fa-pencil-alt"></i></a>
@@ -191,14 +192,14 @@
                         </div>
 
                     </div>
-
+                <!--PROGRAMA/ACTIVIDADES-->
                     <div class="tab-pane fade" id="programa" role="tabpanel" aria-labelledby="programa-tab">
                         <!--<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">-->
                         <div class="row">
                             <!-- Editable table -->
                             <div class="col-lg-8">
                                 <div class="card">
-                                    <h4 class="card-header text-center font-weight-bold text-uppercase py-4">Listado de Actividades</h4>
+                                    <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-4">Listado de Actividades</h4>
                                     <div class="card-body">
                                         
                                         <!--<span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
@@ -229,7 +230,7 @@
                             <!-- Editable table -->
                             <div class="col-lg-4">
                                 <div class="card">
-                                    <h4 class="card-header text-center font-weight-bold text-uppercase py-4">Nueva actividad</h4>
+                                    <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-4">Nueva actividad</h4>
                                     <div class="card-body">
 
                                         <form id="actividadNewForm" class="form-group">
@@ -260,11 +261,12 @@
                         </div>
 
                     </div>
+                <!--MATERIALES-->
                     <div class="tab-pane fade" id="materiales" role="tabpanel" aria-labelledby="materiales-tab">
                         <div class="row">
                             <div class="col-lg-8">
                                 <div class="card">
-                                    <h4 class="card-header text-center font-weight-bold text-uppercase py-3">Materiales del Curso</h4>
+                                    <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Materiales del Curso</h4>
                                     <div class="card-body">
                                         <div id="table" class="table-editable">
                                             <table class="table table-bordered table-responsive-md table-striped text-center" id="materialesCurso">
@@ -285,7 +287,7 @@
                             </div> 
                             <div class="col-lg-4">
                                 <div class="card">
-                                    <h4 class="card-header text-center font-weight-bold text-uppercase py-3">Subir Material</h4>
+                                    <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Subir Material</h4>
                                     <div class="card-body">
                                         <form id="materialNewForm" method="POST" enctype="multipart/form-data">
                                             {{ csrf_field() }}
@@ -305,9 +307,53 @@
                             </div>
                         </div>
                     </div>
+                <!--EVALUACION-->    
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
-                        <h1>Evaluación</h1>
-                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                            <div class="row justify-content-center">
+                                <div class="col-lg-10">
+                                    <div class="card">
+                                        <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Evaluación de conocimientos adquiridos</h4>
+                                        <div class="card-body">
+
+                                            <form class="form-horizontal">
+                                                <div class="panel-body">
+                                                
+                                                        <div class="panel-group" id="accordionExamen" role="tablist"
+                                                            aria-multiselectable="true">
+                                                        </div>
+                                                        
+                                                        <div class="col-md-12 text-center" style="margin-top:15px;">
+                                                            <button class="btn btn-success" id="addButton" value=""><i class="fas fa-plus"></i>&nbsp;Nueva Pregunta</button>
+                                                        </div>
+
+                                                    
+                                                </div>
+                                                <!-- /.panel-body -->
+                                                <div class="panel-footer">
+                                                    <div class="col-sm-offset-3 col-sm-6 text-center">
+                                                        
+                                                    </div>
+
+                                                </div>
+                                                <!-- /.box-footer -->
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>                                 
+                            </div>
+                            <br>
+                            <div class="row justify-content-center">
+                                <div class="col-lg-10">
+                                    <div class="card">
+                                        <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Cuestionario de evaluación-reacción del curso</h4>
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+
+                        <!--<script src="https://code.highcharts.com/highcharts.js"></script>
                         <script src="https://code.highcharts.com/modules/series-label.js"></script>
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
                         <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -318,28 +364,24 @@
                             <p class="highcharts-description">
                             Grafica de Ejemplo para los resultado de la evalucion del Ponente
                             </p>
-                        </figure>
+                        </figure>-->
 
                     </div>
+                <!--ASISTENCIA-->
                     <div class="tab-pane fade" id="asistencia" role="tabpanel" aria-labelledby="asistencia-tab">
-                        <h1>Asistencia</h1>
-                        <br>
-                        <br>
-                        <h5>(A) Asistio, (F) Falta</h5>
                         <div class="table-responsive">
-                            <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <table id="tableAsistencia" class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10">
                                 <thead class="thead-dark">
                                     <tr>
                                     <th scope="col">No.</th>
-                                    <th scope="col">Apellido Paterno</th>
-                                    <th scope="col">Apellido Materno</th>
-                                    <th scope="col">Nombre(s)</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">CURP</th>
                                     <th scope="col">Área</th>
                                     <th scope="col">Asistencia de Entrada</th>
                                     <th scope="col">Asistencia de Salida</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="bodyTableAsistencia">
                                     
                                     
 
@@ -670,173 +712,280 @@
 <!--Agregar y leer de Actividades de Programa con AJAX-->
 <script>
     $("#subirActividadDelCurso").click(function (e) {
-    e.preventDefault();
-    var curso_id = $('#curso_id').val();
-    var actividad = $('#actividad').val();
-    var hora = $('#hora').val();
-    var token = '{{csrf_token()}}';
-    var data={_token:token,curso_id:curso_id,actividad:actividad,hora:hora};
-    $.ajax({
-    type: "post",
-    url: "{{ route('programas.store') }}",
-    data: data,
-    success: function(response){
-    Swal.fire({
-        icon: 'success',
-        title: 'Se agrego una Actividad Nueva',
-        showConfirmButton: false,
-        timer: 1500
-    });
-    eliminarTabla()
-    verTabla(curso_id)
-    },
-    error: function(XMLHttpRequest, textStatus, errorThrown){
-    Swal.fire({
-        icon: 'error',
-        title: 'Ha ocurrido un error',
-        showConfirmButton: false,
-        timer: 2000
-         });
-      }
-      
-  });
-});
-function verTabla(id){
-    $.ajax({
-        url:'/listar/'+id,
-        type:'get',
-    }).done(function(res){
-        var tablaDatos = $("#actividadesPrograma");
-        $(res).each(function(key,value){
-        tablaDatos.append(
-        '<tr class="hide">'+
-        '<td class="pt-3-half">'+value.curso_id+'</td>'+
-        '<td class="pt-3-half">'+value.actividad+'</td>'+
-        '<td class="pt-3-half">'+value.hora+'</td>'+
-        '<td class="pt-3-half">'+
-        '<span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>'+
-        '<span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>'+
-        '</td>'+
-        '<td>'+
-        '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarAct(this);">Borrar</button></span>'+
-        '</td>'+
-        '</tr>');
-        });
-    });
-}
-//Borrar Actividades
-function EliminarAct(btn){
-    var actividad = $('#actividad').val();
-    var ruta = "/borrarAct/"+btn.value;
-    var token = '{{csrf_token()}}';
-    var curso_id = btn.value;
-    $.ajax({
-        url:ruta,
-        headers:{'X-CSRF-TOKEN':token},
-        type:'delete',
-        dataType : 'json',
+        e.preventDefault();
+        var curso_id = $('#curso_id').val();
+        var actividad = $('#actividad').val();
+        var hora = $('#hora').val();
+        var token = '{{csrf_token()}}';
+        var data={_token:token,curso_id:curso_id,actividad:actividad,hora:hora};
+        $.ajax({
+        type: "post",
+        url: "{{ route('programas.store') }}",
+        data: data,
         success: function(response){
             Swal.fire({
                 icon: 'success',
-                title: 'Actividad Eliminada',
+                title: 'Se agrego una Actividad Nueva',
                 showConfirmButton: false,
                 timer: 1500
             });
+            eliminarTabla()
             verTabla(curso_id)
-        }
-    });
-}
-
-function eliminarTabla(){
-    var tablaDatos = $("#actividadesPrograma");
-    tablaDatos.empty();
-}
-</script>
-
-<!--Crud Materiales con AJAX-->
-<script>
-
-$( '#materialNewForm' ).submit( function( e ) {
-    e.preventDefault();
-    var curso_id = $('#curso_id').val();
-    $.ajax( {
-        url: '{{ route("materiales.store") }}',
-        type: 'POST',
-        data: new FormData( this ),
-        processData: false,
-        contentType: false,
-        success: function(response){
-        Swal.fire({
-            icon: 'success',
-            title: 'Se agregon los materiales',
-            showConfirmButton: false,
-            timer: 1500
-        });
-        eliminarTablaMaterial()
-        verMateriales(curso_id)
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
-        Swal.fire({
-            icon: 'error',
-            title: 'Ha ocurrido un error',
-            showConfirmButton: false,
-            timer: 2000
-            });
-        }
-
-    } );
-    
-  } );
-
-function verMateriales(id){
-    $.ajax({
-        url:'/verMateriales/'+id,
-        type:'get',
-    }).done(function(res){
-        var tablaDatos = $("#materialesCurso");
-        $(res).each(function(key,value){
-        tablaDatos.append(
-        '<tr class="hide">'+
-        '<td class="pt-3-half">'+value.curso_id+'</td>'+
-        '<td class="pt-3-half">'+value.url+'</td>'+
-        '<td>'+
-        '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarMaterial(this);">Borrar</button></span>'+
-        '</td>'+
-        '</tr>')
-            
+            Swal.fire({
+                icon: 'error',
+                title: 'Ha ocurrido un error',
+                showConfirmButton: false,
+                timer: 2000
+                });
+            }
         });
     });
-}
-
-function EliminarMaterial(btn){
-    var ruta = "/borrarMaterial/"+btn.value;
-    var token = '{{csrf_token()}}';
-    var curso_id = btn.value;
-    $.ajax({
-        url:ruta,
-        headers:{'X-CSRF-TOKEN':token},
-        type:'delete',
-        dataType : 'json',
-        success: function(response){
-    Swal.fire({
-        icon: 'success',
-        title: 'Archivo Eliminado',
-        showConfirmButton: false,
-        timer: 1500
+    function verTabla(id){
+        $.ajax({
+            url:'/listar/'+id,
+            type:'get',
+        }).done(function(res){
+            var tablaDatos = $("#actividadesPrograma");
+            $(res).each(function(key,value){
+            tablaDatos.append(
+            '<tr class="hide">'+
+            '<td class="pt-3-half">'+value.curso_id+'</td>'+
+            '<td class="pt-3-half">'+value.actividad+'</td>'+
+            '<td class="pt-3-half">'+value.hora+'</td>'+
+            '<td class="pt-3-half">'+
+            '<span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>'+
+            '<span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>'+
+            '</td>'+
+            '<td>'+
+            '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarAct(this);">Borrar</button></span>'+
+            '</td>'+
+            '</tr>');
+            });
+        });
+    }
+    //Borrar Actividades
+    function EliminarAct(btn){
+        var actividad = $('#actividad').val();
+        var ruta = "/borrarAct/"+btn.value;
+        var token = '{{csrf_token()}}';
+        var curso_id = btn.value;
+        $.ajax({
+            url:ruta,
+            headers:{'X-CSRF-TOKEN':token},
+            type:'delete',
+            dataType : 'json',
+            success: function(response){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Actividad Eliminada',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                verTabla(curso_id)
+            }
+        });
+    }
+    function eliminarTabla(){
+        var tablaDatos = $("#actividadesPrograma");
+        tablaDatos.empty();
+    }
+</script>
+<!--Crud Materiales con AJAX-->
+<script>
+    $('#materialNewForm').submit( function( e ) {
+        e.preventDefault();
+        var curso_id = $('#curso_id').val();
+        $.ajax({
+            url: '{{ route("materiales.store") }}',
+            type: 'POST',
+            data: new FormData( this ),
+            processData: false,
+            contentType: false,
+            success: function(response){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se agregon los materiales',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                eliminarTablaMaterial();
+                verMateriales(curso_id);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ha ocurrido un error',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+        });
     });
-    eliminarTablaMaterial();
-    verMateriales(curso_id)
-        }
-    });
-}
-function eliminarTablaMaterial(){
-    var tablaDatos = $("#materialesCurso");
-    tablaDatos.empty();
-}
+    function verMateriales(id){
+        $.ajax({
+            url:'/verMateriales/'+id,
+            type:'get',
+        }).done(function(res){
+            var tablaDatos = $("#materialesCurso");
+            $(res).each(function(key,value){
+                tablaDatos.append(
+                '<tr class="hide">'+
+                '<td class="pt-3-half">'+value.curso_id+'</td>'+
+                '<td class="pt-3-half">'+value.url+'</td>'+
+                '<td>'+
+                '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarMaterial(this);">Borrar</button></span>'+
+                '</td>'+
+                '</tr>')
+            });
+        });
+    }
+    function EliminarMaterial(btn){
+        var ruta = "/borrarMaterial/"+btn.value;
+        var token = '{{csrf_token()}}';
+        var curso_id = btn.value;
+        $.ajax({
+            url:ruta,
+            headers:{'X-CSRF-TOKEN':token},
+            type:'delete',
+            dataType : 'json',
+            success: function(response){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Archivo Eliminado',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                eliminarTablaMaterial();
+                verMateriales(curso_id);
+            }
+        });
+    }
+    function eliminarTablaMaterial(){
+        var tablaDatos = $("#materialesCurso");
+        tablaDatos.empty();
+    }
 </script>
 
+<!--examen script-->
 <script>
-    Highcharts.chart('container', {
+    $(document).ready(function(){
+	    var counter = 1;
+	    var wrapper = $("#accordionExamen");
+	
+		 $("#addButton").on("click", function(e){ 
+	    	e.preventDefault();
+	    	var catgName = prompt("Redacte la pregunta");
+			if(catgName == ''){
+				catgName = 'Catg#'+counter;
+			}
+			if(catgName != null){
+				  $(wrapper).append(
+                    '<div class="col-sm-12" style="margin-bottom: 0;">'+
+                        '<div class="card panel panel-default" id="panel'+ counter +'">' + 
+                            '<div class="card-header panel-heading" role="tab" id="heading'+ counter +'">'+
+                                '<h5 class="mb-0 panel-title">'+
+                                    '<div class="d-flex">'+
+                                        '<a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" href="#collapse'+ counter +'" ' + 'aria-expanded="true" aria-controls="collapse'+ counter +'"> '+catgName+' </a>'+
+                                        '<a href="#" accesskey="'+ counter +'" class="p-2 edit_ctg_label pull-right"><i class="fas fa-pencil-alt"></i></a>' +
+                                        '<a style="color:#dd4b39;;" href="#" accesskey="'+ counter +'" class="p-2 remove_ctg_panel exit-btn pull-right"><i class="fas fa-trash-alt"></i></a>' +
+                                    '</div>'+
+                                '</h5>'+
+                            '</div>' +
+                            '<div id="collapse'+ counter +'" class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+ counter +'">'+
+                                '<div class="card-body panel-body">'+
+                                    '<div id="TextBoxDiv'+ counter +'"></div>'+
+                                    '<a class="btn btn-xs btn-primary" accesskey="'+ counter +'" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>' +
+                                    '<a class="btn btn-xs btn-success" accesskey="1" id="ajax_submit_button" onclick="guardarPregunta()">Guardar</a>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'
+                  );
+				counter++;
+			}
+			
+	     });
+		
+		var x = 1;
+	     $(wrapper).on("click",".remove_ctg_panel", function(e){ 
+				 e.preventDefault(); 
+				 var accesskey = $(this).attr('accesskey');
+		        $('#panel'+accesskey).remove();
+				counter--;
+				x--;
+	     });
+		 
+	     var y = 1; 
+	     $(wrapper).on("click","#addButton3", function(e){
+	         e.preventDefault();
+			 var accesskey = $(this).attr('accesskey');
+			 y++; 
+			 $('#panel'+accesskey).find('#TextBoxDiv'+accesskey).append('<div class="col-lg-12 d-flex"><input type="text" name="ctgtext[]" class="p-2 form-control" style="width: 40%;"/><a href="#" class="d-flex remove_field exit-btn"><i class="fas fa-trash-alt"></i></a></div><br>');
+	        
+	     });
+	     
+	     $(wrapper).on("click",".remove_field", function(e){
+	         e.preventDefault(); 
+	     	$(this).parent('div').remove();y--;
+	     })
+	  	
+	     $(wrapper).on("click",".edit_ctg_label", function(e){ 
+	    	var panelId = $(this).attr('accesskey');
+			var catgName = prompt("Edite la pregunta");
+			if(catgName == ''){
+				   return false;
+			}
+			 if(catgName != null){
+				 $('#panel'+panelId).find("#panel-lebel"+panelId).html('').html(catgName);
+			}		
+		});
+    });
+
+    function guardarPregunta(){
+
+    }
+
+
+</script>
+
+
+<script>
+    function verAsistentes(id) { //Llenar tabla de servicios solicitados
+      var id_usuario=$('#id_usuario').val();
+        $.ajax({
+            url:'/verAsistentes/'+id,
+            type:'get',
+        }).done(function(response){
+            console.log(response)
+
+            let template = '';
+            let contador = 0;
+            $(response).each(function(key,value){
+                contador++;
+                template+=`
+                <tr>
+                    <td>`+contador+`</td>
+                    <td>${value.apPaterno} ${value.apMaterno} ${value.name}</td>
+                    <td>${value.curp}</td>
+                    <td>${value.nombre}</td>
+                    <td></td>
+                    <td></td>
+                </tr>            
+                ` 
+            });
+            $('#bodyTableAsistencia').html(template);
+            
+        });
+      
+    }
+
+</script>
+
+<!--
+<script>
+Highcharts.chart('container', {
 
 title: {
     text: 'Solar Employment Growth by Sector, 2010-2016'
@@ -906,7 +1055,7 @@ responsive: {
 }
 
 });
-    </script>
-
+</script>
+-->
 
 @endsection

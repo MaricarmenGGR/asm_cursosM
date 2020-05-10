@@ -45,16 +45,14 @@ position: static;
    /*width: 100% ;*/
 }
 
+.new{
+	margin-left: 300px;
+	width: 100%;
+}
 
-
-	.new{
-margin-left: 300px;
-width: 100%;
-	}
-
-	.now{
-		padding: 0px;	
-	}
+.now{
+	padding: 0px;	
+}
 
 
 .titulo{
@@ -120,7 +118,11 @@ p{
 }
 a{
 	text-decoration: none;
-	
+	color: inherit;
+}
+a:hover{
+	text-decoration: none;
+	color: inherit;
 }
 
 hr {
@@ -153,7 +155,6 @@ nav a{
 .navbar-nav .nav-item.dropdown {
     padding: 0 0 0 0;
 }
-
 
 /* CARTA CURSOS */
 .carta-cursos  {
@@ -204,34 +205,16 @@ nav a{
 .carta-cursos .carta-curso_fecha {
     flex-direction: row;
     color: #737373;
-    font-size: 12px;
+	font-size: 12px;
+	margin-bottom: 0;
+    margin-right: 10px;
+    font-weight: 700;
 }
 .carta-curso_fecha {
     display: flex;
     flex-direction: column;
     font-weight: 700;
 }
-.carta-cursos  .carta-curso_fecha {
-    margin-bottom: 0;
-    margin-right: 10px;
-    font-weight: 700;
-}
-.carta-cursos .carta-curso_fecha svg {
-    fill: #737373;
-}
-.carta-curso_fecha svg {
-    fill: #fff;
-}
-.carta-cursos .carta-curso_autor {
-    display: flex;
-    align-items: center;
-    padding: 15px 0;
-    color: #333;
-    font-size: 12px;
-    border-top: 1px solid #dedfe0;
-}
-
-
 
 /* CURSO TABS */
 .card-tabs{
@@ -288,3 +271,51 @@ nav > div a.nav-item.nav-link:focus
 	transition: background 0.20s linear;
 }
 
+/* card-header_curso */
+.card-header_curso{
+	background-color: rgb(40, 146, 157);
+	padding: 10px 15px;
+	border-radius: 0;
+	border: none;
+	color: #fff;
+}
+.btn-accordion {
+	font-family : inherit;
+	font-weight: bold;
+	font-size: 16px;
+	color: rgb(248, 245, 245);
+	text-transform: uppercase;
+	width: 95%;
+}
+.btn-accordion:hover {
+	font-family : inherit;
+	font-weight: bold;
+	font-size: 16px;
+	color: rgb(248, 245, 245);
+	text-transform: uppercase;
+	width: 95%;
+}
+
+/* EXAMEN */
+#accordionExamen .panel-title>a {
+	display: block;
+	outline: none;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#accordionExamen.panel-group .panel{
+	margin-top: 5px;
+}
+#accordionExamen .actions_div > a {
+    font-size: 14px;
+    margin-right: 15px;
+}
+#accordionExamen .actions_div > a.exit-btn {
+color:#dd4b39;
+}
+#accordionExamen .remove_field.exit-btn{
+color:#dd4b39;
+margin-left:7px;
+float: left;
+}

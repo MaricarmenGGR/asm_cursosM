@@ -29,12 +29,15 @@
             @endforeach
                 <div class="carta-cursos">
                     <a href={{ route("crearCurso") }} style="text-decoration:none; color: rgb(40, 146, 157);" >
-                    <div class="carta-curso_top">
-                        <img class="carta-curso_imagen" src="../img/nuevo_curso.png">
-                    </div>
-                    <div class="carta-curso_contenido">
-                        Nuevo Curso
-                    </div>
+                    
+                        <br><br>
+                        <div class="carta-curso_top">
+                            <img class="carta-curso_imagen" src="../img/nuevo_curso.png">
+                        </div>
+                        <div class="carta-curso_contenido text-center">
+                            <p style="font-size: 20px;">Nuevo Curso</p>
+                        </div>
+                        <br>
                     </a>
                 </div>
         </div>
@@ -44,7 +47,7 @@
 <!-- VISTA COMO USUARIO -->
 @if( Auth::user()->role->id == 2 )
     <div class="container-fluid">
-        <div class="row">
+        <div class="cartas-curso">
         @foreach($cursos as $curso)
             @if($curso->verificarArea($curso->id, Auth::user()->area_id ))
                 <div class="carta-cursos">
