@@ -19,13 +19,13 @@
                         
                             <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             @if( Auth::user()->estaInscrito($curso->id) )
-                            <a class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa y Material</a>
+                            <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp);eliminarTabla();verActMat(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa y Material</a>
                             <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación de Ponente</a>
                             <a class="nav-item nav-link" id="evaluacionCurso-tab" data-toggle="tab" href="#evaluacionCurso" role="tab" aria-controls="evaluacionCurso" aria-selected="false">Evaluación del Curso</a>
                             @endif
                     </div>
                 </nav>
-
+                <!--InformacionCursoUser-->
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
                         <h2>Información del Curso</h2>
@@ -114,30 +114,60 @@
                         </div>
 
                     </div>
+                     <!--Programa_MaterialCursoUser-->
                     <div class="tab-pane fade" id="programa" role="tabpanel" aria-labelledby="programa-tab">
-                        <h2>Programa del curso</h2>
-                        <br>
-                        <br>
-                    <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                        <thead class="thead-dark ">
-                            <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">Actividad</th>
-                            <th scope="col">Hora</th>
-                            <th scope="col">Material</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row">1</th>
-                            <td>Presentacion</td>
-                            <td>12:00 Horas</td>
-                            <td><a download="mi-nombre-nuevo.mp3" href="https://drive.google.com/drive/u/0/folders/1I1ryIjX1K-pi1533IeYD7mxyQR9gS75j">Enlace para descargar el Material</a></td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </div>
+                    <div class="row">
+                            <!-- Editable table -->
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-4">Listado de Actividades</h4>
+                                    <div class="card-body">
+                                        
+                                        <!--<span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                                                class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>-->
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered text-center" style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th class="text-center">Actividad</th>
+                                                    <th class="text-center">Hora</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="actividadesPrograma">
+                                                
+                                                </tbody>
+                                            
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <!-- Editable table -->
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-4">Materiales</h4>
+                                    <div class="card-body">
+                                    <div class="table-responsive">
+                                            <table class="table table-striped table-bordered text-center" style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    
+                                                    <th class="text-center">Material</th>
+                                                    <th class="text-center"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="materialesCurso">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!--EvaluacionCursoUser-->
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
                         <h2>Evaluación</h2>
                         <br>
@@ -516,12 +546,65 @@
                         <button type="button" class="btn btn-asm float-right">Enviar</button>
                         <br>
                     </div>
+                     <!--InformacionCursoCapacidadUser-->
                     <div class="tab-pane fade" id="evaluacionCurso" role="tabpanel" aria-labelledby="evaluacionCurso-tab">
-
+                            <h2>Espera a que el administrador del curso active la evaluacíon</h2>
                     </div>
                     
             </div>
         </div>
     </div>
 </div>
+<!--Ver Programa-->
+<script>
+     function verActMat(id){
+        $.ajax({
+            url:'/listar/'+id,
+            type:'get',
+        }).done(function(res){
+            var tablaDatos = $("#actividadesPrograma");
+            $(res).each(function(key,value){
+            tablaDatos.append(
+            '<tr class="hide">'+
+            '<td class="pt-3-half">'+value.curso_id+'</td>'+
+            '<td class="pt-3-half">'+value.actividad+'</td>'+
+            '<td class="pt-3-half">'+value.hora+'</td>'+
+            '</tr>');
+            });
+        })
+     }
+     function eliminarTabla(){
+        var tablaDatos = $("#actividadesPrograma");
+        tablaDatos.empty();
+    }
+</script>
+<!--ver Materiales-->
+<script>
+    function verMateriales(id){
+        $.ajax({
+            url:'/verMateriales/'+id,
+            type:'get',
+        }).done(function(res){
+            var tablaDatos = $("#materialesCurso");
+            $(res).each(function(key,value){
+                tablaDatos.append(
+                '<tr class="hide">'+
+                '<td class="pt-3-half">'+value.url+'</td>'+
+                '<td>'+
+                '<span class="table-remove"><button type="button" class="btn btn-asm btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="Descarga(this);">Descargar</button></span>'+
+                '</td>'+
+                '</tr>')
+            });
+        });
+    }
+    function eliminarTablaMaterial(){
+        var tablaDatos = $("#materialesCurso");
+        tablaDatos.empty();
+    }
+    function Descarga(){
+        //
+
+    }
+</script>
+
 @endsection

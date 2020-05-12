@@ -451,19 +451,25 @@
                             </table>
                         </div>
                     </div>
+                <!--INVITACION-->    
                     <div class="tab-pane fade" id="invitacion" role="tabpanel" aria-labelledby="invitacion-tab">
                         <h1>INVITACIÓN</h1>
                         <!--Podemos subir el oficio-->
-                        <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupFileAddon01">Subir Archivo</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01"
-                            aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile01">Seleccionar Archivo</label>
-                        </div>
-                        </div>
+                        <div class="card-body">
+                                        <form id="subirInvitacion" method="POST" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <div class="file-field">
+                                                
+                                                <span>Selecciona los archivos</span>
+                                                <input type="file" class="form-control" id="documento" multiple name="documento[]">
+                                                <input type="hidden" value="{{$curso->id}}" name="curso_id">
+                                                
+                                            </div>
+                                            <br>
+                                            <button type="submit" class="btn btn-asm float-right" id="subeInvitacion">Subir</button>
+                                            <br>
+                                        </form>
+                                    </div>
                         <br>
                         <h3>Titular de área: Nombre del Titular del Area</h3><h3>Estatus:(Vista) o (No Vista)</h3>
                         <br>
@@ -778,6 +784,7 @@
             }
         });
     });
+    
     function verTabla(id){
         $.ajax({
             url:'/listar/'+id,
@@ -1040,6 +1047,37 @@
       
     }
 
+</script>
+
+<!--Invitaciones-->
+<script>
+    $('#subirInvitacion').submit( function( e ) {
+        e.preventDefault();
+        var curso_id = $('#curso_id').val();
+        $.ajax({
+            url: '{{ route("invitacion.store") }}',
+            type: 'POST',
+            data: new FormData( this ),
+            processData: false,
+            contentType: false,
+            success: function(response){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Invitacion Enviada',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ha ocurrido un error',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+        });
+    });
 </script>
 
 <!--

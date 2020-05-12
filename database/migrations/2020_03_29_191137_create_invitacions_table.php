@@ -20,9 +20,7 @@ class CreateInvitacionsTable extends Migration
             $table->increments('id');
             $table->unsignedinteger('curso_id');
             $table->foreign('curso_id')->references('id')->on('cursos');
-            $table->unsignedinteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->boolean('visto')->default(0);
+            $table->string('documento')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -32,8 +32,9 @@
                     <div class="card">
                         <div class="card-block">
                             <div class="card-text">
-                                <img class="carta-curso_imagen" src="../img/nuevo_curso.png">
-                                <p style="font-size: 20px;text-align: center; color: rgb(40, 146, 157);">Nuevo Curso</p>
+                                <a href="/crearCurso"><img class="carta-curso_imagen" src="../img/nuevo_curso.png" role="button">
+                                <p style="font-size: 20px;text-align: center; color: rgb(40, 146, 157);">Nuevo Curso</p></a>
+                                
                             </div>
                         </div>
                     </div>

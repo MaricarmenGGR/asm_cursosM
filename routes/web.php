@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //////////////////////////// RUTAS CURSOS (ADMINS) ////////////////////////////////
 Route::resource('cursos','CursosController');
 Route::resource('materiales','MaterialCursoController');
+Route::resource('invitacion','InvitacionController');
 Route::resource('programas','ProgramaCursoController');
 Route::resource('examenes','ExamenCursoController');
 Route::get('/cursos', 'CursosController@index')->name('cursos');

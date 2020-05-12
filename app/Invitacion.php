@@ -9,7 +9,7 @@ class Invitacion extends Model
 {
     protected $table = 'invitaciones';
     protected $fillable = [
-        'id','curso_id','user_id','visto'
+        'id','curso_id','documento'
     ];
     use SoftDeletes;
     protected $dates = ['deleted_at'];
