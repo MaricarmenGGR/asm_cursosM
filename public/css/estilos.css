@@ -9,7 +9,6 @@
 	font-size: 15px;
 }
 
-
 .row{
 	margin-right: 0px; 
     margin-left: 0px;
@@ -149,11 +148,11 @@ nav a{
 }
 
 .navbar-nav .nav-item {
-    padding: 0 40px 0 0;
+    padding: 5px 40px 0 0px;
 }
 
 .navbar-nav .nav-item.dropdown {
-    padding: 0 0 0 0;
+    padding: 0 0px 0 0;
 }
 
 /* CARTA CURSOS */
@@ -179,7 +178,7 @@ nav a{
 }
  .cartas-curso>* {
     min-width: 240px;
-    max-width: 320px;
+    max-width: 300px;
     height: auto;
     border-radius: 5px;
     box-sizing: border-box;

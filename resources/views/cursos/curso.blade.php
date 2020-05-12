@@ -314,7 +314,25 @@
                                     <div class="card">
                                         <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Evaluación de conocimientos adquiridos</h4>
                                         <div class="card-body">
-
+                                            <label><strong>Activar examen</strong></label>
+                                            <form id="examenActivarForm" class="form-group form-inline">
+                                                {{ csrf_field() }}
+                                                    
+                                                    <div class="form-group form-inline" >
+                                                        <label>Fecha Inicio</label>&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaActivarExm" name="fechaActivar" min="{{ $curso->fechaInicio }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </div>
+                                                    <div class="form-group form-inline">
+                                                        <label>Fecha Fin</label>&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaDesactivarExm" name="fechaDesactivar" min="{{ $curso->fechaFin }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </div>
+                                                
+                                                <input type="hidden" value="{{$curso->id}}" name="curso_id">
+                                                <div class="form-group">
+                                                    <button class="btn btn-asm float-right" id="subirActivacionExamen">Guardar</button>
+                                                </div>
+                                            </form>
+                                            <label><strong>Vista previa de examen</strong></label>
                                             <form class="form-horizontal">
                                                 <div class="panel-body">
                                                 
@@ -348,6 +366,28 @@
                                     <div class="card">
                                         <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Cuestionario de evaluación-reacción del curso</h4>
                                         <div class="card-body">
+
+                                            <label><strong>Activar encuesta</strong></label>
+                                            <form id="examenActivarForm" class="form-group form-inline">
+                                                {{ csrf_field() }}
+                                                    
+                                                    <div class="form-group form-inline" >
+                                                        <label>Fecha Inicio</label>&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaActivarEnc" name="fechaActivar" min="{{ $curso->fechaInicio }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </div>
+                                                    <div class="form-group form-inline">
+                                                        <label>Fecha Fin</label>&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaDesactivarEnc" name="fechaDesactivar" min="{{ $curso->fechaFin }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </div>
+                                                
+                                                <input type="hidden" value="{{$curso->id}}" name="curso_id">
+                                                <div class="form-group">
+                                                    <button class="btn btn-asm float-right" id="subirActivacionEnc">Guardar</button>
+                                                </div>
+                                            </form>
+
+                                            <label><strong>Vista previa de encuesta</strong></label>
+
                                         </div>
                                     </div>
                                 </div>                                
@@ -465,7 +505,12 @@
                 $("#lugar").val(data.lugar);
                 $("#fechaInicio").val(data.fechaInicio);
                 $("#fechaFin").val(data.fechaFin);
-
+                //Para los minimos y maximos de fecha de activacion de examen
+                document.getElementById("fechaActivar").removeAttribute("min");
+                $("#fechaActivar").attr({"min" : data.fechaInicio});
+                //Para los minimos y maximos de fecha de activacion de examen
+                document.getElementById("fechaDesactivar").removeAttribute("min");
+                $("#fechaDesactivar").attr({"min" : data.fechaFin});
 
                 document.getElementById("pNomP").innerHTML=data.nombrePonente
                 document.getElementById("pInfP").innerHTML=data.infoPonente
@@ -872,29 +917,52 @@
 				catgName = 'Catg#'+counter;
 			}
 			if(catgName != null){
-				  $(wrapper).append(
-                    '<div class="col-sm-12" style="margin-bottom: 0;">'+
-                        '<div class="card panel panel-default" id="panel'+ counter +'">' + 
-                            '<div class="card-header panel-heading" role="tab" id="heading'+ counter +'">'+
-                                '<h5 class="mb-0 panel-title">'+
-                                    '<div class="d-flex">'+
-                                        '<a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" href="#collapse'+ counter +'" ' + 'aria-expanded="true" aria-controls="collapse'+ counter +'"> '+catgName+' </a>'+
-                                        '<a href="#" accesskey="'+ counter +'" class="p-2 edit_ctg_label pull-right"><i class="fas fa-pencil-alt"></i></a>' +
-                                        '<a style="color:#dd4b39;;" href="#" accesskey="'+ counter +'" class="p-2 remove_ctg_panel exit-btn pull-right"><i class="fas fa-trash-alt"></i></a>' +
+
+                /*$.ajax({
+                    url: '{{-- route("cuestionario.store") --}}',
+                    type: 'POST',
+                    data: {pregunta: catgName},
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    success: function(response){*/
+                                
+                        $(wrapper).append(
+                            '<div class="col-sm-12" style="margin-bottom: 0;">'+
+                                '<div class="card panel panel-default" id="panel'+ counter +'">' + 
+                                    '<div class="card-header panel-heading" role="tab" id="heading'+ counter +'">'+
+                                        '<h5 class="mb-0 panel-title">'+
+                                            '<div class="d-flex">'+
+                                                '<a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" href="#collapse'+ counter +'" ' + 'aria-expanded="true" aria-controls="collapse'+ counter +'"> '+catgName+' </a>'+
+                                                '<a href="#" accesskey="'+ counter +'" class="p-2 edit_ctg_label pull-right"><i class="fas fa-pencil-alt"></i></a>' +
+                                                '<a style="color:#dd4b39;;" href="#" accesskey="'+ counter +'" class="p-2 remove_ctg_panel exit-btn pull-right"><i class="fas fa-trash-alt"></i></a>' +
+                                            '</div>'+
+                                        '</h5>'+
+                                    '</div>' +
+                                    '<div id="collapse'+ counter +'" class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+ counter +'">'+
+                                        '<div class="card-body panel-body">'+
+                                            '<div id="TextBoxDiv'+ counter +'"></div>'+
+                                            '<a class="btn btn-xs btn-primary" accesskey="'+ counter +'" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>' +
+                                            '<a class="btn btn-xs btn-success" accesskey="1" id="ajax_submit_button">Guardar</a>'+
+                                        '</div>'+
                                     '</div>'+
-                                '</h5>'+
-                            '</div>' +
-                            '<div id="collapse'+ counter +'" class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+ counter +'">'+
-                                '<div class="card-body panel-body">'+
-                                    '<div id="TextBoxDiv'+ counter +'"></div>'+
-                                    '<a class="btn btn-xs btn-primary" accesskey="'+ counter +'" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>' +
-                                    '<a class="btn btn-xs btn-success" accesskey="1" id="ajax_submit_button" onclick="guardarPregunta()">Guardar</a>'+
                                 '</div>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'
-                  );
-				counter++;
+                            '</div>'
+                        );
+                        counter++;
+                        
+                    /*},
+                    error: function(XMLHttpRequest, textStatus, errorThrown){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ha ocurrido un error',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    }
+                });*/
+
+
 			}
 			
 	     });

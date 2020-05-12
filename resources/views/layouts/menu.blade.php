@@ -81,7 +81,7 @@
             </div>
         </nav>--}}
 
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(40, 146, 157);">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(40, 146, 157); height: 50px;">
         
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -103,7 +103,7 @@
                                     Usuarios
                                 </a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item">
                             <a class="nav-link" href={{ route("cursos") }}>
                                 <i class="fas fa-table"></i>
                                 Cursos
@@ -111,7 +111,7 @@
                         </li>
                     @endif
                     @if( Auth::user()->role->id == 2 )
-                        <li class="nav-item dropdown">
+                        <li class="nav-item">
                             <a class="nav-link" href="/">
                                 <i class="fas fa-table"></i>
                                 Mis Cursos
