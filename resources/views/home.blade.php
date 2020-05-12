@@ -50,7 +50,7 @@
             @if($curso->verificarArea($curso->id, Auth::user()->area_id ))
                 <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
                     <div class="card">
-                        <img class="carta-curso_imagen" style="width:100%;" src="../uploads/{{$curso->imagenCurso}}">
+                        <img class="card-img-top" style="width:100%;" src="../uploads/{{$curso->imagenCurso}}">
                         <div class="card-block">
                             <h4 class="card-title" style="text-align: center;">{!! $curso->nombreCurso !!}</h4>
                             <div class="meta" style="text-align: left; color: gray;">
