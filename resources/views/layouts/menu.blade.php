@@ -81,7 +81,7 @@
             </div>
         </nav>--}}
 
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(40, 146, 157); height: 50px;">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(40, 146, 157);">
         
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -118,7 +118,7 @@
                             </a>
                         </li>
                     @endif
-                    <br>
+                    
                     @if( Auth::user()->role->id == 2 )
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="https://www.asf.gob.mx/Default/Index">
@@ -127,7 +127,7 @@
                             </a>
                         </li>
                     @endif
-                    <br>
+
                     @if( Auth::user()->role->id == 2 )
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="https://www.asf.gob.mx/Section/105_ICADEFIS">
