@@ -112,9 +112,6 @@ h5{
 h6{
 	font-size: 12px;
 }
-p{
-	
-}
 a{
 	text-decoration: none;
 	color: inherit;
@@ -320,7 +317,7 @@ float: left;
 }
 
 
-/*  */
+/* CARD BLOCKS */
 
 .card {
     font-size: 1em;
