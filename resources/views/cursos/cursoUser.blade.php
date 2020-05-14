@@ -28,14 +28,13 @@
                 <!--InformacionCursoUser-->
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
-                        <h2>Información del Curso</h2>
                         <br>
                         <div id="accordion">
                             <div class="card">
-                                <div class="card-header" id="headingOne">
+                                <div class="card-header card-header_curso text-center font-weight-bold text-uppercase py-4" id="headingOne">
                                 <h5 class="mb-0">
                                     <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Información general curso
+                                    <h4 class="text-center font-weight-bold">Información general curso</h4>
                                     </button>
                                 </h5>
                                 </div>
@@ -47,10 +46,10 @@
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card-header" id="headingTwo">
+                                <div class="card-header card-header_curso text-center font-weight-bold text-uppercase py-4" id="headingTwo">
                                 <h5 class="mb-0">
                                     <button class="btn collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Horario
+                                    <h4 class="text-center font-weight-bold">Horario</h4>
                                     </button>
                                 </h5>
                                 </div>
@@ -61,10 +60,10 @@
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card-header" id="headingThree">
+                                <div class="card-header card-header_curso text-center font-weight-bold text-uppercase py-4" id="headingThree">
                                 <h5 class="mb-0">
                                     <button class="btn collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Información del ponente
+                                    <h4 class="text-center font-weight-bold">Informacion general del ponente</h4>
                                     </button>
                                 </h5>
                                 </div>
@@ -591,7 +590,7 @@
                 '<tr class="hide">'+
                 '<td class="pt-3-half">'+value.url+'</td>'+
                 '<td>'+
-                '<span class="table-remove"><button type="button" class="btn btn-asm btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="Descarga(this);">Descargar</button></span>'+
+                '<span class="table-remove"><button type="button" class="btn btn-asm btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'""><a href="/download/'+value.id+'">Download</a></button></span>'+
                 '</td>'+
                 '</tr>')
             });
@@ -601,8 +600,11 @@
         var tablaDatos = $("#materialesCurso");
         tablaDatos.empty();
     }
-    function Descarga(){
-        //
+    function Descarga(btn){
+        $.ajax({
+            url: "/download/"+btn.value,
+            type:'get'
+        });
 
     }
 </script>

@@ -30,6 +30,7 @@ Route::resource('examenes','ExamenCursoController');
 Route::get('/cursos', 'CursosController@index')->name('cursos');
 Route::get('/verCurso', 'CursosController@show')->name('verCurso');
 Route::get('/crearCurso', 'CursosController@create')->name('crearCurso');
+Route::get('/download/{id}' , 'MaterialCursoController@descargarMaterial');
 
 //CRUD AJAX
 Route::get('/getCInfo/{id}', 'CursosController@getCInfo');
