@@ -20,7 +20,7 @@
                             <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             @if( Auth::user()->estaInscrito($curso->id) )
                             <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp);eliminarTabla();verActMat(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa y Material</a>
-                            <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación de Ponente</a>
+                            <a onclick="comprobarFechas(@php echo $curso->id @endphp);" class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación del Ponente y Desarrollo del Curso</a>
                             <a class="nav-item nav-link" id="evaluacionCurso-tab" data-toggle="tab" href="#evaluacionCurso" role="tab" aria-controls="evaluacionCurso" aria-selected="false">Evaluación del Curso</a>
                             @endif
                     </div>
@@ -167,10 +167,12 @@
                         </div>
                     </div>
                      <!--EvaluacionCursoUser-->
+                   
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
                         <h2>Evaluación</h2>
                         <br>
                         <br>
+                        <input type="hidden" id="curso_idF" name="curso_idF" value="{{$curso->id}}"/>
                     <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10 text-center">
                     <h3 class="text-center">DEL INSTRUCTOR/CAPACITOR</h3>
                         <thead class="thead-dark text-center">
@@ -545,6 +547,7 @@
                         <button type="button" class="btn btn-asm float-right">Enviar</button>
                         <br>
                     </div>
+                    
                      <!--InformacionCursoCapacidadUser-->
                     <div class="tab-pane fade" id="evaluacionCurso" role="tabpanel" aria-labelledby="evaluacionCurso-tab">
                             <h2>Espera a que el administrador del curso active la evaluacíon</h2>
@@ -608,5 +611,35 @@
 
     }
 </script>
+
+<script>
+    function comprobarFechas(id){
+        $.ajax({
+            url:'/fechas/'+id,
+            type:'get',
+        }).done(function(res){
+            $(res).each(function(key,value){
+                var bandera = false;
+                var fechaE = value.fechaEmision;
+                var separacion = fechaE.split('-');
+                var anio = parseInt(separacion[0]);
+                var mes = parseInt(separacion[1]);
+                var dia = parseInt(separacion[2]);
+                var f = new Date();
+                
+                if(anio==f.getFullYear()&&mes==(f.getMonth() +1)&&dia==f.getDate()){
+                    
+                    console.log( f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear() );
+                    console.log("Concuerda");
+                    return true;
+                }else{
+                    console.log(value.fechaEmision);
+                    return false;
+                }
+
+            });
+        });
+    }
+    </script>
 
 @endsection

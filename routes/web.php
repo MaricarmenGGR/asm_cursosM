@@ -27,6 +27,7 @@ Route::resource('materiales','MaterialCursoController');
 Route::resource('invitacion','InvitacionController');
 Route::resource('programas','ProgramaCursoController');
 Route::resource('examenes','ExamenCursoController');
+Route::resource('evaluacion','EvaluacionPonenteController');
 Route::get('/cursos', 'CursosController@index')->name('cursos');
 Route::get('/verCurso', 'CursosController@show')->name('verCurso');
 Route::get('/crearCurso', 'CursosController@create')->name('crearCurso');
@@ -38,7 +39,9 @@ Route::put('/updateCInfo/{id}', 'CursosController@updateCInfo');
 Route::get('/listar/{id}','ProgramaCursoController@listar');
 Route::delete('/borrarAct/{id}','ProgramaCursoController@destroy');
 Route::get('/verMateriales/{id}','MaterialCursoController@verMateriales');
+Route::get('/fechas/{id}','EvaluacionPonenteController@Fechas');
 Route::delete('/borrarMaterial/{id}','MaterialCursoController@destroy');
+Route::delete('/desactivarEvaluacion/{id}','EvaluacionPonenteController@destroy');
 Route::get('/verAsistentes/{id}', 'CursosController@verAsistentes');
 
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////

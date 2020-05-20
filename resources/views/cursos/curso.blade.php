@@ -366,23 +366,25 @@
                                     <div class="card">
                                         <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Cuestionario de evaluación-reacción del curso</h4>
                                         <div class="card-body">
-
+                                            
                                             <label><strong>Activar encuesta</strong></label>
-                                            <form id="examenActivarForm" class="form-group form-inline">
+                                            <form id="examenPonenteActivarForm" class="form-group form-inline">
                                                 {{ csrf_field() }}
                                                     
                                                     <div class="form-group form-inline" >
                                                         <label>Fecha Inicio</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaActivarEnc" name="fechaActivar" min="{{ $curso->fechaInicio }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaActivarEva" name="fechaActivarEva" min="{{ $curso->fechaInicio }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                     <div class="form-group form-inline">
                                                         <label>Fecha Fin</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaDesactivarEnc" name="fechaDesactivar" min="{{ $curso->fechaFin }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaDesactivarEva" name="fechaDesactivarEva" min="{{ $curso->fechaFin }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                 
                                                 <input type="hidden" value="{{$curso->id}}" name="curso_id">
                                                 <div class="form-group">
-                                                    <button class="btn btn-asm float-right" id="subirActivacionEnc">Guardar</button>
+                                                    <button class="btn btn-asm float-right" id="subirActivacionEncPonente">Activar</button>
+                                                    <br>
+                                                    <button class="btn btn-danger float-right" id="quitarActivacionEncPonente">Desactivar</button>
                                                 </div>
                                             </form>
 
@@ -911,8 +913,9 @@
     }
 </script>
 
-<!--examen script-->
+<!--examen script
 <script>
+    
     $(document).ready(function(){
 	    var counter = 1;
 	    var wrapper = $("#accordionExamen");
@@ -1015,8 +1018,7 @@
 
 
 </script>
-
-
+-->
 <script>
     function verAsistentes(id) { //Llenar tabla de servicios solicitados
       var id_usuario=$('#id_usuario').val();
@@ -1078,6 +1080,71 @@
             }
         });
     });
+</script>
+
+<!--Evaluacion del ponente/Curso-->
+<script>
+    
+    $("#subirActivacionEncPonente").click(function (e) {
+        e.preventDefault();
+        var curso_id = $('#curso_id').val();
+        var fechaEmision = $('#fechaActivarEva').val();
+        var fechaTermino = $('#fechaDesactivarEva').val();
+        var token = '{{csrf_token()}}';
+        var data={_token:token,curso_id:curso_id,fechaEmision:fechaEmision,fechaTermino:fechaTermino};
+        $.ajax({
+        type: "POST",
+        url: "{{ route('evaluacion.store') }}",
+        data: data,
+        success: function(response){
+            Swal.fire({
+                icon: 'success',
+                title: 'Hora Acordada',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            console.log(data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+            Swal.fire({
+                icon: 'error',
+                title: 'Ha ocurrido un error',
+                showConfirmButton: false,
+                timer: 2000
+                });
+            }
+        });
+    });
+
+        $("#quitarActivacionEncPonente").click(function (e) {
+        e.preventDefault();
+        var curso_id = $('#curso_id').val();
+        var token = '{{csrf_token()}}';
+        var data={_token:token,curso_id:curso_id};
+        $.ajax({
+        type: "DELETE",
+        url: "/desactivarEvaluacion/"+curso_id,
+        data:data,
+        success: function(response){
+            Swal.fire({
+                icon: 'success',
+                title: 'Desactivado',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+            Swal.fire({
+                icon: 'error',
+                title: 'Ha ocurrido un error',
+                showConfirmButton: false,
+                timer: 2000
+                });
+            }
+        });
+    });
+
+
 </script>
 
 <!--
