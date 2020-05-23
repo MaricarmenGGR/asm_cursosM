@@ -16,7 +16,7 @@
             <div class="card-tabs" style="margin-top: 1%;">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        
+                   <!-- onclick="comprobarFechas(@php echo $curso->id @endphp);"-->
                             <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             @if( Auth::user()->estaInscrito($curso->id) )
                             <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp);eliminarTabla();verActMat(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa y Material</a>
@@ -169,7 +169,9 @@
                      <!--EvaluacionCursoUser-->
                    
                     <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
-                        <h2>Evaluación</h2>
+                       <!--{{Auth::user()->id}}-->
+                        
+                        <h2>EVALUACIÓN</h2>
                         <br>
                         <br>
                         <input type="hidden" id="curso_idF" name="curso_idF" value="{{$curso->id}}"/>
@@ -546,8 +548,9 @@
                         <br>
                         <button type="button" class="btn btn-asm float-right">Enviar</button>
                         <br>
+                  
                     </div>
-                    
+                  
                      <!--InformacionCursoCapacidadUser-->
                     <div class="tab-pane fade" id="evaluacionCurso" role="tabpanel" aria-labelledby="evaluacionCurso-tab">
                             <h2>Espera a que el administrador del curso active la evaluacíon</h2>
@@ -612,7 +615,7 @@
     }
 </script>
 
-<script>
+<script type="text/javascript">
     function comprobarFechas(id){
         $.ajax({
             url:'/fechas/'+id,
@@ -621,19 +624,21 @@
             $(res).each(function(key,value){
                 var bandera = false;
                 var fechaE = value.fechaEmision;
-                var separacion = fechaE.split('-');
-                var anio = parseInt(separacion[0]);
-                var mes = parseInt(separacion[1]);
-                var dia = parseInt(separacion[2]);
+                var fechaT = value.fechaTermino;
                 var f = new Date();
+                fechaE = new Date();
+                fechaT = new Date();
                 
-                if(anio==f.getFullYear()&&mes==(f.getMonth() +1)&&dia==f.getDate()){
-                    
-                    console.log( f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear() );
-                    console.log("Concuerda");
+                var Hoy = f.getFullYear()+'-'+(f.getMonth() +1)+'-'+f.getDate()
+                console.log(Hoy);
+                console.log(value.fechaEmision);
+                console.log(value.fechaTermino);
+
+                if(Hoy=value.fechaEmision||((Hoy>value.fechaEmision) && (Hoy<=value.fechaTermino))){
+                    console.log('Estas a tiempo');
                     return true;
                 }else{
-                    console.log(value.fechaEmision);
+                    console.log("NOP");
                     return false;
                 }
 
