@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInvitacionsTable extends Migration
+class CreateEvaluacionCursoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,18 @@ class CreateInvitacionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('invitaciones', function (Blueprint $table) {
+        Schema::create('evaluacion_curso', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset='utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->unsignedinteger('curso_id');
             $table->foreign('curso_id')->references('id')->on('cursos');
-            $table->string('documento')->nullable();
+            $table->string('fechaEmision');
+            $table->string('fechaTermino');
             $table->timestamps();
             $table->softDeletes();
+            
         });
     }
 
@@ -33,8 +35,6 @@ class CreateInvitacionsTable extends Migration
      */
     public function down()
     {
-        
-        Schema::dropIfExists('invitaciones');
-
+        Schema::dropIfExists('evaluacion_curso');
     }
 }

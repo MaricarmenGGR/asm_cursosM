@@ -25,6 +25,7 @@ return array(
     'App\\Http\\Controllers\\CursosUsuarioController' => $baseDir . '/app/Http/Controllers/CursosUsuarioController.php',
     'App\\Http\\Controllers\\ExamenCursoController' => $baseDir . '/app/Http/Controllers/ExamenCursoController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
+    'App\\Http\\Controllers\\InvitacionController' => $baseDir . '/app/Http/Controllers/InvitacionController.php',
     'App\\Http\\Controllers\\MaterialCursoController' => $baseDir . '/app/Http/Controllers/MaterialCursoController.php',
     'App\\Http\\Controllers\\ProgramaCursoController' => $baseDir . '/app/Http/Controllers/ProgramaCursoController.php',
     'App\\Http\\Controllers\\UsuariosController' => $baseDir . '/app/Http/Controllers/UsuariosController.php',

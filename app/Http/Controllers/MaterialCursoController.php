@@ -179,4 +179,14 @@ class MaterialCursoController extends Controller
             $actividades->toArray()
         );
     }
+    public function descargarMaterial($id){
+        $documento = DB::table('materiales')
+        ->where('id','=',$id)
+        ->select('*')
+        ->get();
+        $archivo = ($documento[0]->url);
+        $nombreArchivo = strval($archivo);
+        $pathtoFile = 'materials/'.$nombreArchivo;
+      return response()->download($pathtoFile);
+    }
 }
