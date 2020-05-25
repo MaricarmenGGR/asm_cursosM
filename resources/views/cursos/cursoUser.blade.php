@@ -20,7 +20,7 @@
                             <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             @if( Auth::user()->estaInscrito($curso->id) )
                             <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp);eliminarTabla();verActMat(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa y Material</a>
-                            <a onclick="comprobarFechas(@php echo $curso->id @endphp);" class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación del Ponente y Desarrollo del Curso</a>
+                            <a onclick="comprobarFechas(@php echo $curso->id @endphp);DesactivarNav();" class="nav-item nav-link" id="evaluacionPonente-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación del Ponente y Desarrollo del Curso</a>
                             <a class="nav-item nav-link" id="evaluacionCurso-tab" data-toggle="tab" href="#evaluacionCurso" role="tab" aria-controls="evaluacionCurso" aria-selected="false">Evaluación del Curso</a>
                             @endif
                     </div>
@@ -168,12 +168,14 @@
                     </div>
                      <!--EvaluacionCursoUser-->
                    
-                    <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
-                       <!--{{Auth::user()->id}}-->
-                        
-                        <h2>EVALUACIÓN</h2>
+                    <div class="tab-pane fade" id="evaluacion" role="tabpanel" aria-labelledby="evaluacionPonente-tab">
+                       
+                        <input type="hidden" value="{{Auth::user()->id}}" id="user_id">
+                        <h2 class="text-center">Evaluación del Ponente y Desarrollo del Curso</h2>
                         <br>
                         <br>
+                        <form id="formEvaluacion" class="form-group">
+                                            {{ csrf_field() }}
                         <input type="hidden" id="curso_idF" name="curso_idF" value="{{$curso->id}}"/>
                     <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10 text-center">
                     <h3 class="text-center">DEL INSTRUCTOR/CAPACITOR</h3>
@@ -190,22 +192,22 @@
                             <td>Dominó el tema que impartió</td>
                             <td>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex1" value="Ex1">
+                                <input class="form-check-input" type="radio" name="pregunta1" id="Ex1" value="Excelente">
                                 <label class="form-check-label" for="Ex1">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue1" value="Bue1">
+                                <input class="form-check-input" type="radio" name="pregunta1" id="Bue1" value="Bueno">
                                 <label class="form-check-label" for="Bue1">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re1" value="Re1">
+                                <input class="form-check-input" type="radio" name="pregunta1" id="Re1" value="Regular">
                                 <label class="form-check-label" for="Re1">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def1" value="Def1">
+                                <input class="form-check-input" type="radio" name="pregunta1" id="Def1" value="Deficiente">
                                 <label class="form-check-label" for="Def1">Deficiente</label>
                                 </div>
                             </td>
@@ -215,22 +217,22 @@
                             <td>Fomentó la participación del grupo</td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex2" value="Ex2">
+                                <input class="form-check-input" type="radio" name="pregunta2" id="Ex2" value="Excelente">
                                 <label class="form-check-label" for="Ex2">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue2" value="Bue2">
+                                <input class="form-check-input" type="radio" name="pregunta2" id="Bue2" value="Bueno">
                                 <label class="form-check-label" for="Bue2">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re2" value="Re2">
+                                <input class="form-check-input" type="radio" name="pregunta2" id="Re2" value="Regular">
                                 <label class="form-check-label" for="Re2">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def2" value="Def2">
+                                <input class="form-check-input" type="radio" name="pregunta2" id="Def2" value="Deficiente">
                                 <label class="form-check-label" for="Def2">Deficiente</label>
                                 </div>
                             </td>
@@ -240,22 +242,22 @@
                             <td>Ilustró el tema con casos prácticos</td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex3" value="Ex3">
+                                <input class="form-check-input" type="radio" name="pregunta3" id="Ex3" value="Excelente">
                                 <label class="form-check-label" for="Ex3">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue3" value="Bue3">
+                                <input class="form-check-input" type="radio" name="pregunta3" id="Bue3" value="Bueno">
                                 <label class="form-check-label" for="Bue3">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re3" value="Re3">
+                                <input class="form-check-input" type="radio" name="pregunta3" id="Re3" value="Regular">
                                 <label class="form-check-label" for="Re3">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def3" value="Def3">
+                                <input class="form-check-input" type="radio" name="pregunta3" id="Def3" value="Deficiente">
                                 <label class="form-check-label" for="Def3">Deficiente</label>
                                 </div>
                             
@@ -266,22 +268,22 @@
                             <td>Dio a conocer los objetivos del curso</td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex4" value="Ex4">
+                                <input class="form-check-input" type="radio" name="pregunta4" id="Ex4" value="Excelente">
                                 <label class="form-check-label" for="Ex4">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue4" value="Bue4">
+                                <input class="form-check-input" type="radio" name="pregunta4" id="Bue4" value="Bueno">
                                 <label class="form-check-label" for="Bue4">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re4" value="Re4">
+                                <input class="form-check-input" type="radio" name="pregunta4" id="Re4" value="Regular">
                                 <label class="form-check-label" for="Re4">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def4" value="Def4">
+                                <input class="form-check-input" type="radio" name="pregunta4" id="Def4" value="Deficiente">
                                 <label class="form-check-label" for="Def4">Deficiente</label>
                                 </div>
                             </td>
@@ -291,22 +293,22 @@
                             <td>Aclaró dudas</td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex5" value="Ex5">
+                                <input class="form-check-input" type="radio" name="pregunta5" id="Ex5" value="Excelente">
                                 <label class="form-check-label" for="Ex5">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue5" value="Bue5">
+                                <input class="form-check-input" type="radio" name="pregunta5" id="Bue5" value="Bueno">
                                 <label class="form-check-label" for="Bue5">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re5" value="Re5">
+                                <input class="form-check-input" type="radio" name="pregunta5" id="Re5" value="Regular">
                                 <label class="form-check-label" for="Re5">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def5" value="Def5">
+                                <input class="form-check-input" type="radio" name="pregunta5" id="Def5" value="Deficiente">
                                 <label class="form-check-label" for="Def5">Deficiente</label>
                                 </div>
                             
@@ -329,22 +331,22 @@
                             <td>Los temas impartidos, contienen un equilibrio teórico-práctico</td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex6" value="Ex6">
+                                <input class="form-check-input" type="radio" name="pregunta6" id="Ex6" value="Excelente">
                                 <label class="form-check-label" for="Ex6">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue6" value="Bue6">
+                                <input class="form-check-input" type="radio" name="pregunta6" id="Bue6" value="Bueno">
                                 <label class="form-check-label" for="Bue6">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re6" value="Re6">
+                                <input class="form-check-input" type="radio" name="pregunta6" id="Re6" value="Regular">
                                 <label class="form-check-label" for="Re6">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def6" value="Def6">
+                                <input class="form-check-input" type="radio" name="pregunta6" id="Def6" value="Deficiente">
                                 <label class="form-check-label" for="Def6">Deficiente</label>
                                 </div>
                             </td>
@@ -354,22 +356,22 @@
                             <td>Los materiales y manuales empleados fueron suficientes</td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex7" value="Ex7">
+                                <input class="form-check-input" type="radio" name="pregunta7" id="Ex7" value="Excelente">
                                 <label class="form-check-label" for="Ex7">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue7" value="Bue7>
+                                <input class="form-check-input" type="radio" name="pregunta7" id="Bue7" value="Bueno">
                                 <label class="form-check-label" for="Bue7">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re7" value="Re7">
+                                <input class="form-check-input" type="radio" name="pregunta7" id="Re7" value="Regular">
                                 <label class="form-check-label" for="Re7">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def7" value="Def7">
+                                <input class="form-check-input" type="radio" name="pregunta7" id="Def7" value="Deficiente">
                                 <label class="form-check-label" for="Def7">Deficiente</label>
                                 </div>
                             </td>
@@ -379,22 +381,22 @@
                             <td>El tiempo programado fue el adecuado para cumplir con el objetivo del curso</td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex8" value="Ex8">
+                                <input class="form-check-input" type="radio" name="pregunta8" id="Ex8" value="Excelente">
                                 <label class="form-check-label" for="Ex8">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue8" value="Bue8">
+                                <input class="form-check-input" type="radio" name="pregunta8" id="Bue8" value="Bueno">
                                 <label class="form-check-label" for="Bue8">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re8" value="Re8">
+                                <input class="form-check-input" type="radio" name="pregunta8" id="Re8" value="Regular">
                                 <label class="form-check-label" for="Re8">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def8" value="Def8">
+                                <input class="form-check-input" type="radio" name="pregunta8" id="Def8" value="Deficiente">
                                 <label class="form-check-label" for="Def8">Deficiente</label>
                                 </div>
                             </td>
@@ -416,22 +418,22 @@
                             <td>Se entregó el material a tiempo </td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex9" value="Ex9">
+                                <input class="form-check-input" type="radio" name="pregunta9" id="Ex9" value="Excelente">
                                 <label class="form-check-label" for="Ex9">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue9" value="Bue9">
+                                <input class="form-check-input" type="radio" name="pregunta9" id="Bue9" value="Bueno">
                                 <label class="form-check-label" for="Bue9">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re9" value="Re9">
+                                <input class="form-check-input" type="radio" name="pregunta9" id="Re9" value="Regular">
                                 <label class="form-check-label" for="Re9">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def9" value="Def9">
+                                <input class="form-check-input" type="radio" name="pregunta9" id="Def9" value="Deficiente">
                                 <label class="form-check-label" for="Def9">Deficiente</label>
                                 </div>
                             </td>
@@ -441,22 +443,22 @@
                             <td>El funcionamiento del equipo audiovisual fue adecuado</td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex10" value="Ex10">
+                                <input class="form-check-input" type="radio" name="pregunta10" id="Ex10" value="Excelente">
                                 <label class="form-check-label" for="Ex10">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue10" value="Bue10">
+                                <input class="form-check-input" type="radio" name="pregunta10" id="Bue10" value="Bueno">
                                 <label class="form-check-label" for="Bue10">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re10" value="Re10">
+                                <input class="form-check-input" type="radio" name="pregunta10" id="Re10" value="Regular">
                                 <label class="form-check-label" for="Re10">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def10" value="Def10">
+                                <input class="form-check-input" type="radio" name="pregunta10" id="Def10" value="Deficiente">
                                 <label class="form-check-label" for="Def10">Deficiente</label>
                                 </div>
                             </td>
@@ -466,22 +468,22 @@
                             <td>El salón fue adecuado para el curso/taller</td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex11" value="Ex11">
+                                <input class="form-check-input" type="radio" name="pregunta11" id="Ex11" value="Excelente">
                                 <label class="form-check-label" for="Ex11">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue11" value="Bue11">
+                                <input class="form-check-input" type="radio" name="pregunta11" id="Bue11" value="Bueno">
                                 <label class="form-check-label" for="Bue11">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re11" value="Re11">
+                                <input class="form-check-input" type="radio" name="pregunta11" id="Re11" value="Regular">
                                 <label class="form-check-label" for="Re11">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def11" value="Def11">
+                                <input class="form-check-input" type="radio" name="pregunta11" id="Def11" value="Deficiente">
                                 <label class="form-check-label" for="Def11">Deficiente</label>
                                 </div>
                             </td>
@@ -491,22 +493,22 @@
                             <td>El salón fue adecuado para el curso/taller</td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex12" value="Ex12">
+                                <input class="form-check-input" type="radio" name="pregunta12" id="Ex12" value="Excelente">
                                 <label class="form-check-label" for="Ex12">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue12" value="Bue12">
+                                <input class="form-check-input" type="radio" name="pregunta12" id="Bue12" value="Bueno">
                                 <label class="form-check-label" for="Bue12">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re2" value="Re12">
+                                <input class="form-check-input" type="radio" name="pregunta12" id="Re2" value="Regular">
                                 <label class="form-check-label" for="Re12">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def12" value="Def12">
+                                <input class="form-check-input" type="radio" name="pregunta12" id="Def12" value="Deficiente">
                                 <label class="form-check-label" for="Def12">Deficiente</label>
                                 </div>
                             </td>
@@ -516,22 +518,22 @@
                             <td>La atención por parte del Departamento de Capacitación</td>
                             <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Ex13" value="Ex13">
+                                <input class="form-check-input" type="radio" name="pregunta13" id="Ex13" value="Excelente">
                                 <label class="form-check-label" for="Ex13">Excelente</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Bue13" value="Bue13">
+                                <input class="form-check-input" type="radio" name="pregunta13" id="Bue13" value="Bueno">
                                 <label class="form-check-label" for="Bue13">Bueno</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Re13" value="Re13">
+                                <input class="form-check-input" type="radio" name="pregunta13" id="Re13" value="Regular">
                                 <label class="form-check-label" for="Re13">Regular</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Def13" value="Def13">
+                                <input class="form-check-input" type="radio" name="pregunta13" id="Def13" value="Deficiente">
                                 <label class="form-check-label" for="Def13">Deficiente</label>
                                 </div>
                             </td>
@@ -543,14 +545,12 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Sugerencias y comentarios:</span>
                         </div>
-                        <textarea class="form-control" aria-label="sugerencias"></textarea>
+                        <textarea id="sugerenciasCursouser" class="form-control" aria-label="sugerencias"></textarea>
                         </div>
                         <br>
-                        <button type="button" class="btn btn-asm float-right">Enviar</button>
+                        <button type="button" class="btn btn-asm float-right" onclick="enviarRespuestas();">Enviar</button>
                         <br>
-                  
                     </div>
-                  
                      <!--InformacionCursoCapacidadUser-->
                     <div class="tab-pane fade" id="evaluacionCurso" role="tabpanel" aria-labelledby="evaluacionCurso-tab">
                             <h2>Espera a que el administrador del curso active la evaluacíon</h2>
@@ -615,14 +615,13 @@
     }
 </script>
 
-<script type="text/javascript">
+<script>
     function comprobarFechas(id){
         $.ajax({
             url:'/fechas/'+id,
             type:'get',
         }).done(function(res){
             $(res).each(function(key,value){
-                var bandera = false;
                 var fechaE = value.fechaEmision;
                 var fechaT = value.fechaTermino;
                 var f = new Date();
@@ -645,6 +644,95 @@
             });
         });
     }
+    function DesactivarNav(){
+        var curso_id = $('#curso_idF').val();
+        const Pagina = document.getElementById("evaluacionPonente-tab");
+       if(comprobarFechas(curso_id)==false){
+        Pagina.setAttribute('class', 'nav-item nav-link disabled');
+       }else{
+        //Pagina.removeAttribute('class','nav-item nav-link');
+        //Pagina.setAttribute('class', 'nav-item nav-link disabled');
+       };
+       /*$('evaluacion-tab').click(function(e) { 
+           e.preventDefault(); 
+           var $this = $(this); 
+           $this.closest('ul').find('li.active,a.active').removeClass('active'); 
+           $this.addClass('active'); $this.parent().addClass('active'); 
+        });*/
+       
+    }
+
+
+
+    function enviarRespuestas(){
+        var pregunta1 = $('input[name="pregunta1"]:checked').val();
+        var pregunta2 = $('input[name="pregunta2"]:checked').val();
+        var pregunta3 = $('input[name="pregunta3"]:checked').val();
+        var pregunta4 = $('input[name="pregunta4"]:checked').val();
+        var pregunta5 = $('input[name="pregunta5"]:checked').val();
+        var pregunta6 = $('input[name="pregunta6"]:checked').val();
+        var pregunta7 = $('input[name="pregunta7"]:checked').val();
+        var pregunta8 = $('input[name="pregunta8"]:checked').val();
+        var pregunta9 = $('input[name="pregunta9"]:checked').val();
+        var pregunta10 = $('input[name="pregunta10"]:checked').val();
+        var pregunta11 = $('input[name="pregunta11"]:checked').val();
+        var pregunta12 = $('input[name="pregunta12"]:checked').val();
+        var pregunta13 = $('input[name="pregunta13"]:checked').val();
+
+        var comentarios = $('#sugerenciasCursouser').val();
+        var usuario_id = $('#user_id').val();
+        var curso_id = $('#curso_idF').val();
+        ///Contadores///
+        var ExcelenteC =0;
+        var BuenoC = 0;
+        var RegunarC = 0;
+        var DeficienteC = 0;
+        ///////////////
+
+        var respuestas = [pregunta1,pregunta2,pregunta3,pregunta4,pregunta5,pregunta6,pregunta7,pregunta8,pregunta9,pregunta10,pregunta11,pregunta12, pregunta13];
+        console.log(respuestas.length)
+       
+        for (var i = 0; i < respuestas.length; i++) {
+            if(respuestas[i]=="Excelente"){
+                ExcelenteC = ExcelenteC + 1;
+            }else if(respuestas[i]=="Bueno"){
+                BuenoC = BuenoC+1;
+            }else if(respuestas[i]=="Regular"){
+                RegunarC = RegunarC +1;
+            }else{
+                DeficienteC = DeficienteC +1 ;
+            }
+        }
+
+        var token = '{{csrf_token()}}';
+        var data={_token:token,curso_id:curso_id,user_id:usuario_id,Excelente:ExcelenteC,Bueno:BuenoC,Regular:RegunarC,Deficiente:DeficienteC,Comentarios:comentarios};
+        $.ajax({
+        type: "POST",
+        url: '/agregarRespuesta',
+        data: data,
+        success: function(response){
+            Swal.fire({
+                icon: 'success',
+                title: 'La prueba fue enviada Exitosamente',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            console.log(data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+            Swal.fire({
+                icon: 'error',
+                title: 'Ha ocurrido un error',
+                showConfirmButton: false,
+                timer: 2000
+                });
+            }
+        });
+
+    }
+
+
     </script>
+
 
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Evaluacion;
 use App\Http\Controllers\Controller;
+use App\Respuestas_Evaluacion_Ponente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -109,5 +110,21 @@ class EvaluacionPonenteController extends Controller
         return response()->json(
             $fechas
         );
+    }
+
+    public function saveRespuesta(Request $request){
+        if($request->ajax()){
+            return response()->json([
+                Respuestas_Evaluacion_Ponente::create([
+                    'curso_id' =>$request->curso_id,
+                    'user_id' => $request->user_id,
+                    'Excelente'=>$request->Excelente,
+                    'Bueno'=>$request->Bueno,
+                    'Regular'=>$request->Regular,
+                    'Deficiente'=>$request->Deficiente,
+                    'Comentarios'=>$request->Comentarios,
+                ])
+            ]);
+        }
     }
 }

@@ -43,6 +43,7 @@ Route::get('/fechas/{id}','EvaluacionPonenteController@Fechas');
 Route::delete('/borrarMaterial/{id}','MaterialCursoController@destroy');
 Route::delete('/desactivarEvaluacion/{id}','EvaluacionPonenteController@destroy');
 Route::get('/verAsistentes/{id}', 'CursosController@verAsistentes');
+Route::post('/agregarRespuesta','EvaluacionPonenteController@saveRespuesta');
 
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////
 Route::resource('cursosUsuario','CursosUsuarioController');
