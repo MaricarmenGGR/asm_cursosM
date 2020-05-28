@@ -631,7 +631,7 @@
             })
         });
         //return true;
-        console.log(respuesta);
+        //console.log(respuesta);
         if(respuesta.length!=0){
             return true;
         }else{
@@ -656,9 +656,9 @@
                 });
           })
       });
-      console.log(respuesta);
-      console.log("Fecha inicio: "+FechaInicio);
-      console.log("Fecha termino: "+ FechaTermino);
+      //console.log(respuesta);
+      //console.log("Fecha inicio: "+FechaInicio);
+     // console.log("Fecha termino: "+ FechaTermino);
                 var f = new Date();
                 var Hoy = f.getFullYear()+'-'+(f.getMonth() +1)+'-'+f.getDate()
                 console.log(Hoy);
