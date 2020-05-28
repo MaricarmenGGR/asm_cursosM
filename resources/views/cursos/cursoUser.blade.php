@@ -20,7 +20,7 @@
                             <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             @if( Auth::user()->estaInscrito($curso->id) )
                             <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp);eliminarTabla();verActMat(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa y Material</a>
-                            <a onclick="DesactivarNavUser();" class="nav-item nav-link" id="evaluacionPonente-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación del Ponente y Desarrollo del Curso</a>
+                            <a onclick="DesactivarNav();DesactivarNavUser();" class="nav-item nav-link" id="evaluacionPonente-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación del Ponente y Desarrollo del Curso</a>
                             <a class="nav-item nav-link" id="evaluacionCurso-tab" data-toggle="tab" href="#evaluacionCurso" role="tab" aria-controls="evaluacionCurso" aria-selected="false">Evaluación del Curso</a>
                             @endif
                             <!--verificarRespuesta(@php echo $curso->id @endphp,@php echo Auth::user()->id @endphp); ;DesactivarNavUser();-->
@@ -615,7 +615,7 @@
 
     }
 </script>
-
+<!--BackEvaluacionPonenete-->
 <script>
     function verificarRespuesta(id_curso,id_user){
         var respuesta;
@@ -632,38 +632,47 @@
         });
         //return true;
         console.log(respuesta);
-        if(respuesta!=0){
+        if(respuesta.length!=0){
             return true;
         }else{
-                    return false;
-                }
+            return false;
+        }
 
     }
-    function comprobarFechas(id){
-       // const Pagina = document.getElementById("evaluacionPonente-tab");
-      /*  var bandera = true;
-        var respuesta = [];
 
-        var objajax = $.ajax({
-            url:'/fechas/'+id,
-            type: 'get',
-            dataType : 'json',
-            success:function(res){
-               // console.log(res);
-                objajax = res;
-            }
-        });
-        console.log(objajax);
-        if(objajax.length==0){
-           // console.log(objajax);
-           
-            return false;
-        }else{
-           // console.log(objajax);
-            //var res = objajax.responseText;
-            //console.log(res);
-            return true;
-        } */
+    function comprobarFechas(id){
+      var respuesta;
+      var FechaInicio;
+      var FechaTermino;
+      $.ajax({
+          async:false,
+          url:'/fechas/'+id,
+          type: 'GET',
+          success:(function(res){
+            $(res).each(function(key,value){
+                 FechaInicio = value.fechaEmision;
+                 FechaTermino = value.fechaTermino;
+                 respuesta = res;
+                });
+          })
+      });
+      console.log(respuesta);
+      console.log("Fecha inicio: "+FechaInicio);
+      console.log("Fecha termino: "+ FechaTermino);
+                var f = new Date();
+                var Hoy = f.getFullYear()+'-'+(f.getMonth() +1)+'-'+f.getDate()
+                console.log(Hoy);
+                if(respuesta.length!=0){
+                    if(Hoy=FechaInicio||((Hoy>FechaInicio) && (Hoy<=fechaTermino))){
+                        console.log('Esta en tiempo');
+                        return true;
+                    }else{
+                        console.log('Ya no esta en tiempo');
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
        
     }
     function DesactivarNavUser(){
@@ -672,7 +681,7 @@
         const tab = document.getElementById("evaluacionPonente-tab");
        if(verificarRespuesta(curso_id,usuario_id)==true){
            console.log('entra aqui Verdadero');
-        //tab.setAttribute('class', 'nav-item nav-link disabled');
+        tab.setAttribute('class', 'nav-item nav-link disabled');
        
        }else if(verificarRespuesta(curso_id,usuario_id)==false){
            console.log('entra Falso');
@@ -694,7 +703,7 @@
         //Pagina.removeAttribute('class','nav-item nav-link');
        // Pagina.setAttribute('class', 'nav-item nav-link disabled');
        }else{
-           console.log('Ni una ni otra xd');
+           console.log('Error al validar');
        };
        
     }
@@ -775,7 +784,7 @@
 
     }
 
-    </script>
+</script>
 
 
 @endsection
