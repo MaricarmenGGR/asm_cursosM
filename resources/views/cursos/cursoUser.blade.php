@@ -20,9 +20,10 @@
                             <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             @if( Auth::user()->estaInscrito($curso->id) )
                             <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp);eliminarTabla();verActMat(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa y Material</a>
-                            <a onclick="comprobarFechas(@php echo $curso->id @endphp);DesactivarNav();" class="nav-item nav-link" id="evaluacionPonente-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación del Ponente y Desarrollo del Curso</a>
+                            <a onclick="DesactivarNavUser();" class="nav-item nav-link" id="evaluacionPonente-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación del Ponente y Desarrollo del Curso</a>
                             <a class="nav-item nav-link" id="evaluacionCurso-tab" data-toggle="tab" href="#evaluacionCurso" role="tab" aria-controls="evaluacionCurso" aria-selected="false">Evaluación del Curso</a>
                             @endif
+                            <!--verificarRespuesta(@php echo $curso->id @endphp,@php echo Auth::user()->id @endphp); ;DesactivarNavUser();-->
                     </div>
                 </nav>
                 <!--InformacionCursoUser-->
@@ -177,7 +178,7 @@
                         <form id="formEvaluacion" class="form-group">
                                             {{ csrf_field() }}
                         <input type="hidden" id="curso_idF" name="curso_idF" value="{{$curso->id}}"/>
-                    <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10 text-center">
+                    <table class="table mx-auto col-lg-10 col-md-10 col-sm-10 col-xs-10 text-center" id="examenTabla">
                     <h3 class="text-center">DEL INSTRUCTOR/CAPACITOR</h3>
                         <thead class="thead-dark text-center">
                             <tr>
@@ -616,49 +617,85 @@
 </script>
 
 <script>
-    function comprobarFechas(id){
+    function verificarRespuesta(id_curso,id_user){
+        var respuesta;
         $.ajax({
-            url:'/fechas/'+id,
-            type:'get',
-        }).done(function(res){
-            $(res).each(function(key,value){
-                var fechaE = value.fechaEmision;
-                var fechaT = value.fechaTermino;
-                var f = new Date();
-                fechaE = new Date();
-                fechaT = new Date();
-                
-                var Hoy = f.getFullYear()+'-'+(f.getMonth() +1)+'-'+f.getDate()
-                console.log(Hoy);
-                console.log(value.fechaEmision);
-                console.log(value.fechaTermino);
-
-                if(Hoy=value.fechaEmision||((Hoy>value.fechaEmision) && (Hoy<=value.fechaTermino))){
-                    console.log('Estas a tiempo');
-                    return true;
-                }else{
-                    console.log("NOP");
+            async: false,
+            url: '/verificarRespuestas/'+id_curso+'/'+id_user,
+            type:'GET',
+            success:(function(res){
+                $(res).each(function(key,value){
+                  //  console.log('IMPRIMO->: '+value.Excelente);
+                 respuesta = res;
+                });
+            })
+        });
+        //return true;
+        console.log(respuesta);
+        if(respuesta!=0){
+            return true;
+        }else{
                     return false;
                 }
 
-            });
+    }
+    function comprobarFechas(id){
+       // const Pagina = document.getElementById("evaluacionPonente-tab");
+      /*  var bandera = true;
+        var respuesta = [];
+
+        var objajax = $.ajax({
+            url:'/fechas/'+id,
+            type: 'get',
+            dataType : 'json',
+            success:function(res){
+               // console.log(res);
+                objajax = res;
+            }
         });
+        console.log(objajax);
+        if(objajax.length==0){
+           // console.log(objajax);
+           
+            return false;
+        }else{
+           // console.log(objajax);
+            //var res = objajax.responseText;
+            //console.log(res);
+            return true;
+        } */
+       
+    }
+    function DesactivarNavUser(){
+        var curso_id = $('#curso_idF').val();
+        var usuario_id = $('#user_id').val();
+        const tab = document.getElementById("evaluacionPonente-tab");
+       if(verificarRespuesta(curso_id,usuario_id)==true){
+           console.log('entra aqui Verdadero');
+        //tab.setAttribute('class', 'nav-item nav-link disabled');
+       
+       }else if(verificarRespuesta(curso_id,usuario_id)==false){
+           console.log('entra Falso');
+        //Pagina.removeAttribute('class','nav-item nav-link');
+       // tab.setAttribute('class', 'nav-item nav-link disabled');
+       }else{
+           console.log('No se valido');
+       };
     }
     function DesactivarNav(){
         var curso_id = $('#curso_idF').val();
+        var usuario_id = $('#user_id').val();
         const Pagina = document.getElementById("evaluacionPonente-tab");
        if(comprobarFechas(curso_id)==false){
         Pagina.setAttribute('class', 'nav-item nav-link disabled');
-       }else{
+        console.log('NO Esta en fecha');
+       }else if(comprobarFechas(curso_id)==true){
+           console.log('Esta en fecha');
         //Pagina.removeAttribute('class','nav-item nav-link');
-        //Pagina.setAttribute('class', 'nav-item nav-link disabled');
+       // Pagina.setAttribute('class', 'nav-item nav-link disabled');
+       }else{
+           console.log('Ni una ni otra xd');
        };
-       /*$('evaluacion-tab').click(function(e) { 
-           e.preventDefault(); 
-           var $this = $(this); 
-           $this.closest('ul').find('li.active,a.active').removeClass('active'); 
-           $this.addClass('active'); $this.parent().addClass('active'); 
-        });*/
        
     }
 
@@ -703,6 +740,12 @@
                 DeficienteC = DeficienteC +1 ;
             }
         }
+        console.log(ExcelenteC);
+        console.log(BuenoC);
+        console.log(RegunarC);
+        console.log(DeficienteC);
+        console.log(usuario_id);
+        
 
         var token = '{{csrf_token()}}';
         var data={_token:token,curso_id:curso_id,user_id:usuario_id,Excelente:ExcelenteC,Bueno:BuenoC,Regular:RegunarC,Deficiente:DeficienteC,Comentarios:comentarios};
@@ -718,6 +761,7 @@
                 timer: 1500
             });
             console.log(data);
+            location.reload();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             Swal.fire({
@@ -730,7 +774,6 @@
         });
 
     }
-
 
     </script>
 

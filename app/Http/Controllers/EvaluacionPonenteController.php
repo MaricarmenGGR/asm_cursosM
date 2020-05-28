@@ -103,6 +103,7 @@ class EvaluacionPonenteController extends Controller
         );
     }
     public function Fechas($id){
+       
         $fechas = DB::table('evaluacion_curso')
         ->where('curso_id', '=',$id)
         ->select('fechaEmision','fechaTermino')
@@ -126,5 +127,16 @@ class EvaluacionPonenteController extends Controller
                 ])
             ]);
         }
+    }
+
+    public function verificaRespuestaUsuario($id_curso,$id_user){
+        $respuestas = DB::table('evaluacion_respuestas')
+        ->where('curso_id', '=',$id_curso)
+        ->where('user_id','=',$id_user)
+        ->select('*')
+        ->get();
+        return response()->json(
+            $respuestas
+        );
     }
 }
