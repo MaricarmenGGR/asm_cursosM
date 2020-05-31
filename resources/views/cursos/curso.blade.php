@@ -387,9 +387,6 @@
                                                     <button class="btn btn-danger float-right" id="quitarActivacionEncPonente">Desactivar</button>
                                                 </div>
                                             </form>
-
-                                            <label><strong>Vista previa de encuesta</strong></label>
-
                                         </div>
                                     </div>
                                 </div>                                
@@ -481,6 +478,7 @@
                         @endforeach
                         <br>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -913,7 +911,7 @@
     }
 </script>
 
-<!--examen script
+
 <script>
     
     $(document).ready(function(){
@@ -1018,7 +1016,7 @@
 
 
 </script>
--->
+
 <script>
     function verAsistentes(id) { //Llenar tabla de servicios solicitados
       var id_usuario=$('#id_usuario').val();

@@ -233,4 +233,8 @@ class CursosController extends Controller
             $asistentes->toArray()
         );
     }
+
+    public function DescarganInfoCurso($id){
+        //
+    }
 }

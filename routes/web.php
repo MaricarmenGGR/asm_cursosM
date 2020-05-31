@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
+use App\Curso;
+use App\Programa_Curso;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,3 +69,11 @@ Route::get('/cursos', function () {
 Route::get('/cursos2', function () {
     return view('cursos.curso2');
 })->name('cursos2')->middleware('auth');
+
+Route::get('/pdf', function(){
+    $cursos = Curso::all();
+    $programas = Programa_Curso::all();
+    
+    $pdf = PDF::loadView('informacionCurso',['cursos'=>$cursos],['programas'=>$programas]);//Retorna una vista
+    return $pdf->download('archivo.pdf');
+});
