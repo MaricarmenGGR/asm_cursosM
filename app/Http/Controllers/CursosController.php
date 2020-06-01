@@ -11,6 +11,7 @@ use App\Curso_Usuario;
 use App\Modalidad;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class CursosController extends Controller
 {
@@ -235,6 +236,46 @@ class CursosController extends Controller
     }
 
     public function DescarganInfoCurso($id){
-        //
+        $cursoDatos =  DB:: table('cursos')
+        ->where('id', '=',$id)
+        ->select('*')
+        ->get();
+
+        $programaCurso = DB:: table('programa_cursos')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->get();
+
+        $materialCurso = DB:: table('materiales')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->get();
+
+        $areas = DB::table('curso_areas')
+        ->leftJoin('areas', 'curso_areas.area_id', '=', 'areas.id')
+        ->select('curso_areas.*', 'areas.*')
+        ->where('curso_areas.curso_id', '=', $id)
+        ->get();
+
+        $inscritos = DB::table('users')
+        ->leftJoin('curso_usuarios', 'curso_usuarios.user_id', '=', 'users.id')
+        ->leftJoin('areas', 'areas.id', '=', 'users.area_id')
+        ->select('curso_usuarios.*', 'users.*', 'areas.*')
+        ->where('curso_usuarios.curso_id', '=', $id)
+        ->get();
+
+       
+        $vars = [
+            'cursos' => $cursoDatos,
+            'programas' => $programaCurso,
+            'materiales' => $materialCurso,
+            'areas' => $areas,
+            'inscritos' =>$inscritos,
+            
+        ];
+
+        $pdf = \PDF::loadView('informacionCurso',$vars);//Retorna una vista
+        return $pdf->download('archivo.pdf');
+        
     }
 }

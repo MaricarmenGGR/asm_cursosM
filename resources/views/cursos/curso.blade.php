@@ -211,7 +211,7 @@
                                                     <th class="text-center">#</th>
                                                     <th class="text-center">Actividad</th>
                                                     <th class="text-center">Hora</th>
-                                                    <th class="text-center">Ordenar</th>
+                                                    <th class="text-center">Fecha</th>
                                                     <th class="text-center">Borrar</th>
                                                 </tr>
                                                 </thead>
@@ -247,6 +247,12 @@
                                                         <label>Hora</label>
                                                     </div>
                                                     <input type="time" class="form-control" id="hora" name="hora" placeholder="Hora" required>
+                                                </div>
+                                                <div class="form-group" style="padding: 0 2% 0 2%">
+                                                    <div class="text-left">
+                                                        <label>Fecha</label>
+                                                    </div>
+                                                    <input type="date" class="form-control" id="fechaActividad" name="fechaActividad" placeholder="fechaActividad" required>
                                                 </div>
                                             
                                             <input type="hidden" value="{{$curso->id}}" id="curso_id" name="curso_id">
@@ -370,7 +376,6 @@
                                             <label><strong>Activar encuesta</strong></label>
                                             <form id="examenPonenteActivarForm" class="form-group form-inline">
                                                 {{ csrf_field() }}
-                                                    
                                                     <div class="form-group form-inline" >
                                                         <label>Fecha Inicio</label>&nbsp;&nbsp;
                                                         <input type="date" class="form-control" id="fechaActivarEva" name="fechaActivarEva" min="{{ $curso->fechaInicio }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -379,7 +384,6 @@
                                                         <label>Fecha Fin</label>&nbsp;&nbsp;
                                                         <input type="date" class="form-control" id="fechaDesactivarEva" name="fechaDesactivarEva" min="{{ $curso->fechaFin }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
-                                                
                                                 <input type="hidden" value="{{$curso->id}}" name="curso_id">
                                                 <div class="form-group">
                                                     <button class="btn btn-asm float-right" id="subirActivacionEncPonente">Activar</button>
@@ -758,8 +762,9 @@
         var curso_id = $('#curso_id').val();
         var actividad = $('#actividad').val();
         var hora = $('#hora').val();
+        var fechaActividad = $('#fechaActividad').val();
         var token = '{{csrf_token()}}';
-        var data={_token:token,curso_id:curso_id,actividad:actividad,hora:hora};
+        var data={_token:token,curso_id:curso_id,actividad:actividad,hora:hora,fechaActividad:fechaActividad};
         $.ajax({
         type: "post",
         url: "{{ route('programas.store') }}",
@@ -797,10 +802,7 @@
             '<td class="pt-3-half">'+value.curso_id+'</td>'+
             '<td class="pt-3-half">'+value.actividad+'</td>'+
             '<td class="pt-3-half">'+value.hora+'</td>'+
-            '<td class="pt-3-half">'+
-            '<span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>'+
-            '<span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>'+
-            '</td>'+
+            '<td class="pt-3-half">'+value.fechaActividad+'</td>'+
             '<td>'+
             '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarAct(this);">Borrar</button></span>'+
             '</td>'+
@@ -826,7 +828,7 @@
                     showConfirmButton: false,
                     timer: 1500
                 });
-                verTabla(curso_id)
+                verTabla(curso_id);
             }
         });
     }
@@ -1102,6 +1104,8 @@
                 timer: 1500
             });
             console.log(data);
+            const boton = document.getElementById("subirActivacionEncPonente");
+            boton.disabled = true;
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             Swal.fire({
@@ -1130,6 +1134,8 @@
                 showConfirmButton: false,
                 timer: 1500
             });
+            const boton = document.getElementById("subirActivacionEncPonente");
+            boton.disabled = false;
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             Swal.fire({

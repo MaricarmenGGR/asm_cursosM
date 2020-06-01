@@ -15,7 +15,7 @@
                             <div class="meta" style="text-align: left; color: gray;">
                                 <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{!! $curso->fechaInicio !!}
                                 <button class="btn btn-asm text-center"><i class="fas fa-trash-alt">Borrar</i></button>
-                                <a href="/pdf"><button class="btn btn-asm text-center"><i class="fas fa-download">Descargar Curso</i></button></a>
+                                <a href="/pdfCurso/{{$curso->id}}"><button class="btn btn-asm text-center"><i class="fas fa-download">Descargar Curso</i></button></a>
                             </div>
                             <div class="card-text" style="text-align: justify; color: black;">
                                 {!! $curso->descripcionCurso !!}

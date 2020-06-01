@@ -50,6 +50,7 @@ Route::delete('/desactivarEvaluacion/{id}','EvaluacionPonenteController@destroy'
 Route::get('/verAsistentes/{id}', 'CursosController@verAsistentes');
 Route::get('/verificarRespuestas/{id_curso}/{id_user}','EvaluacionPonenteController@verificaRespuestaUsuario');
 Route::post('/agregarRespuesta','EvaluacionPonenteController@saveRespuesta');
+Route::get('/pdfCurso/{id}','CursosController@DescarganInfoCurso');
 
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////
 Route::resource('cursosUsuario','CursosUsuarioController');
@@ -74,6 +75,6 @@ Route::get('/pdf', function(){
     $cursos = Curso::all();
     $programas = Programa_Curso::all();
     
-    $pdf = PDF::loadView('informacionCurso',['cursos'=>$cursos],['programas'=>$programas]);//Retorna una vista
-    return $pdf->download('archivo.pdf');
+   // $pdf = PDF::loadView('informacionCurso',['cursos'=>$cursos],['programas'=>$programas]);//Retorna una vista
+   // return $pdf->download('archivo.pdf');
 });

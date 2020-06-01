@@ -113,6 +113,17 @@ class EvaluacionPonenteController extends Controller
         );
     }
 
+    public function verFechasEvaluacion($id){
+        $fechas = DB::table('evaluacion_curso')
+        ->where('curso_id', '=',$id)
+        ->select('fechaEmision','fechaTermino')
+        ->get();
+        $vars = [
+            'fechas' => $fechas
+        ];
+        return view('cursos.curso', $vars);
+    }
+
     public function saveRespuesta(Request $request){
         if($request->ajax()){
             return response()->json([

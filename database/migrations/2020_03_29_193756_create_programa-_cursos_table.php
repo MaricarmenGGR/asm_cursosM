@@ -22,6 +22,7 @@ class CreateProgramaCursosTable extends Migration
             $table->foreign('curso_id')->references('id')->on('cursos');
             $table->string('actividad');
             $table->string('hora')->nullable();
+            $table->string('fechaActividad');
             $table->timestamps();
             $table->softDeletes();
         });

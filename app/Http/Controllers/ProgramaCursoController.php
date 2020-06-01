@@ -52,6 +52,7 @@ class ProgramaCursoController extends Controller
                     'curso_id' =>$request->curso_id,
                     'actividad' => $request->actividad,
                     'hora'=>$request->hora,
+                    'fechaActividad'=>$request->fechaActividad,
                     'material'=>$request->material
                 ])
             ]);
