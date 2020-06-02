@@ -35,7 +35,7 @@
                             <a onclick="viewInfoCurso(@php echo $curso->id @endphp)" class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             <a onclick="eliminarTabla();verTabla(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
                             <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp)"class="nav-item nav-link" id="materiales-tab"   data-toggle="tab" href="#materiales"   role="tab" aria-controls="materiales" aria-selected="false">Material</a>
-                            <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
+                            <a onclick="comprobarFechas(@php echo $curso->id @endphp);" class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
                             <a onclick="verAsistentes(@php echo $curso->id @endphp)" class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
                             <a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
                     </div>
@@ -1084,6 +1084,34 @@
 
 <!--Evaluacion del ponente/Curso-->
 <script>
+
+    function comprobarFechas(id){
+      var respuesta;
+      var FechaInicio;
+      var FechaTermino;
+      $.ajax({
+          async:false,
+          url:'/fechas/'+id,
+          type: 'GET',
+          success:(function(res){
+            $(res).each(function(key,value){
+                 FechaInicio = value.fechaEmision;
+                 FechaTermino = value.fechaTermino;
+                 respuesta = res;
+                });
+          })
+      });
+      //console.log(respuesta);
+      //console.log("Fecha inicio: "+FechaInicio);
+        //console.log("Fecha termino: "+ FechaTermino);
+        if(respuesta === undefined){
+            
+        }else{
+            const boton = document.getElementById("subirActivacionEncPonente");
+            boton.disabled = true;
+        }
+       
+    }
     
     $("#subirActivacionEncPonente").click(function (e) {
         e.preventDefault();

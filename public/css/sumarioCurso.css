@@ -1,0 +1,23 @@
+/*Informacion Curso*/
+@font-face{
+    font-family : gothamBook;
+    src:url('GothamBook.ttf');
+}
+.encabezado{
+    float: left;
+    width: 100%;
+    background-color: #d4d4d4;
+    border: medium;
+}
+.textContenido{
+    color: black;
+    font-size: large;
+}
+.textTabla{
+    color: black;
+    font-size: small;
+    text-align: right;
+}
+.textOficio{
+    font-size: medium;
+}

@@ -8,16 +8,28 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    
+    <link rel="stylesheet" href="css/sumarioCurso.css" type="text/css">
 </head>
 <body>
+    <div class="encabezado">
+  <div class="encabezado">
+    <table>
+        <tr>
+            <td><img src="img/logo_asm.png" width="120px"></td>
+            <td><h6 class="text-center textOficio">INFORMACIÓN DE CURSO DE CAPACITACIÓN</h6></td>
+            <td><h6 class="textTabla">"Fiscalizando con Responsabilidad para Transparentar"</h6></td>
+        </tr>
+    </table>
+  </div>
+</div>
 @foreach($cursos as $curso)
-    <h2>Curso: {{$curso->nombreCurso}}</h2>
-    <h3>Informacion: </h3>
-    <h5>Descripcion: {{$curso->descripcionCurso}}</h5>
+<div>
+    <h2 class="text-center textContenido">Curso: {{$curso->nombreCurso}}</h2>
+    <h3 class="textContenido">Informacion: </h3>
+    <h5 class="textContenido">Descripcion: {{$curso->descripcionCurso}}</h5>
     <h5>Ponente: {{$curso->nombrePonente}}</h5>
     <h6>Informacion del Ponente: {{$curso->infoPonente}}</h6>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered textTabla">
         <thead class="text-center font-weight-bolder">
             <tr>
             <th>Lugar</th>
@@ -41,8 +53,9 @@
             @endforeach
         </tbody>
     </table>
+</div>
     <h5>Programa del Curso</h5>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered textTabla">
         <thead class="text-center font-weight-bolder">
         <tr>
             <th>Actividad</th>
@@ -61,7 +74,7 @@
         </tbody>
     </table>
     <h5>Listado de Materiales</h5>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered textTabla">
         <thead class="text-center font-weight-bolder">
             <tr>
                 <th>Nombre de Materiales utilizados</th>
@@ -80,8 +93,8 @@
     @foreach($areas as $area)
     <h6> {{$area->nombre}} </h6>
     @endforeach
-    <h5>Lista de Asistencia:</h5>
-    <table class="table table-striped table-bordered">
+    <h5>Lista de Inscritos:</h5>
+    <table class="table table-striped table-bordered textTabla">
         <thead class="text-center font-weight-bolder">
             <tr>
                 <th>Nombre</th>
@@ -94,7 +107,7 @@
                 <tr>
                     <td>{{$inscrito->name}} {{$inscrito->apPaterno}} {{$inscrito->apMaterno}}</td>
                     <td>{{$inscrito->curp}}</td>
-                    <td>{{$inscrito->nombre}}</td>
+                    <td>{{$inscrito->nombre}}</td><!--Area a la que corresponde-->
                 </tr>
             @endforeach
         </tbody>
