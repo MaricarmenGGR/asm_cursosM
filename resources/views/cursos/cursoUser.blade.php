@@ -132,6 +132,7 @@
                                                     <th class="text-center">#</th>
                                                     <th class="text-center">Actividad</th>
                                                     <th class="text-center">Hora</th>
+                                                    <th class="text-center">Fecha</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody id="actividadesPrograma">
@@ -575,6 +576,7 @@
             '<td class="pt-3-half">'+value.curso_id+'</td>'+
             '<td class="pt-3-half">'+value.actividad+'</td>'+
             '<td class="pt-3-half">'+value.hora+'</td>'+
+            '<td class="pt-3-half">'+value.fechaActividad+'</td>'+
             '</tr>');
             });
         })

@@ -51,6 +51,7 @@ Route::get('/verAsistentes/{id}', 'CursosController@verAsistentes');
 Route::get('/verificarRespuestas/{id_curso}/{id_user}','EvaluacionPonenteController@verificaRespuestaUsuario');
 Route::post('/agregarRespuesta','EvaluacionPonenteController@saveRespuesta');
 Route::get('/pdfCurso/{id}','CursosController@DescarganInfoCurso');
+Route::delete('/borrarCurso/{id}','CursosController@destroy');
 
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////
 Route::resource('cursosUsuario','CursosUsuarioController');

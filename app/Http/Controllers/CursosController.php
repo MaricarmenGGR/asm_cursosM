@@ -207,10 +207,61 @@ class CursosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+        //Borrar de materiales
+       /* $nombreMaterial = DB::table('materiales')
+        ->where('curso_id','=',$id)
+        ->select('url')
+        ->get();
+        foreach($nombreMaterial as $archivo){
+            $archivo = ($nombreMaterial->url);
+            unlink('materials/'.$archivo);
+        //$nombreArchivo = strval($archivo);
+        //unlink('materials/'.$nombreArchivo);
+        }*/
+        $material = DB::table('materiales')
+        ->where('curso_id', '=',$id)
+        ->delete();
+
+        $programaCurso = DB:: table('programa_cursos')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->delete();
+
+        $areas = DB::table('curso_areas')
+        ->leftJoin('areas', 'curso_areas.area_id', '=', 'areas.id')
+        ->select('curso_areas.*', 'areas.*')
+        ->where('curso_areas.curso_id', '=', $id)
+        ->delete();   
+        
+        $inscritos = DB::table('curso_usuarios')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->delete();
+
+        $evaluacionCurso = DB::table('evaluacion_curso')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->delete();
+
+        $evalucionRespuestas = DB::table('evaluacion_respuestas')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->delete();
+
+        $invitaciones = DB:: table('invitaciones')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->delete();
+
+        $curso = DB:: table('cursos')
+        ->where('id','=',$id)
+        ->select('*')
+        ->delete();
+        
     }
+
+    
 
     public function getCInfo($id){
         $curso = Curso::findOrFail($id);
@@ -278,4 +329,6 @@ class CursosController extends Controller
         return $pdf->download('archivo.pdf');
         
     }
+
+
 }
