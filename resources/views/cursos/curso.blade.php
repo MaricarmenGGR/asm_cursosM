@@ -38,6 +38,7 @@
                             <a onclick="comprobarFechas(@php echo $curso->id @endphp);" class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
                             <a onclick="verAsistentes(@php echo $curso->id @endphp)" class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
                             <a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
+                            <a class="nav-item nav-link" id="resultadosEva-tab" data-toggle="tab" href="#resultadosEva" role="tab" aria-controls="resultadosEva" aria-selected="false">Resultados</a>
                     </div>
                 </nav>
 
@@ -396,19 +397,6 @@
                                 </div>                                
                             </div>
 
-                        <!--<script src="https://code.highcharts.com/highcharts.js"></script>
-                        <script src="https://code.highcharts.com/modules/series-label.js"></script>
-                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-                        <script src="https://code.highcharts.com/modules/export-data.js"></script>
-                        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
-                        <figure class="highcharts-figure">
-                            <div id="container"></div>
-                            <p class="highcharts-description">
-                            Grafica de Ejemplo para los resultado de la evalucion del Ponente
-                            </p>
-                        </figure>-->
-
                     </div>
                 <!--ASISTENCIA-->
                     <div class="tab-pane fade" id="asistencia" role="tabpanel" aria-labelledby="asistencia-tab">
@@ -481,6 +469,23 @@
                             {!! $area->nombre !!} <br>
                         @endforeach
                         <br>
+                    </div>
+
+                    <div class="tab-pane fade" id="resultadosEva" role="tabpanel" aria-labelledby="resultados-tab">
+                        <h1>Resultados en grafica</h1>
+                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <script src="https://code.highcharts.com/modules/series-label.js"></script>
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+                        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+                       
+                        <figure class="highcharts-figure">
+                            <div id="grafica"></div>
+                            <p class="highcharts-description">
+                            Grafica de Ejemplo para los resultado de la evalucion del Ponente
+                            </p>
+                        </figure>
+
                     </div>
                     
                 </div>
@@ -1179,32 +1184,36 @@
 
 </script>
 
-<!--
+
+
 <script>
-Highcharts.chart('container', {
+    Highcharts.chart('grafica', {
 
 title: {
-    text: 'Solar Employment Growth by Sector, 2010-2016'
+    text: 'Resultado de Evaluación - Reacción de la capacitación'
 },
 
 subtitle: {
-    text: 'Source: thesolarfoundation.com'
+    text: 'Curso y Ponente'
 },
 
 yAxis: {
     title: {
-        text: 'Number of Employees'
+        text: 'Porcentaje de Respuestas'
     }
 },
 
 xAxis: {
-    accessibility: {
-        rangeDescription: 'Range: 2010 to 2017'
-    }
+    title:{
+        text:'Respuestas'
+    },
+    categories: ['Excelente','Bueno','Regular','Deficiente']
+    
+    
 },
-
+//Leyendas
 legend: {
-    layout: 'vertical',
+    layout: 'horizontal',
     align: 'right',
     verticalAlign: 'middle'
 },
@@ -1214,31 +1223,20 @@ plotOptions: {
         label: {
             connectorAllowed: false
         },
-        pointStart: 2010
+        
     }
 },
 
 series: [{
-    name: 'Installation',
-    data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-}, {
-    name: 'Manufacturing',
-    data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-}, {
-    name: 'Sales & Distribution',
-    data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-}, {
-    name: 'Project Development',
-    data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-}, {
-    name: 'Other',
-    data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+    type: 'column',
+    name: 'Respuesta',
+    data: [10,45,34,16]// datos prueba
 }],
 
 responsive: {
     rules: [{
         condition: {
-            maxWidth: 500
+            maxWidth: 100
         },
         chartOptions: {
             legend: {
@@ -1252,6 +1250,5 @@ responsive: {
 
 });
 </script>
--->
 
 @endsection
