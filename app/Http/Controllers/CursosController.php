@@ -12,6 +12,7 @@ use App\Modalidad;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\PDF;
+use SebastianBergmann\Environment\Console;
 
 class CursosController extends Controller
 {
@@ -209,16 +210,33 @@ class CursosController extends Controller
      */
     public function destroy($id){
         //Borrar de materiales
-       /* $nombreMaterial = DB::table('materiales')
+        $nombreMaterial = DB::table('materiales')
         ->where('curso_id','=',$id)
         ->select('url')
         ->get();
         foreach($nombreMaterial as $archivo){
-            $archivo = ($nombreMaterial->url);
-            unlink('materials/'.$archivo);
-        //$nombreArchivo = strval($archivo);
-        //unlink('materials/'.$nombreArchivo);
-        }*/
+            $file = $archivo->url;
+          unlink('materials/'.$file);
+        }
+        //Borrar de Invitaciones
+       $invitaciones = DB:: table('invitaciones')
+        ->where('curso_id','=',$id)
+        ->select('documento')
+        ->get();
+        foreach($invitaciones as $invitacion){
+            $file = $invitacion->documento;
+            unlink('invitaciones/'.$file);
+        }
+        //Borra de Uploads
+        $imagenCurso = DB:: table('cursos')
+        ->where('id','=',$id)
+        ->select('imagenCurso')
+        ->get();
+        foreach($imagenCurso as $imagen){
+            $file = $imagen->imagenCurso;
+            unlink('uploads/'.$file);
+        }
+        
         $material = DB::table('materiales')
         ->where('curso_id', '=',$id)
         ->delete();
@@ -258,6 +276,10 @@ class CursosController extends Controller
         ->where('id','=',$id)
         ->select('*')
         ->delete();
+
+        return response()->json(
+            ["mensaje"=> "Se borro el Curso"]
+         );
         
     }
 
