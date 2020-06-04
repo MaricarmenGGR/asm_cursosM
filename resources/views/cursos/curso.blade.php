@@ -379,13 +379,13 @@
                                                 {{ csrf_field() }}
                                                     <div class="form-group form-inline" >
                                                         <label>Fecha Inicio</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaActivarEva" name="fechaActivarEva" min="{{ $curso->fechaInicio }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaActivarEva" name="fechaActivarEva" min="{{ $curso->fechaInicio }}" required><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
                                                     </div>
                                                     <div class="form-group form-inline">
                                                         <label>Fecha Fin</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaDesactivarEva" name="fechaDesactivarEva" min="{{ $curso->fechaFin }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaDesactivarEva" name="fechaDesactivarEva" min="{{ $curso->fechaFin }}" required><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
                                                     </div>
-                                                <input type="hidden" value="{{$curso->id}}" name="curso_id">
+                                                <input type="hidden" value="{{$curso->id}}" name="curso_id" id="curso_id">
                                                 <div class="form-group">
                                                     <button class="btn btn-asm float-right" id="subirActivacionEncPonente">Activar</button>
                                                     <br>
@@ -1185,70 +1185,143 @@
 </script>
 
 
-
+<!--Grafica Resultados de Evaluacion-Curso-->
 <script>
-    Highcharts.chart('grafica', {
+    var respuesta;
+    var curso_id = $('#curso_id').val();
+    var ExcelenteRes = new Array();
+    var BuenoRes = new Array();
+    var RegularRes = new Array();
+    var DeficienteRes = new Array();
+    //VARPROMEDIO
+    var promedioExc;
+    var promedioBue;
+    var promedioReg;
+    var promedioDef;
 
-title: {
-    text: 'Resultado de Evaluación - Reacción de la capacitación'
-},
+            $.ajax({
+                async: false,
+                url: '/resultadosGrafica/'+curso_id,
+                type:'GET',
+                success:(function(res){
+                    $(res).each(function(key,value){
+                    respuesta = res;
+                    ExcelenteRes.push(value.Excelente);
+                    BuenoRes.push(value.Bueno);
+                    RegularRes.push(value.Regular);
+                    DeficienteRes.push(value.Deficiente);
+                    });
+                })
+            });
 
-subtitle: {
-    text: 'Curso y Ponente'
-},
-
-yAxis: {
-    title: {
-        text: 'Porcentaje de Respuestas'
-    }
-},
-
-xAxis: {
-    title:{
-        text:'Respuestas'
-    },
-    categories: ['Excelente','Bueno','Regular','Deficiente']
-    
-    
-},
-//Leyendas
-legend: {
-    layout: 'horizontal',
-    align: 'right',
-    verticalAlign: 'middle'
-},
-
-plotOptions: {
-    series: {
-        label: {
-            connectorAllowed: false
-        },
-        
-    }
-},
-
-series: [{
-    type: 'column',
-    name: 'Respuesta',
-    data: [10,45,34,16]// datos prueba
-}],
-
-responsive: {
-    rules: [{
-        condition: {
-            maxWidth: 100
-        },
-        chartOptions: {
-            legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom'
+            var arrayExcelentes = new Array();
+            for (var i = 0; i < ExcelenteRes.length; i++) {
+                var ExceNum = parseInt(ExcelenteRes[i]);
+                arrayExcelentes.push(ExceNum);
             }
-        }
-    }]
-}
+            var arrayBuenos = new Array();
+            for (var i = 0; i < BuenoRes.length; i++) {
+                var Num = parseInt(BuenoRes[i]);
+                arrayBuenos.push(Num);
+            }
+            var arrayRegulares = new Array();
+            for (var i = 0; i < RegularRes.length; i++) {
+                var Num = parseInt(RegularRes[i]);
+                arrayRegulares.push(Num);
+            }
+            var arrayDeficientes = new Array();
+            for (var i = 0; i < DeficienteRes.length; i++) {
+                var Num = parseInt(DeficienteRes[i]);
+                arrayDeficientes.push(Num);
+            }
 
-});
+            //PROMEDIOS DATOS DE GRAFICA
+            var sum = 0;
+            for(var j = 0; j<arrayExcelentes.length; j++){
+                sum += arrayExcelentes[j];
+            }
+            promedioExc = sum/arrayExcelentes.length;
+
+            var sum1 = 0;
+            for(var j = 0; j<arrayBuenos.length; j++){
+                sum1 += arrayBuenos[j];
+            }
+            promedioBue = sum1/arrayBuenos.length;
+
+            var sum2 = 0;
+            for(var j = 0; j<arrayRegulares.length; j++){
+                sum2 += arrayRegulares[j];
+            }
+            promedioReg = sum2/arrayRegulares.length;
+
+            var sum3 = 0;
+            for(var j = 0; j<arrayDeficientes.length; j++){
+                sum3 += arrayDeficientes[j];
+            }
+            promedioDef = sum3/arrayDeficientes.length;
+
+        Highcharts.chart('grafica', {
+
+    title: {
+        text: 'Resultado de Evaluación - Reacción de la capacitación'
+    },
+
+    subtitle: {
+        text: 'Curso y Ponente'
+    },
+
+    yAxis: {
+        title: {
+            text: 'Promedio de Respuestas'
+        }
+    },
+
+    xAxis: {
+        title:{
+            text:'Respuestas'
+        },
+        categories: ['Excelente','Bueno','Regular','Deficiente']
+        
+        
+    },
+    //Leyendas
+    legend: {
+        layout: 'horizontal',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    plotOptions: {
+        series: {
+            label: {
+                connectorAllowed: false
+            },
+            
+        }
+    },
+
+    series: [{
+        type: 'column',
+        name: 'Respuesta',
+        data: [promedioExc,promedioBue,promedioReg,promedioDef]
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 100
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+    });
 </script>
 
 @endsection

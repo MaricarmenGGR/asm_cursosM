@@ -150,4 +150,14 @@ class EvaluacionPonenteController extends Controller
             $respuestas
         );
     }
+
+    public function respuestaCursoGrafica($id){
+        $respuestas = DB::table('evaluacion_respuestas')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->get();
+        return response()->json(
+            $respuestas
+        );
+    }
 }
