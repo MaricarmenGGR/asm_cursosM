@@ -716,20 +716,7 @@
 
 
     function enviarRespuestas(){
-        var pregunta1 = $('input[name="pregunta1"]:checked').val();
-        var pregunta2 = $('input[name="pregunta2"]:checked').val();
-        var pregunta3 = $('input[name="pregunta3"]:checked').val();
-        var pregunta4 = $('input[name="pregunta4"]:checked').val();
-        var pregunta5 = $('input[name="pregunta5"]:checked').val();
-        var pregunta6 = $('input[name="pregunta6"]:checked').val();
-        var pregunta7 = $('input[name="pregunta7"]:checked').val();
-        var pregunta8 = $('input[name="pregunta8"]:checked').val();
-        var pregunta9 = $('input[name="pregunta9"]:checked').val();
-        var pregunta10 = $('input[name="pregunta10"]:checked').val();
-        var pregunta11 = $('input[name="pregunta11"]:checked').val();
-        var pregunta12 = $('input[name="pregunta12"]:checked').val();
-        var pregunta13 = $('input[name="pregunta13"]:checked').val();
-
+        var respuestas = new Array();
         var comentarios = $('#sugerenciasCursouser').val();
         var usuario_id = $('#user_id').val();
         var curso_id = $('#curso_idF').val();
@@ -738,11 +725,20 @@
         var BuenoC = 0;
         var RegunarC = 0;
         var DeficienteC = 0;
-        ///////////////
-
-        var respuestas = [pregunta1,pregunta2,pregunta3,pregunta4,pregunta5,pregunta6,pregunta7,pregunta8,pregunta9,pregunta10,pregunta11,pregunta12, pregunta13];
-        console.log(respuestas.length)
-       
+        for( var i = 1; i<=13; i++){
+            var num = i.toString();
+            if($('input[name="pregunta'+num+'"]').is(':checked')){
+                var pregunta = $('input[name="pregunta'+num+'"]:checked').val();
+                respuestas.push(pregunta);
+                
+            }else{
+                alert('La pregunta: '+num+' no tiene respuesta');
+            }
+        }
+        
+       if(respuestas.length!=13){
+            alert('Las respuestas no se enviaran hasta que este completo el cuestionario');
+       }else{
         for (var i = 0; i < respuestas.length; i++) {
             if(respuestas[i]=="Excelente"){
                 ExcelenteC = ExcelenteC + 1;
@@ -787,6 +783,7 @@
             }
         });
 
+        }
     }
 
 </script>

@@ -44,6 +44,7 @@
                 </div>
         </div>
     </div>
+    <!--Borrar Curso-->
     <script>
         function borrarCurso(){
             var curso_id = $('#curso_id').val();
