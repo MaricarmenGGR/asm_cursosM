@@ -713,8 +713,6 @@
        
     }
 
-
-
     function enviarRespuestas(){
         var respuestas = new Array();
         var comentarios = $('#sugerenciasCursouser').val();
