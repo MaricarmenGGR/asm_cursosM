@@ -76,7 +76,8 @@ Route::get('/cursos2', function () {
 Route::get('/pdf', function(){
     $cursos = Curso::all();
     $programas = Programa_Curso::all();
-    
-   // $pdf = PDF::loadView('informacionCurso',['cursos'=>$cursos],['programas'=>$programas]);//Retorna una vista
-   // return $pdf->download('archivo.pdf');
+});
+
+Route::get('/registro',function(){
+    return view('usuarios.registro');
 });

@@ -120,9 +120,11 @@
                                 <button type="submit" class="btn login_btn">
                                     {{ __('Iniciar Sesión') }}
                                 </button>
-				        </div>
-				    </form>
-				</div>
+                        </div>
+                        <hr>
+                    </form>
+                </div>
+                <a href="/registro"><button class="btn login_btn">Registro</button></a>
 		
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
@@ -132,7 +134,8 @@
                             </a>
                         @endif
 						
-					</div>
+                    </div>
+                    
 				</div>
 			</div>
 		</div>
