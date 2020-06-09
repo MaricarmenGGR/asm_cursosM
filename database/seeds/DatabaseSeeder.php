@@ -99,6 +99,18 @@ class DatabaseSeeder extends Seeder
             'id'=>2,
             'descripcion'=>'Trabajador'
         ]);
+        DB::table('roles')->insert([
+            'id'=>3,
+            'descripcion'=>'Auditor Auxiliar'
+        ]);
+        DB::table('roles')->insert([
+            'id'=>4,
+            'descripcion'=>'Jefe'
+        ]);
+        DB::table('roles')->insert([
+            'id'=>5,
+            'descripcion'=>'Director'
+        ]);
 
         //USUARIOS SEED
         DB::table('users')->insert([

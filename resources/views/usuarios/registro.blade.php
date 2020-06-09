@@ -52,18 +52,18 @@
                                     <div class="text-center">
                                         <label>Apellido Paterno</label>
                                     </div>
-                                    <input type="text" class="form-control" id="aPaterno" name="aPaterno" placeholder="Apellido Paterno" required>
+                                    <input type="text" class="form-control" id="aPaterno" name="aPaterno" placeholder="Apellido Paterno" onkeypress="return soloLetras(event)" required>
                                 </div>
                                 <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Apellido Materno</label>
-                                        <input type="text" class="form-control" id="aMaterno" name="aMaterno" placeholder="Apellido Materno" required>
+                                        <input type="text" class="form-control" id="aMaterno" name="aMaterno" placeholder="Apellido Materno" onkeypress="return soloLetras(event)" required>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Nombre(s)</label>
-                                        <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombre" required>
+                                        <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombre" onkeypress="return soloLetras(event)" required>
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                                     <div class="text-center">
                                         <label>Calle</label>
                                     </div>
-                                    <input type="text"  class="form-control" id="calle" name="celle" placeholder="Calle" required>
+                                    <input type="text"  class="form-control" id="calle" name="calle" placeholder="Calle" required>
                                 </div>
                                 <div class="form-group col-lg-2" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
@@ -121,7 +121,7 @@
                                     <div class="text-center">
                                         <label>No.</label>
                                     </div>
-                                    <input type="text"  class="form-control" id="numeroCasa" name="numeroCasa" placeholder="#" min="0" max="100" required>
+                                    <input type="text" class="form-control" id="numeroCasa" name="numeroCasa" placeholder="#" required>
                                 </div>
 
                             </div>
@@ -137,13 +137,13 @@
                                     <div class="text-center">
                                         <label>Correo Electrónico</label>
                                     </div>
-                                    <input type="text" class="form-control" id="correo" name="correo" placeholder="correo electrónico" required>
+                                    <input type="text" class="form-control" id="correo" name="correo" placeholder="correo electrónico" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>CURP</label>
                                     </div>
-                                    <input type="text" class="form-control" id="curp" name="curp" placeholder="CURP" required>
+                                    <input type="text" class="form-control" id="curp" name="curp" placeholder="CURP" pattern="([A-Z][AEIOUX][A-Z]{2}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM](AS|BC|BS|CC|CL|CM|CS|CH|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[A-Z]{3}[0-9A-Z]\d)" required>
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
@@ -161,7 +161,7 @@
                                     <div class="text-center">
                                         <label>Tipo de sangre</label>
                                     </div>
-                                    <input type="text" class="form-control" id="tipoSangre" name="tipoSangre" placeholder="Tipo de Sangre">
+                                    <input type="text" class="form-control" id="tipoSangre" name="tipoSangre" placeholder="Tipo de Sangre" required>
                                 </div>
                                 
                                 <div class="form-group col-lg-2" style="padding: 0 2% 0 2%">
@@ -175,7 +175,7 @@
                                     <div class="text-center">
                                         <label>En caso de emergencia llamar a</label>
                                     </div>
-                                    <input type="text" class="form-control" id="nombreEmergencia" name="nombreEmergencia" placeholder="Nombre Completo" required>
+                                    <input type="text" class="form-control" id="nombreEmergencia" name="nombreEmergencia" placeholder="Nombre Completo" onkeypress="return soloLetras(event)" required>
                                 </div>
                                 <div class="form-group col-lg-2" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
@@ -374,7 +374,11 @@
                                     <div class="text-center">
                                         <label>Cargo Actual</label>
                                     </div>
-                                    <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Cargo" required>
+                                   <select class="custom-select">
+                                       <option value="3">Auditor Auxiliar</option>
+                                       <option value="4">Jefe</option>
+                                       <option value="5">Director</option>
+                                   </select>
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
@@ -438,7 +442,7 @@
                                     <div class="text-center">
                                         <label>Describe de responsabilidades actuales:</label>
                                     </div>
-                                    <textarea class="form-control" id="responsabilidades" name="responsabilidades" placeholder=""></textarea>
+                                    <textarea class="form-control" id="responsabilidades" name="responsabilidades" placeholder="" required></textarea>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -520,3 +524,22 @@
     
 </body>
 </html>
+
+<!--Script para solo letras en el nombre-->
+<script>
+     function soloLetras(e) {
+        key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toLowerCase();
+        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+        especiales = [8, 37, 39, 46];
+        tecla_especial = false
+        for(var i in especiales) {
+            if(key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
+        if(letras.indexOf(tecla) == -1 && !tecla_especial)
+        return false;
+     }
+</script>
