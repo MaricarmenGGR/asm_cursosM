@@ -112,10 +112,12 @@
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                 <div class="card-body">
-                                        <h4><p id="pNomP">{!! $curso->nombrePonente !!}<p></h4>
-                                        <p id="pInfP">{!! $curso->infoPonente !!}<p>
                                         <form id="ponenteForm" class="form-group">
                                             {{ csrf_field() }}
+                                            <h4><label id="pNomP">{!! $curso->nombrePonente !!}</label></h4>
+                                            <label id="pInfP">{!! $curso->infoPonente !!}</label>
+                                        
+                                            
                                             <label id="LnombrePonente" hidden>Nombre Completo del Ponente</label>
                                             <input type="text" class="form-control" name="nombrePonente" id="nombrePonente" value="{!! $curso->nombrePonente !!}" placeholder="Nombre completo del ponente" hidden style="margin-bottom: 5px;">
                                             <label id="LinfoPonente" hidden>Información del Ponente</label>
@@ -513,12 +515,6 @@
                 $("#lugar").val(data.lugar);
                 $("#fechaInicio").val(data.fechaInicio);
                 $("#fechaFin").val(data.fechaFin);
-                //Para los minimos y maximos de fecha de activacion de examen
-                document.getElementById("fechaActivar").removeAttribute("min");
-                $("#fechaActivar").attr({"min" : data.fechaInicio});
-                //Para los minimos y maximos de fecha de activacion de examen
-                document.getElementById("fechaDesactivar").removeAttribute("min");
-                $("#fechaDesactivar").attr({"min" : data.fechaFin});
 
                 document.getElementById("pNomP").innerHTML=data.nombrePonente
                 document.getElementById("pInfP").innerHTML=data.infoPonente
@@ -532,6 +528,12 @@
                 $("#horaFin").val(data.horaFin);
                 $("#horasTotales").val(data.horasTotales);
 
+                //Para los minimos y maximos de fecha de activacion de examen
+                document.getElementById("fechaActivar").removeAttribute("min");
+                $("#fechaActivar").attr({"min" : data.fechaInicio});
+                //Para los minimos y maximos de fecha de activacion de examen
+                document.getElementById("fechaDesactivar").removeAttribute("min");
+                $("#fechaDesactivar").attr({"min" : data.fechaFin});
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 alert("Status: " + textStatus); alert("Error: " + errorThrown);
@@ -913,7 +915,6 @@
     }
 </script>
 
-<!--examen script
 <script>
     
     $(document).ready(function(){
@@ -945,7 +946,7 @@
                                             '<div class="d-flex">'+
                                                 '<a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" href="#collapse'+ counter +'" ' + 'aria-expanded="true" aria-controls="collapse'+ counter +'"> '+catgName+' </a>'+
                                                 '<a href="#" accesskey="'+ counter +'" class="p-2 edit_ctg_label pull-right"><i class="fas fa-pencil-alt"></i></a>' +
-                                                '<a style="color:#dd4b39;;" href="#" accesskey="'+ counter +'" class="p-2 remove_ctg_panel exit-btn pull-right"><i class="fas fa-trash-alt"></i></a>' +
+                                                '<a style="color:#dd4b39;" href="#" accesskey="'+ counter +'" class="p-2 remove_ctg_panel exit-btn pull-right"><i class="fas fa-trash-alt"></i></a>' +
                                             '</div>'+
                                         '</h5>'+
                                     '</div>' +
@@ -1018,7 +1019,7 @@
 
 
 </script>
--->
+
 <script>
     function verAsistentes(id) { //Llenar tabla de servicios solicitados
       var id_usuario=$('#id_usuario').val();

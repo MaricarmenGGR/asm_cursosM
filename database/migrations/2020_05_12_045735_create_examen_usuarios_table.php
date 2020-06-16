@@ -13,10 +13,10 @@ class CreateExamenUsuariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('examen_usuarios', function (Blueprint $table) {
+        Schema::create('examen_usuario', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedinteger('examen_id');
-            $table->foreign('examen_id')->references('id')->on('examenes');
+            $table->foreign('examen_id')->references('id')->on('examen');
             $table->unsignedinteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->boolean('terminado');

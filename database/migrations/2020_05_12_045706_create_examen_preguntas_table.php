@@ -16,7 +16,7 @@ class CreateExamenPreguntasTable extends Migration
         Schema::create('examen_preguntas', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedinteger('examen_id');
-            $table->foreign('examen_id')->references('id')->on('examenes');
+            $table->foreign('examen_id')->references('id')->on('examen');
             $table->longText('preguntaTxt');
             $table->timestamps();
             $table->softDeletes();
