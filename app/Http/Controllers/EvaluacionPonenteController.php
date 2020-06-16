@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Evaluacion;
 use App\Http\Controllers\Controller;
+use App\Respuestas_Evaluacion_Ponente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -102,12 +103,61 @@ class EvaluacionPonenteController extends Controller
         );
     }
     public function Fechas($id){
+       
         $fechas = DB::table('evaluacion_curso')
         ->where('curso_id', '=',$id)
         ->select('fechaEmision','fechaTermino')
         ->get();
         return response()->json(
             $fechas
+        );
+    }
+
+    public function verFechasEvaluacion($id){
+        $fechas = DB::table('evaluacion_curso')
+        ->where('curso_id', '=',$id)
+        ->select('fechaEmision','fechaTermino')
+        ->get();
+        $vars = [
+            'fechas' => $fechas
+        ];
+        return view('cursos.curso', $vars);
+    }
+
+    public function saveRespuesta(Request $request){
+        if($request->ajax()){
+            return response()->json([
+                Respuestas_Evaluacion_Ponente::create([
+                    'curso_id' =>$request->curso_id,
+                    'user_id' => $request->user_id,
+                    'Excelente'=>$request->Excelente,
+                    'Bueno'=>$request->Bueno,
+                    'Regular'=>$request->Regular,
+                    'Deficiente'=>$request->Deficiente,
+                    'Comentarios'=>$request->Comentarios,
+                ])
+            ]);
+        }
+    }
+
+    public function verificaRespuestaUsuario($id_curso,$id_user){
+        $respuestas = DB::table('evaluacion_respuestas')
+        ->where('curso_id', '=',$id_curso)
+        ->where('user_id','=',$id_user)
+        ->select('*')
+        ->get();
+        return response()->json(
+            $respuestas
+        );
+    }
+
+    public function respuestaCursoGrafica($id){
+        $respuestas = DB::table('evaluacion_respuestas')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->get();
+        return response()->json(
+            $respuestas
         );
     }
 }

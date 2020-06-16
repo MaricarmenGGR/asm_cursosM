@@ -11,6 +11,8 @@ use App\Curso_Usuario;
 use App\Modalidad;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\PDF;
+use SebastianBergmann\Environment\Console;
 
 class CursosController extends Controller
 {
@@ -206,10 +208,82 @@ class CursosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+        //Borrar de materiales
+        $nombreMaterial = DB::table('materiales')
+        ->where('curso_id','=',$id)
+        ->select('url')
+        ->get();
+        foreach($nombreMaterial as $archivo){
+            $file = $archivo->url;
+          unlink('materials/'.$file);
+        }
+        //Borrar de Invitaciones
+       $invitaciones = DB:: table('invitaciones')
+        ->where('curso_id','=',$id)
+        ->select('documento')
+        ->get();
+        foreach($invitaciones as $invitacion){
+            $file = $invitacion->documento;
+            unlink('invitaciones/'.$file);
+        }
+        //Borra de Uploads
+        $imagenCurso = DB:: table('cursos')
+        ->where('id','=',$id)
+        ->select('imagenCurso')
+        ->get();
+        foreach($imagenCurso as $imagen){
+            $file = $imagen->imagenCurso;
+            unlink('uploads/'.$file);
+        }
+        
+        $material = DB::table('materiales')
+        ->where('curso_id', '=',$id)
+        ->delete();
+
+        $programaCurso = DB:: table('programa_cursos')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->delete();
+
+        $areas = DB::table('curso_areas')
+        ->leftJoin('areas', 'curso_areas.area_id', '=', 'areas.id')
+        ->select('curso_areas.*', 'areas.*')
+        ->where('curso_areas.curso_id', '=', $id)
+        ->delete();   
+        
+        $inscritos = DB::table('curso_usuarios')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->delete();
+
+        $evaluacionCurso = DB::table('evaluacion_curso')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->delete();
+
+        $evalucionRespuestas = DB::table('evaluacion_respuestas')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->delete();
+
+        $invitaciones = DB:: table('invitaciones')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->delete();
+
+        $curso = DB:: table('cursos')
+        ->where('id','=',$id)
+        ->select('*')
+        ->delete();
+
+        return response()->json(
+            ["mensaje"=> "Se borro el Curso"]
+         );
+        
     }
+
+    
 
     public function getCInfo($id){
         $curso = Curso::findOrFail($id);
@@ -233,4 +307,50 @@ class CursosController extends Controller
             $asistentes->toArray()
         );
     }
+
+    public function DescarganInfoCurso($id){
+        $cursoDatos =  DB:: table('cursos')
+        ->where('id', '=',$id)
+        ->select('*')
+        ->get();
+
+        $programaCurso = DB:: table('programa_cursos')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->get();
+
+        $materialCurso = DB:: table('materiales')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->get();
+
+        $areas = DB::table('curso_areas')
+        ->leftJoin('areas', 'curso_areas.area_id', '=', 'areas.id')
+        ->select('curso_areas.*', 'areas.*')
+        ->where('curso_areas.curso_id', '=', $id)
+        ->get();
+
+        $inscritos = DB::table('users')
+        ->leftJoin('curso_usuarios', 'curso_usuarios.user_id', '=', 'users.id')
+        ->leftJoin('areas', 'areas.id', '=', 'users.area_id')
+        ->select('curso_usuarios.*', 'users.*', 'areas.*')
+        ->where('curso_usuarios.curso_id', '=', $id)
+        ->get();
+
+       
+        $vars = [
+            'cursos' => $cursoDatos,
+            'programas' => $programaCurso,
+            'materiales' => $materialCurso,
+            'areas' => $areas,
+            'inscritos' =>$inscritos,
+            
+        ];
+
+        $pdf = \PDF::loadView('informacionCurso',$vars);//Retorna una vista
+        return $pdf->download('archivo.pdf');
+        
+    }
+
+
 }

@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
+use App\Curso;
+use App\Programa_Curso;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +48,11 @@ Route::get('/fechas/{id}','EvaluacionPonenteController@Fechas');
 Route::delete('/borrarMaterial/{id}','MaterialCursoController@destroy');
 Route::delete('/desactivarEvaluacion/{id}','EvaluacionPonenteController@destroy');
 Route::get('/verAsistentes/{id}', 'CursosController@verAsistentes');
+Route::get('/verificarRespuestas/{id_curso}/{id_user}','EvaluacionPonenteController@verificaRespuestaUsuario');
+Route::get('/resultadosGrafica/{id}','EvaluacionPonenteController@respuestaCursoGrafica');
+Route::post('/agregarRespuesta','EvaluacionPonenteController@saveRespuesta');
+Route::get('/pdfCurso/{id}','CursosController@DescarganInfoCurso');
+Route::delete('/borrarCurso/{id}','CursosController@destroy');
 
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////
 Route::resource('cursosUsuario','CursosUsuarioController');
@@ -62,3 +72,12 @@ Route::get('/cursos', function () {
 Route::get('/cursos2', function () {
     return view('cursos.curso2');
 })->name('cursos2')->middleware('auth');
+
+Route::get('/pdf', function(){
+    $cursos = Curso::all();
+    $programas = Programa_Curso::all();
+});
+
+Route::get('/registro',function(){
+    return view('usuarios.registro');
+});

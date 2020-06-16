@@ -35,9 +35,10 @@
                             <a onclick="viewInfoCurso(@php echo $curso->id @endphp)" class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             <a onclick="eliminarTabla();verTabla(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
                             <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp)"class="nav-item nav-link" id="materiales-tab"   data-toggle="tab" href="#materiales"   role="tab" aria-controls="materiales" aria-selected="false">Material</a>
-                            <a class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
+                            <a onclick="comprobarFechas(@php echo $curso->id @endphp);" class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
                             <a onclick="verAsistentes(@php echo $curso->id @endphp)" class="nav-item nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab" aria-controls="asistencia" aria-selected="false">Asistencia</a>
                             <a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
+                            <a class="nav-item nav-link" id="resultadosEva-tab" data-toggle="tab" href="#resultadosEva" role="tab" aria-controls="resultadosEva" aria-selected="false">Resultados</a>
                     </div>
                 </nav>
 
@@ -213,7 +214,7 @@
                                                     <th class="text-center">#</th>
                                                     <th class="text-center">Actividad</th>
                                                     <th class="text-center">Hora</th>
-                                                    <th class="text-center">Ordenar</th>
+                                                    <th class="text-center">Fecha</th>
                                                     <th class="text-center">Borrar</th>
                                                 </tr>
                                                 </thead>
@@ -249,6 +250,12 @@
                                                         <label>Hora</label>
                                                     </div>
                                                     <input type="time" class="form-control" id="hora" name="hora" placeholder="Hora" required>
+                                                </div>
+                                                <div class="form-group" style="padding: 0 2% 0 2%">
+                                                    <div class="text-left">
+                                                        <label>Fecha</label>
+                                                    </div>
+                                                    <input type="date" class="form-control" id="fechaActividad" name="fechaActividad" placeholder="fechaActividad" required>
                                                 </div>
                                             
                                             <input type="hidden" value="{{$curso->id}}" id="curso_id" name="curso_id">
@@ -372,43 +379,25 @@
                                             <label><strong>Activar encuesta</strong></label>
                                             <form id="examenPonenteActivarForm" class="form-group form-inline">
                                                 {{ csrf_field() }}
-                                                    
                                                     <div class="form-group form-inline" >
                                                         <label>Fecha Inicio</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaActivarEva" name="fechaActivarEva" min="{{ $curso->fechaInicio }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaActivarEva" name="fechaActivarEva" min="{{ $curso->fechaInicio }}" required><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
                                                     </div>
                                                     <div class="form-group form-inline">
                                                         <label>Fecha Fin</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaDesactivarEva" name="fechaDesactivarEva" min="{{ $curso->fechaFin }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaDesactivarEva" name="fechaDesactivarEva" min="{{ $curso->fechaFin }}" required><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
                                                     </div>
-                                                
-                                                <input type="hidden" value="{{$curso->id}}" name="curso_id">
+                                                <input type="hidden" value="{{$curso->id}}" name="curso_id" id="curso_id">
                                                 <div class="form-group">
                                                     <button class="btn btn-asm float-right" id="subirActivacionEncPonente">Activar</button>
                                                     <br>
                                                     <button class="btn btn-danger float-right" id="quitarActivacionEncPonente">Desactivar</button>
                                                 </div>
                                             </form>
-
-                                            <label><strong>Vista previa de encuesta</strong></label>
-
                                         </div>
                                     </div>
                                 </div>                                
                             </div>
-
-                        <!--<script src="https://code.highcharts.com/highcharts.js"></script>
-                        <script src="https://code.highcharts.com/modules/series-label.js"></script>
-                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-                        <script src="https://code.highcharts.com/modules/export-data.js"></script>
-                        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
-                        <figure class="highcharts-figure">
-                            <div id="container"></div>
-                            <p class="highcharts-description">
-                            Grafica de Ejemplo para los resultado de la evalucion del Ponente
-                            </p>
-                        </figure>-->
 
                     </div>
                 <!--ASISTENCIA-->
@@ -483,6 +472,24 @@
                         @endforeach
                         <br>
                     </div>
+
+                    <div class="tab-pane fade" id="resultadosEva" role="tabpanel" aria-labelledby="resultados-tab">
+                        <h1>Resultados en grafica</h1>
+                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <script src="https://code.highcharts.com/modules/series-label.js"></script>
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+                        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+                       
+                        <figure class="highcharts-figure">
+                            <div id="grafica"></div>
+                            <p class="highcharts-description">
+                            Grafica de Ejemplo para los resultado de la evalucion del Ponente
+                            </p>
+                        </figure>
+
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -762,8 +769,9 @@
         var curso_id = $('#curso_id').val();
         var actividad = $('#actividad').val();
         var hora = $('#hora').val();
+        var fechaActividad = $('#fechaActividad').val();
         var token = '{{csrf_token()}}';
-        var data={_token:token,curso_id:curso_id,actividad:actividad,hora:hora};
+        var data={_token:token,curso_id:curso_id,actividad:actividad,hora:hora,fechaActividad:fechaActividad};
         $.ajax({
         type: "post",
         url: "{{ route('programas.store') }}",
@@ -801,10 +809,7 @@
             '<td class="pt-3-half">'+value.curso_id+'</td>'+
             '<td class="pt-3-half">'+value.actividad+'</td>'+
             '<td class="pt-3-half">'+value.hora+'</td>'+
-            '<td class="pt-3-half">'+
-            '<span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>'+
-            '<span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>'+
-            '</td>'+
+            '<td class="pt-3-half">'+value.fechaActividad+'</td>'+
             '<td>'+
             '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarAct(this);">Borrar</button></span>'+
             '</td>'+
@@ -830,7 +835,7 @@
                     showConfirmButton: false,
                     timer: 1500
                 });
-                verTabla(curso_id)
+                verTabla(curso_id);
             }
         });
     }
@@ -1085,6 +1090,34 @@
 
 <!--Evaluacion del ponente/Curso-->
 <script>
+
+    function comprobarFechas(id){
+      var respuesta;
+      var FechaInicio;
+      var FechaTermino;
+      $.ajax({
+          async:false,
+          url:'/fechas/'+id,
+          type: 'GET',
+          success:(function(res){
+            $(res).each(function(key,value){
+                 FechaInicio = value.fechaEmision;
+                 FechaTermino = value.fechaTermino;
+                 respuesta = res;
+                });
+          })
+      });
+      //console.log(respuesta);
+      //console.log("Fecha inicio: "+FechaInicio);
+        //console.log("Fecha termino: "+ FechaTermino);
+        if(respuesta === undefined){
+            
+        }else{
+            const boton = document.getElementById("subirActivacionEncPonente");
+            boton.disabled = true;
+        }
+       
+    }
     
     $("#subirActivacionEncPonente").click(function (e) {
         e.preventDefault();
@@ -1105,6 +1138,8 @@
                 timer: 1500
             });
             console.log(data);
+            const boton = document.getElementById("subirActivacionEncPonente");
+            boton.disabled = true;
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             Swal.fire({
@@ -1133,6 +1168,8 @@
                 showConfirmButton: false,
                 timer: 1500
             });
+            const boton = document.getElementById("subirActivacionEncPonente");
+            boton.disabled = false;
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             Swal.fire({
@@ -1148,79 +1185,144 @@
 
 </script>
 
-<!--
+
+<!--Grafica Resultados de Evaluacion-Curso-->
 <script>
-Highcharts.chart('container', {
+    var respuesta;
+    var curso_id = $('#curso_id').val();
+    var ExcelenteRes = new Array();
+    var BuenoRes = new Array();
+    var RegularRes = new Array();
+    var DeficienteRes = new Array();
+    //VARPROMEDIO
+    var promedioExc;
+    var promedioBue;
+    var promedioReg;
+    var promedioDef;
 
-title: {
-    text: 'Solar Employment Growth by Sector, 2010-2016'
-},
+            $.ajax({
+                async: false,
+                url: '/resultadosGrafica/'+curso_id,
+                type:'GET',
+                success:(function(res){
+                    $(res).each(function(key,value){
+                    respuesta = res;
+                    ExcelenteRes.push(value.Excelente);
+                    BuenoRes.push(value.Bueno);
+                    RegularRes.push(value.Regular);
+                    DeficienteRes.push(value.Deficiente);
+                    });
+                })
+            });
 
-subtitle: {
-    text: 'Source: thesolarfoundation.com'
-},
-
-yAxis: {
-    title: {
-        text: 'Number of Employees'
-    }
-},
-
-xAxis: {
-    accessibility: {
-        rangeDescription: 'Range: 2010 to 2017'
-    }
-},
-
-legend: {
-    layout: 'vertical',
-    align: 'right',
-    verticalAlign: 'middle'
-},
-
-plotOptions: {
-    series: {
-        label: {
-            connectorAllowed: false
-        },
-        pointStart: 2010
-    }
-},
-
-series: [{
-    name: 'Installation',
-    data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-}, {
-    name: 'Manufacturing',
-    data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-}, {
-    name: 'Sales & Distribution',
-    data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-}, {
-    name: 'Project Development',
-    data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-}, {
-    name: 'Other',
-    data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-}],
-
-responsive: {
-    rules: [{
-        condition: {
-            maxWidth: 500
-        },
-        chartOptions: {
-            legend: {
-                layout: 'horizontal',
-                align: 'center',
-                verticalAlign: 'bottom'
+            var arrayExcelentes = new Array();
+            for (var i = 0; i < ExcelenteRes.length; i++) {
+                var ExceNum = parseInt(ExcelenteRes[i]);
+                arrayExcelentes.push(ExceNum);
             }
-        }
-    }]
-}
+            var arrayBuenos = new Array();
+            for (var i = 0; i < BuenoRes.length; i++) {
+                var Num = parseInt(BuenoRes[i]);
+                arrayBuenos.push(Num);
+            }
+            var arrayRegulares = new Array();
+            for (var i = 0; i < RegularRes.length; i++) {
+                var Num = parseInt(RegularRes[i]);
+                arrayRegulares.push(Num);
+            }
+            var arrayDeficientes = new Array();
+            for (var i = 0; i < DeficienteRes.length; i++) {
+                var Num = parseInt(DeficienteRes[i]);
+                arrayDeficientes.push(Num);
+            }
 
-});
+            //PROMEDIOS DATOS DE GRAFICA
+            var sum = 0;
+            for(var j = 0; j<arrayExcelentes.length; j++){
+                sum += arrayExcelentes[j];
+            }
+            promedioExc = sum/arrayExcelentes.length;
+
+            var sum1 = 0;
+            for(var j = 0; j<arrayBuenos.length; j++){
+                sum1 += arrayBuenos[j];
+            }
+            promedioBue = sum1/arrayBuenos.length;
+
+            var sum2 = 0;
+            for(var j = 0; j<arrayRegulares.length; j++){
+                sum2 += arrayRegulares[j];
+            }
+            promedioReg = sum2/arrayRegulares.length;
+
+            var sum3 = 0;
+            for(var j = 0; j<arrayDeficientes.length; j++){
+                sum3 += arrayDeficientes[j];
+            }
+            promedioDef = sum3/arrayDeficientes.length;
+
+        Highcharts.chart('grafica', {
+
+    title: {
+        text: 'Resultado de Evaluación - Reacción de la capacitación'
+    },
+
+    subtitle: {
+        text: 'Curso y Ponente'
+    },
+
+    yAxis: {
+        title: {
+            text: 'Promedio de Respuestas'
+        }
+    },
+
+    xAxis: {
+        title:{
+            text:'Respuestas'
+        },
+        categories: ['Excelente','Bueno','Regular','Deficiente']
+        
+        
+    },
+    //Leyendas
+    legend: {
+        layout: 'horizontal',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    plotOptions: {
+        series: {
+            label: {
+                connectorAllowed: false
+            },
+            
+        }
+    },
+
+    series: [{
+        type: 'column',
+        name: 'Respuesta',
+        data: [promedioExc,promedioBue,promedioReg,promedioDef]
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 100
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+    });
 </script>
--->
 
 @endsection

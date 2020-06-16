@@ -14,6 +14,9 @@
                             <h4 class="card-title" style="text-align: center;">{!! $curso->nombreCurso !!}</h4>
                             <div class="meta" style="text-align: left; color: gray;">
                                 <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{!! $curso->fechaInicio !!}
+                                <button class="btn btn-asm text-center" onclick="borrarCurso();"><i class="fas fa-trash-alt">Borrar</i></button>
+                                <input type="hidden" id="curso_id" value="{{$curso->id}}">
+                                <a href="/pdfCurso/{{$curso->id}}"><button class="btn btn-asm text-center"><i class="fas fa-download">Descargar Curso</i></button></a>
                             </div>
                             <div class="card-text" style="text-align: justify; color: black;">
                                 {!! $curso->descripcionCurso !!}
@@ -41,6 +44,29 @@
                 </div>
         </div>
     </div>
+    <!--Borrar Curso-->
+    <script>
+        function borrarCurso(){
+            var curso_id = $('#curso_id').val();
+            var ruta = "/borrarCurso/"+curso_id;
+        var token = '{{csrf_token()}}';
+        $.ajax({
+            url:ruta,
+            headers:{'X-CSRF-TOKEN':token},
+            type:'delete',
+            dataType : 'json',
+            success: function(response){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'CURSO ELIMINADO',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                location.reload();
+            }
+        });
+        }
+    </script>
 @endif
 
 <!-- VISTA COMO USUARIO -->
@@ -109,6 +135,9 @@
             })
         }
     </script>
+
+    
+
 @endif
 
 @endsection
