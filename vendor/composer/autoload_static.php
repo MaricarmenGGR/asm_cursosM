@@ -556,6 +556,7 @@ class ComposerStaticInitb8290ad129bd1dc8e6f1f1f3648f551a
         'App\\Role' => __DIR__ . '/../..' . '/app/Role.php',
         'App\\Status' => __DIR__ . '/../..' . '/app/Status.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'App\\UserMedic' => __DIR__ . '/../..' . '/app/UserMedic.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
         'Barryvdh\\DomPDF\\Facade' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade.php',

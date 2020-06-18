@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
+use App\UserJob;
+use App\UserMedic;
+use App\UserSchool;
 use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UsuariosController extends Controller
 {
@@ -44,8 +49,74 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create([
+            'name' => $request->name,
+            'apPaterno' => $request->apPaterno,
+            'apMaterno' => $request->apMaterno,
+            'edad' => $request->edad,
+            'sexo' => $request->sexo,
+            'edoCivil' => $request->edoCivil,
+            'calle' => $request->calle,
+            'colonia' => $request->colonia,
+            'nCasa' => $request->nCasa,
+            'telfono' => $request->telfono,
+            'curp' => $request->curp,
+            'nHijos' =>$request->nHijos,
+            'email' => $request->email,
+            'role_id' => 2,
+            'password' => Hash::make($request->password),
+            'area_id' => $request->area_id,
+        ]);
+
+        //$id_user = User::latest('id')->first();
+        $ultimaTupla = DB::table('users')->latest('id')->first(); 
+
+        UserMedic:: create([
+            'id_user'=>$ultimaTupla->id,
+            'tipoSangre'=>$request->tipoSangre,
+            'noImss'=>$request->noImss,
+            'nombreEmergencia'=>$request->nombreEmergencia,
+            'telEmergencia'=>$request->telEmergencia,
+            'parentesco'=>$request->parentesco,
+            'alergias'=>$request->alergias,
+            'enfermedades'=>$request->enfermedades,
+        ]);
+
+        UserSchool::create([
+            'id_user'=>$ultimaTupla->id,
+            'Primaria'=>$request->Primaria,
+            'Secundaria'=>$request->Secundaria,
+            'Prepa'=>$request->Prepa,
+            'cTecnica'=>$request->cTecnica,
+            'cProfesional'=>$request->cProfesional,
+            'nCTecnica'=>$request->nCTecnica,
+            'nCProfesional'=>$request->nCProfesional,
+            'diplomados'=>$request->diplomados,
+            'noCedula'=>$request->noCedula,
+            'Maestrias'=>$request->Maestrias,
+            'cursosExtra'=>$request->cursosExtra,
+            'hCapacidades'=>$request->hCapacidades,
+            'habilidadesDesc'=>$request->habilidadesDesc,
+        ]);
+
+        UserJob::create([
+            'id_user'=>$ultimaTupla->id,
+            'fechaIngreso'=>$request->fechaIngreso,
+            'nombramiento'=>$request->nombramiento,
+            'tipoTrabajador'=>$request->tipoTrabajador,
+            'actActuales'=>$request->actActuales,
+            'actActualesDesc'=>$request->actActualesDesc,
+            'responsabilidades'=>$request->responsabilidades,
+            'Puesto'=>$request->Puesto,
+            'descPuesto'=>$request->descPuesto,
+            'cursoInduccion'=>$request->cursoInduccion,
+            'cursoInduccionDesc'=>$request->cursoInduccionDesc,
+            'cargosAnt'=>$request->cargosAnt,
+            'trabajosExt'=>$request->trabajosExt,
+        ]);
+        return view('auth.login');
     }
+    
 
     /**
      * Display the specified resource.
@@ -53,6 +124,7 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    //VER INFO DEL PERFIL DESDE AQUI
     public function show($id)
     {
         $rol=Role::get();

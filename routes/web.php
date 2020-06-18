@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use App\Curso;
+use App\Http\Controllers\UsuariosController;
 use App\Programa_Curso;
 
 /*
@@ -32,7 +33,9 @@ Route::resource('materiales','MaterialCursoController');
 Route::resource('invitacion','InvitacionController');
 Route::resource('programas','ProgramaCursoController');
 Route::resource('examenes','ExamenCursoController');
+Route::resource('usuarios','UsuariosController');
 Route::resource('evaluacion','EvaluacionPonenteController');
+
 Route::get('/cursos', 'CursosController@index')->name('cursos');
 Route::get('/verCurso', 'CursosController@show')->name('verCurso');
 Route::get('/crearCurso', 'CursosController@create')->name('crearCurso');
@@ -77,6 +80,10 @@ Route::get('/pdf', function(){
     $cursos = Curso::all();
     $programas = Programa_Curso::all();
 });
+
+/*Route::get('/registro',function(){
+    return view('auth.register');
+});*/
 
 Route::get('/registro',function(){
     return view('usuarios.registro');

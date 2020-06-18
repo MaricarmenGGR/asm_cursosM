@@ -37,8 +37,9 @@ class RegisterController extends Controller
      * @return void
      */
     public function __construct()
-    {
+    {   
         $this->middleware('guest');
+        
     }
 
     /**
@@ -49,10 +50,25 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+       
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'apPaterno'=>['required','string'],
+            'apMaterno'=>['required','string'],
+            'edad'=>['required'],
+            'sexo'=>['required'],
+            'edoCivil'=>['required'],
+            'calle'=>['required'],
+            'colonia'=>['required'],
+            'nCasa'=>['required'],
+            'telfono'=>['required'],
+            'curp'=>['required'],
+            'nHijos'=>['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'role_id' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'area_id'=>['required'],
+
         ]);
     }
 
@@ -66,8 +82,21 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'apPaterno' => $data['apPaterno'],
+            'apMaterno' => $data['apMaterno'],
+            'edad' => $data['edad'],
+            'sexo' => $data['sexo'],
+            'edoCivil' => $data['edoCivil'],
+            'calle' => $data['calle'],
+            'colonia' => $data['colonia'],
+            'nCasa' => $data['nCasa'],
+            'telfono' => $data['telfono'],
+            'curp' => $data['curp'],
+            'nHijos' => $data['nHijos'],
             'email' => $data['email'],
+            'role_id' => $data['role_id'],
             'password' => Hash::make($data['password']),
+            'area_id' => $data['area_id'],
         ]);
     }
 }

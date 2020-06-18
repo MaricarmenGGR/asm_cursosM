@@ -57,6 +57,7 @@ return array(
     'App\\Role' => $baseDir . '/app/Role.php',
     'App\\Status' => $baseDir . '/app/Status.php',
     'App\\User' => $baseDir . '/app/User.php',
+    'App\\UserMedic' => $baseDir . '/app/UserMedic.php',
     'Asm89\\Stack\\Cors' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
     'Asm89\\Stack\\CorsService' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
     'Barryvdh\\DomPDF\\Facade' => $vendorDir . '/barryvdh/laravel-dompdf/src/Facade.php',
