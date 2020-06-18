@@ -62,6 +62,7 @@ return array(
     'App\\examen_respuestas' => $baseDir . '/app/examen_respuestas.php',
     'App\\examen_respuestas_usuario' => $baseDir . '/app/examen_respuestas_usuario.php',
     'App\\examen_usuario' => $baseDir . '/app/examen_usuario.php',
+    'App\\UserMedic' => $baseDir . '/app/UserMedic.php',
     'Asm89\\Stack\\Cors' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
     'Asm89\\Stack\\CorsService' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
     'Barryvdh\\DomPDF\\Facade' => $vendorDir . '/barryvdh/laravel-dompdf/src/Facade.php',

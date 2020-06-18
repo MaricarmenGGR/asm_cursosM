@@ -115,7 +115,7 @@ class DatabaseSeeder extends Seeder
         //USUARIOS SEED
         DB::table('users')->insert([
             'id'=>1,
-            'name'=>'Nombre',
+            'name'=>'Admin',
             'apPaterno'=>'Ap P',
             'apMaterno'=>'Ap M',
             'role_id'=>1,
@@ -123,11 +123,20 @@ class DatabaseSeeder extends Seeder
             'email'=>"admin@admin.com",
             'email_verified_at'=>null,
             'password' => bcrypt('admin1989'),
+            'sexo'=>'Masculino',
+            'edoCivil'=>'Soltero',
+            'calle'=>'Egipto',
+            'colonia'=>'Joyas',
+            'nCasa'=>'100',
+            'telfono'=>'4423562378',
+            'curp'=>'GORMPOEIRNEOEN',
+            'nHijos'=>3,
+            'edad'=>40,
             'remember_token'=>null
         ]);
         DB::table('users')->insert([
             'id'=>2,
-            'name'=>'Nombre',
+            'name'=>'Usuario1',
             'apPaterno'=>'Usr ap',
             'apMaterno'=>'Usr am',
             'role_id'=>2,
@@ -135,9 +144,20 @@ class DatabaseSeeder extends Seeder
             'email'=>"user@user.com",
             'email_verified_at'=>null,
             'password' => bcrypt('user1989'),
+            'sexo'=>'Femenino',
+            'edoCivil'=>'Soltero',
+            'calle'=>'Egipto',
+            'colonia'=>'Joyas',
+            'nCasa'=>'100',
+            'telfono'=>'4423562378',
+            'curp'=>'GORMPOEIRNEOEN',
+            'nHijos'=>3,
+            'edad'=>40,
             'remember_token'=>null
         ]);
-        DB::table('users')->insert([
+
+        
+       /* DB::table('users')->insert([
             'id'=>3,
             'name'=>'User 1',
             'apPaterno'=>'Usr ap',
@@ -172,7 +192,7 @@ class DatabaseSeeder extends Seeder
             'email_verified_at'=>null,
             'password' => bcrypt('user1989'),
             'remember_token'=>null
-        ]);
+        ]);*/
 
     }
 }

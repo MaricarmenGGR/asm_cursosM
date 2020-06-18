@@ -561,6 +561,7 @@ class ComposerStaticInitb8290ad129bd1dc8e6f1f1f3648f551a
         'App\\examen_respuestas' => __DIR__ . '/../..' . '/app/examen_respuestas.php',
         'App\\examen_respuestas_usuario' => __DIR__ . '/../..' . '/app/examen_respuestas_usuario.php',
         'App\\examen_usuario' => __DIR__ . '/../..' . '/app/examen_usuario.php',
+        'App\\UserMedic' => __DIR__ . '/../..' . '/app/UserMedic.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
         'Barryvdh\\DomPDF\\Facade' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade.php',

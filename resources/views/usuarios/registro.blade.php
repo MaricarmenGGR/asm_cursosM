@@ -43,7 +43,7 @@
 
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
-                        <form  method="POST" action="" enctype="multipart/form-data">
+                        <form  method="POST" action="{{ route('usuarios.store') }}" enctype="multipart/form-data">
                             <h3 class="text-center">DATOS PERSONALES</h3>
                             <hr> 
                             {{ csrf_field() }}
@@ -52,18 +52,18 @@
                                     <div class="text-center">
                                         <label>Apellido Paterno</label>
                                     </div>
-                                    <input type="text" class="form-control" id="aPaterno" name="aPaterno" placeholder="Apellido Paterno" onkeypress="return soloLetras(event)" required>
+                                    <input type="text" class="form-control" id="apPaterno" name="apPaterno" placeholder="Apellido Paterno" onkeypress="return soloLetras(event)" required>
                                 </div>
                                 <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Apellido Materno</label>
-                                        <input type="text" class="form-control" id="aMaterno" name="aMaterno" placeholder="Apellido Materno" onkeypress="return soloLetras(event)" required>
+                                        <input type="text" class="form-control" id="apMaterno" name="apMaterno" placeholder="Apellido Materno" onkeypress="return soloLetras(event)" required>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Nombre(s)</label>
-                                        <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombre" onkeypress="return soloLetras(event)" required>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" onkeypress="return soloLetras(event)" required>
                                     </div>
                                 </div>
                             </div>
@@ -95,13 +95,13 @@
                                     <div class="text-center">
                                         <label>Estado Civil</label>
                                     </div>
-                                    <select class="custom-select">
+                                    <select class="custom-select" id="edoCivil" name="edoCivil">
                                     <option selected>Casado</option>
-                                    <option value="1">Soltero</option>
-                                    <option value="2">Divorciado</option>
-                                    <option value="3">Separación en proceso Judicial</option>
-                                    <option value="4">Viudo</option>
-                                    <option value="5">Concubinato</option>
+                                    <option value="Soltero">Soltero</option>
+                                    <option value="Divorciado">Divorciado</option>
+                                    <option value="Separación en proceso Judicial">Separación en proceso Judicial</option>
+                                    <option value="Viudo">Viudo</option>
+                                    <option value="Concubinato">Concubinato</option>
                                     </select>
                                 </div>
 
@@ -113,15 +113,15 @@
                                 </div>
                                 <div class="form-group col-lg-2" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
-                                        <label>Colonia - Fraccionamiento</label>
+                                        <label>Colonia</label>
                                     </div>
-                                    <input type="text"  class="form-control" id="Colonia" name="Colonia" placeholder="Colonia" required>
+                                    <input type="text"  class="form-control" id="colonia" name="colonia" placeholder="Colonia" required>
                                 </div>
                                 <div class="form-group col-lg-1" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>No.</label>
                                     </div>
-                                    <input type="text" class="form-control" id="numeroCasa" name="numeroCasa" placeholder="#" required>
+                                    <input type="text" class="form-control" id="nCasa" name="nCasa" placeholder="#" required>
                                 </div>
 
                             </div>
@@ -131,13 +131,13 @@
                                     <div class="text-center">
                                         <label>Telefóno celular</label>
                                     </div>
-                                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono Celular" maxlength="10" required>
+                                    <input type="text" class="form-control" id="telfono" name="telfono" placeholder="Teléfono Celular" maxlength="10" required>
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Correo Electrónico</label>
                                     </div>
-                                    <input type="text" class="form-control" id="correo" name="correo" placeholder="correo electrónico" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
@@ -149,11 +149,53 @@
                                     <div class="text-center">
                                         <label>Num. de Hijos</label>
                                     </div>
-                                    <input type="number" class="form-control" id="telefono" name="telefono" placeholder="Número de Hijos" maxlength="10" required>
+                                    <input type="number" class="form-control" id="nHijos" name="nHijos" placeholder="Número de Hijos" maxlength="10" required>
                                 </div>
                             </div>
-                            
-                            <br>
+                            <div class="form-row">
+                                <!--<div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
+                                    <div class="text-center">
+                                        <label>Cargo Actual</label>
+                                    </div>
+                                   <select class="custom-select" name="role_id" id="role_id">
+                                       <option value="1">Administrador</option>
+                                       <option value="2">Usuario</option>
+                                       <option value="5">Director</option>
+                                   </select>
+                                </div>-->
+                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
+                                    <div class="text-center">
+                                        <label>Área de Trabajo</label>
+                                    </div>
+                                    <select class="custom-select" name="area_id" id="area_id">
+                                        <option disabled>Elige una área</option>
+                                        <option value="1">Despacho del Auditor Superior</option>
+                                        <option value="2">Normatividad</option>
+                                        <option value="3">Especial Estatal</option>
+                                        <option value="4">Especial Municipal</option>
+                                        <option value="5">Planeación</option>
+                                        <option value="6">Investigación</option>
+                                        <option value="7">Substanciación</option>
+                                        <option value="8">Unidad Gral de Asuntos Jurídicos</option>
+                                        <option value="9">Dirección administrativa</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
+                                    <label for="password">Contraseña</label>
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
+                                    <label for="password-confirm">Confirma Contreseña</label>
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                </div>
+
+                            </div>
+                        <br>
                             <h3 class="text-center">DATOS MÉDICOS</h3>
                             <hr>
                             <div class="form-row">
@@ -161,27 +203,37 @@
                                     <div class="text-center">
                                         <label>Tipo de sangre</label>
                                     </div>
-                                    <input type="text" class="form-control" id="tipoSangre" name="tipoSangre" placeholder="Tipo de Sangre" required>
+                                    <select class="custom-select" id="tipoSangre" name="tipoSangre">
+                                        <option disabled>Elige un Tipo</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                    </select>
                                 </div>
                                 
                                 <div class="form-group col-lg-2" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>No. IMSS</label>
                                     </div>
-                                    <input type="text" class="form-control" id="numImss" name="numImss" placeholder="No. IMSS" required>
+                                    <input type="text" class="form-control" id="noImss" name="noImss" placeholder="No. IMSS" required>
                                 </div>
                                 
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
-                                        <label>En caso de emergencia llamar a</label>
+                                        <label>En caso de emergencia llamar a:</label>
                                     </div>
                                     <input type="text" class="form-control" id="nombreEmergencia" name="nombreEmergencia" placeholder="Nombre Completo" onkeypress="return soloLetras(event)" required>
                                 </div>
                                 <div class="form-group col-lg-2" style="padding: 0 2% 0 2%">
-                                    <div class="text-center">
-                                        <label>Telefóno de emergencia</label>
+                                    <div class="text-left">
+                                        <label>Telefóno emergencia</label>
                                     </div>
-                                    <input type="text" class="form-control" id="telefonoEmergencia" name="telefonoEmergencia" placeholder="Teléfono de Emergencia" required>
+                                    <input type="text" class="form-control" id="telEmergencia" name="telEmergencia" placeholder="Teléfono de Emerg." required>
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
@@ -223,11 +275,11 @@
                                             <td>
                                                 <div class="text-center">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="primaria" id="SI" value="SI">
+                                                        <input class="form-check-input" type="radio" name="Primaria" id="SI" value="SI">
                                                         <label class="form-check-label" for="SI">SI</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="primaria" id="NO" value="NO">
+                                                        <input class="form-check-input" type="radio" name="Primaria" id="NO" value="NO">
                                                         <label class="form-check-label" for="NO">NO</label>
                                                     </div>
                                                 </div>
@@ -238,11 +290,11 @@
                                             <td>
                                                 <div class="text-center">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="secundaria" id="SI" value="SI">
+                                                        <input class="form-check-input" type="radio" name="Secundaria" id="SI" value="SI">
                                                         <label class="form-check-label" for="SI">SI</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="secundaria" id="NO" value="NO">
+                                                        <input class="form-check-input" type="radio" name="Secundaria" id="NO" value="NO">
                                                         <label class="form-check-label" for="NO">NO</label>
                                                     </div>
                                                 </div>
@@ -253,11 +305,11 @@
                                             <td>
                                                 <div class="text-center">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="prepa" id="SI" value="SI">
+                                                        <input class="form-check-input" type="radio" name="Prepa" id="SI" value="SI">
                                                         <label class="form-check-label" for="SI">SI</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="prepa" id="NO" value="NO">
+                                                        <input class="form-check-input" type="radio" name="Prepa" id="NO" value="NO">
                                                         <label class="form-check-label" for="NO">NO</label>
                                                     </div>
                                                 </div>
@@ -268,11 +320,11 @@
                                             <td>
                                                 <div class="text-center">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="carreraTecnica" id="SI" value="SI">
+                                                        <input class="form-check-input" type="radio" name="cTecnica" id="SI" value="SI">
                                                         <label class="form-check-label" for="SI">SI</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="carreraTecnica" id="NO" value="NO">
+                                                        <input class="form-check-input" type="radio" name="cTecnica" id="NO" value="NO">
                                                         <label class="form-check-label" for="NO">NO</label>
                                                     </div>
                                                 </div>
@@ -283,11 +335,11 @@
                                             <td>
                                                 <div class="text-center">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="carreraProf" id="SI" value="SI">
+                                                        <input class="form-check-input" type="radio" name="cProfesional" id="SI" value="SI">
                                                         <label class="form-check-label" for="SI">SI</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="carreraProf" id="NO" value="NO">
+                                                        <input class="form-check-input" type="radio" name="cProfesional" id="NO" value="NO">
                                                         <label class="form-check-label" for="NO">NO</label>
                                                     </div>
                                                 </div>
@@ -304,25 +356,25 @@
                                     <div class="text-center">
                                         <label>Nombre de Carrera Técnica</label>
                                     </div>
-                                    <input type="text" class="form-control" id="carreraTecnica" name="carreraTecnica" placeholder="Nombre de Carrera Técnica">
+                                    <input type="text" class="form-control" id="nCTecnica" name="nCTecnica" placeholder="Nombre de Carrera Técnica">
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Nombre de Carrera Profesional</label>
                                     </div>
-                                    <input type="text" class="form-control" id="carreraProfesional" name="carreraProfesional" placeholder="Nombre de Carrera Profesional">
+                                    <input type="text" class="form-control" id="nCProfesional" name="nCProfesional" placeholder="Nombre de Carrera Profesional">
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Diplomados</label>
                                     </div>
-                                    <input type="text" class="form-control" id="diplomado" name="diplomado" placeholder="Diplomados">
+                                    <input type="text" class="form-control" id="diplomados" name="diplomados" placeholder="Diplomados">
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>No. De Cédula Profesional:</label>
                                     </div>
-                                    <input type="text" class="form-control" id="cedula" name="cedula" placeholder="No. De Cédula Profesional">
+                                    <input type="text" class="form-control" id="noCedula" name="noCedula" placeholder="No. De Cédula Profesional">
                                 </div>
 
 
@@ -332,13 +384,13 @@
                                     <div class="text-center">
                                         <label>Nombre de Maestrías o Doctorados</label>
                                     </div>
-                                    <textarea class="form-control" id="maestriasDoc" name="maestriasDoc" placeholder=""></textarea>
+                                    <textarea class="form-control" id="Maestrias" name="Maestrias" placeholder=""></textarea>
                                 </div>
                                 <div class="form-group col-lg-6" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Otros Cursos recibidos enfocados a tu actividad en el trabajo</label>
                                     </div>
-                                    <textarea class="form-control" id="otrosCursos" name="otrosCursos" placeholder=""></textarea>
+                                    <textarea class="form-control" id="cursosExtra" name="cursosExtra" placeholder=""></textarea>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -347,30 +399,30 @@
                                         <label>¿Consideras que tienes aptitudes como capacitador? Especifícalas</label>
                                         <div class="text-center">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="capacidades" id="capa1" value="SI">
+                                        <input class="form-check-input" type="radio" name="hCapacidades" id="capa1" value="SI">
                                         <label class="form-check-label" for="SI">SI</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="capacidades" id="capa2" value="NO">
+                                        <input class="form-check-input" type="radio" name="hCapacidades" id="capa2" value="NO">
                                         <label class="form-check-label" for="NO">NO</label>
                                     </div>
                                     </div>
 
                                     </div>
-                                    <textarea class="form-control" id="maestriasDoc" name="maestriasDoc" placeholder=""></textarea>
+                                    <textarea class="form-control" id="habilidadesDesc" name="habilidadesDesc" placeholder=""></textarea>
                                 </div>
                             </div>
                             <br>
                             <h3 class="text-center">DATOS LABORALES</h3>
                             <hr>
                             <div class="form-row">
-                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
+                                <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Fecha de Ingreso</label>
                                     </div>
                                     <input type="date" class="form-control" id="fechaIngreso" name="fechaIngreso" placeholder="" required>
                                 </div>
-                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
+                                <!--<div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Cargo Actual</label>
                                     </div>
@@ -379,44 +431,25 @@
                                        <option value="4">Jefe</option>
                                        <option value="5">Director</option>
                                    </select>
-                                </div>
-                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
+                                </div>-->
+                                <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Nombramiento</label>
                                     </div>
-                                    <input type="text" class="form-control" id="Nombramiento" name="Nombramiento" placeholder="Nombramiento" required>
+                                    <input type="text" class="form-control" id="nombramiento" name="nombramiento" placeholder="Nombramiento" required>
                                 </div>
-                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
-                                    <div class="text-center">
-                                        <label>Área de Trabajo</label>
-                                    </div>
-                                    <select class="custom-select">
-                                        <option disabled>Elige una área</option>
-                                        <option value="1">Despacho del Auditor Superior</option>
-                                        <option value="2">Normatividad</option>
-                                        <option value="3">Especial Estatal</option>
-                                        <option value="4">Especial Municipal</option>
-                                        <option value="5">Planeación</option>
-                                        <option value="6">Investigación</option>
-                                        <option value="7">Substanciación</option>
-                                        <option value="8">Unidad Gral de Asuntos Jurídicos</option>
-                                        <option value="9">Dirección administrativa</option>
-                                    </select>
-                                </div>
-                                
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
                                         <div class="text-center">
                                             <label>Tipo de Trabajador</label>
                                         </div>
-                                        <select class="custom-select">
+                                        <select class="custom-select" id="tipoTrabajador" name="tipoTrabajador">
                                             <option disabled>Elige una opción</option>
                                             <option value="Base">Base</option>
                                             <option value="Confianza">Confianza</option>
                                             <option value="Sindicalizado">Sindicalizado</option>
                                         </select>
                                 </div>
+                                
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-lg-12" style="padding: 0 2% 0 2%">
@@ -424,17 +457,17 @@
                                         <label>¿Sus actividades laborales actuales coinciden con su categoría?. Especifíque: </label>
                                         <div class="text-center">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="datosL1" id="L1" value="SI">
+                                        <input class="form-check-input" type="radio" name="actActuales" id="L1" value="SI">
                                         <label class="form-check-label" for="SI">SI</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="datosL1" id="L2" value="NO">
+                                        <input class="form-check-input" type="radio" name="actActuales" id="L2" value="NO">
                                         <label class="form-check-label" for="NO">NO</label>
                                     </div>
                                     </div>
 
                                     </div>
-                                    <textarea class="form-control" id="actLaborales" name="actLaborales" placeholder=""></textarea>
+                                    <textarea class="form-control" id="actActualesDesc" name="actActualesDesc" placeholder=""></textarea>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -451,11 +484,11 @@
                                         <label>¿Conoces la descripción de tu puesto? Explica</label>
                                         <div class="text-center">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="datosL2" id="L2" value="SI">
+                                        <input class="form-check-input" type="radio" name="Puesto" id="L2" value="SI">
                                         <label class="form-check-label" for="SI">SI</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="datosL2" id="L2" value="NO">
+                                        <input class="form-check-input" type="radio" name="Puesto" id="L2" value="NO">
                                         <label class="form-check-label" for="NO">NO</label>
                                     </div>
                                     </div>
@@ -470,17 +503,17 @@
                                         <label>¿Recibiste curso de inducción a la ASM y a tu puesto? Explica</label>
                                         <div class="text-center">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="datosL3" id="L3" value="SI">
+                                        <input class="form-check-input" type="radio" name="cursoInduccion" id="L3" value="SI">
                                         <label class="form-check-label" for="SI">SI</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="datosL3" id="L3" value="NO">
+                                        <input class="form-check-input" type="radio" name="cursoInduccion" id="L3" value="NO">
                                         <label class="form-check-label" for="NO">NO</label>
                                     </div>
                                     </div>
 
                                     </div>
-                                    <textarea class="form-control" id="confiCurso" name="confiCurso" placeholder=""></textarea>
+                                    <textarea class="form-control" id="cursoInduccionDesc" name="cursoInduccionDesc" placeholder=""></textarea>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -488,13 +521,13 @@
                                     <div class="text-center">
                                         <label>Cargos anteriores:</label>
                                     </div>
-                                    <textarea class="form-control" id="cargosAnteriores" name="cargosAnteriores" placeholder=""></textarea>
+                                    <textarea class="form-control" id="cargosAnt" name="cargosAnt" placeholder=""></textarea>
                                 </div>
                                 <div class="form-group col-lg-6" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Trabajos externos anteriores:</label>
                                     </div>
-                                    <textarea class="form-control" id="trabajosAnteriores" name="trabajosAnteriores" placeholder=""></textarea>
+                                    <textarea class="form-control" id="trabajosExt" name="trabajosExt" placeholder=""></textarea>
                                 </div>
                             </div>
                            

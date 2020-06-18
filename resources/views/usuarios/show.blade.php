@@ -12,7 +12,7 @@
 
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
-                        INFO GENERAL <br>
+                        INFO GENERAL DEL USUARIO <br>
                         Nombre: {{$usuario->name}} {{$usuario->apPaterno}} {{$usuario->apMaterno}} <br>
                         Correo: {{$usuario->email}} <br>
                         Rol: {{$usuario->role->descripcion}}
