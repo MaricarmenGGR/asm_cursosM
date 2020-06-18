@@ -121,10 +121,15 @@
                                     {{ __('Iniciar Sesión') }}
                                 </button>
                         </div>
-                        <hr>
+                        
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <a href="/registro" class="btn login_btn">Registrarse</a>
+                        </div>
+                        
                     </form>
+                    
                 </div>
-                <a href="/registro"><button class="btn login_btn">Registro</button></a>
+                
 		
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
