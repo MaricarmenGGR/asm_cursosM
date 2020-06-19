@@ -81,11 +81,11 @@
                                     </div>
                                     <div class="text-center">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="sexo" id="Masculino" value="Masculino">
+                                        <input class="form-check-input" type="radio" name="sexo" id="Masculino" value="Masculino" required>
                                         <label class="form-check-label" for="Masculino">Masculino</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="sexo" id="Femenino" value="Femenino">
+                                        <input class="form-check-input" type="radio" name="sexo" id="Femenino" value="Femenino" required>
                                         <label class="form-check-label" for="Femenino">Femenino</label>
                                     </div>
                                     </div>
@@ -275,11 +275,11 @@
                                             <td>
                                                 <div class="text-center">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="Primaria" id="SI" value="SI">
+                                                        <input class="form-check-input" type="radio" name="Primaria" id="SI" value="SI" required>
                                                         <label class="form-check-label" for="SI">SI</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="Primaria" id="NO" value="NO">
+                                                        <input class="form-check-input" type="radio" name="Primaria" id="NO" value="NO" required>
                                                         <label class="form-check-label" for="NO">NO</label>
                                                     </div>
                                                 </div>
@@ -290,11 +290,11 @@
                                             <td>
                                                 <div class="text-center">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="Secundaria" id="SI" value="SI">
+                                                        <input class="form-check-input" type="radio" name="Secundaria" id="SI" value="SI" required>
                                                         <label class="form-check-label" for="SI">SI</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="Secundaria" id="NO" value="NO">
+                                                        <input class="form-check-input" type="radio" name="Secundaria" id="NO" value="NO" required>
                                                         <label class="form-check-label" for="NO">NO</label>
                                                     </div>
                                                 </div>
@@ -305,11 +305,11 @@
                                             <td>
                                                 <div class="text-center">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="Prepa" id="SI" value="SI">
+                                                        <input class="form-check-input" type="radio" name="Prepa" id="SI" value="SI" required>
                                                         <label class="form-check-label" for="SI">SI</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="Prepa" id="NO" value="NO">
+                                                        <input class="form-check-input" type="radio" name="Prepa" id="NO" value="NO" required>
                                                         <label class="form-check-label" for="NO">NO</label>
                                                     </div>
                                                 </div>
@@ -320,11 +320,11 @@
                                             <td>
                                                 <div class="text-center">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="cTecnica" id="SI" value="SI">
+                                                        <input class="form-check-input" type="radio" name="cTecnica" id="SI" value="SI" required>
                                                         <label class="form-check-label" for="SI">SI</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="cTecnica" id="NO" value="NO">
+                                                        <input class="form-check-input" type="radio" name="cTecnica" id="NO" value="NO" required>
                                                         <label class="form-check-label" for="NO">NO</label>
                                                     </div>
                                                 </div>
@@ -335,11 +335,11 @@
                                             <td>
                                                 <div class="text-center">
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="cProfesional" id="SI" value="SI">
+                                                        <input class="form-check-input" type="radio" name="cProfesional" id="SI" value="SI" required>
                                                         <label class="form-check-label" for="SI">SI</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="cProfesional" id="NO" value="NO">
+                                                        <input class="form-check-input" type="radio" name="cProfesional" id="NO" value="NO" required>
                                                         <label class="form-check-label" for="NO">NO</label>
                                                     </div>
                                                 </div>
@@ -399,11 +399,11 @@
                                         <label>¿Consideras que tienes aptitudes como capacitador? Especifícalas</label>
                                         <div class="text-center">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="hCapacidades" id="capa1" value="SI">
+                                        <input class="form-check-input" type="radio" name="hCapacidades" id="capa1" value="SI" required>
                                         <label class="form-check-label" for="SI">SI</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="hCapacidades" id="capa2" value="NO">
+                                        <input class="form-check-input" type="radio" name="hCapacidades" id="capa2" value="NO" required>
                                         <label class="form-check-label" for="NO">NO</label>
                                     </div>
                                     </div>
@@ -457,11 +457,11 @@
                                         <label>¿Sus actividades laborales actuales coinciden con su categoría?. Especifíque: </label>
                                         <div class="text-center">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="actActuales" id="L1" value="SI">
+                                        <input class="form-check-input" type="radio" name="actActuales" id="L1" value="SI" required>
                                         <label class="form-check-label" for="SI">SI</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="actActuales" id="L2" value="NO">
+                                        <input class="form-check-input" type="radio" name="actActuales" id="L2" value="NO" required>
                                         <label class="form-check-label" for="NO">NO</label>
                                     </div>
                                     </div>
@@ -484,11 +484,11 @@
                                         <label>¿Conoces la descripción de tu puesto? Explica</label>
                                         <div class="text-center">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="Puesto" id="L2" value="SI">
+                                        <input class="form-check-input" type="radio" name="Puesto" id="L2" value="SI" required>
                                         <label class="form-check-label" for="SI">SI</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="Puesto" id="L2" value="NO">
+                                        <input class="form-check-input" type="radio" name="Puesto" id="L2" value="NO" required>
                                         <label class="form-check-label" for="NO">NO</label>
                                     </div>
                                     </div>
@@ -503,11 +503,11 @@
                                         <label>¿Recibiste curso de inducción a la ASM y a tu puesto? Explica</label>
                                         <div class="text-center">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="cursoInduccion" id="L3" value="SI">
+                                        <input class="form-check-input" type="radio" name="cursoInduccion" id="L3" value="SI" required>
                                         <label class="form-check-label" for="SI">SI</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="cursoInduccion" id="L3" value="NO">
+                                        <input class="form-check-input" type="radio" name="cursoInduccion" id="L3" value="NO" required>
                                         <label class="form-check-label" for="NO">NO</label>
                                     </div>
                                     </div>

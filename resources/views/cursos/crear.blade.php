@@ -46,20 +46,20 @@
                                     <div class="text-center">
                                         <label>Lugar</label>
                                     </div>
-                                    <input type="text"  class="form-control" id="lugar" name="lugar" placeholder="Lugar donde se impartira el curso">
+                                    <input type="text"  class="form-control" id="lugar" name="lugar" placeholder="Lugar donde se impartira el curso" required>
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Fecha Inicio</label>
                                     </div>
-                                    <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
+                                    <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
                                 </div>
                                 
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Fecha Fin</label>
                                     </div>
-                                    <input type="date" class="form-control" id="fechaFin" name="fechaFin">
+                                    <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
                                 </div>
 
                             </div>
@@ -69,7 +69,7 @@
                                     <div class="text-left">
                                         <label>Descripción del curso</label>
                                     </div>
-                                    <textarea class="form-control" id="descripcionCurso" name="descripcionCurso" rows="3" placeholder="Descripción breve de curso"></textarea>
+                                    <textarea class="form-control" id="descripcionCurso" name="descripcionCurso" rows="3" placeholder="Descripción breve de curso" required></textarea>
                                 </div>
                             </div>
                             
@@ -81,21 +81,21 @@
                                     <div class="text-center">
                                         <label>Hora de entrada</label>
                                     </div>
-                                    <input type="time" class="form-control" id="horaInicio" name="horaInicio" placeholder="Nombre del Curso">
+                                    <input type="time" class="form-control" id="horaInicio" name="horaInicio" placeholder="Nombre del Curso" required>
                                 </div>
                                 
                                 <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Hora de salida</label>
                                     </div>
-                                    <input type="time" class="form-control" id="horaFin" name="horaFin">
+                                    <input type="time" class="form-control" id="horaFin" name="horaFin" required>
                                 </div>
                                 
                                 <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Horas Totales</label>
                                     </div>
-                                    <input type="number" class="form-control" id="horasTotales" name="horasTotales" placeholder="Horas Totales">
+                                    <input type="number" class="form-control" id="horasTotales" name="horasTotales" placeholder="Horas Totales" required>
                                 </div>
                             </div>
                             
@@ -108,13 +108,13 @@
                                     <div class="text-left">
                                         <label>Nombre del Ponente</label>
                                     </div>
-                                    <input type="text" class="form-control" id="namePonente" name="nombrePonente" placeholder="Nombre completo del ponente">
+                                    <input type="text" class="form-control" id="namePonente" name="nombrePonente" placeholder="Nombre completo del ponente" required>
                                 </div>
                                 <div class="form-group col-lg-12" style="padding: 0 2% 0 2%">
                                     <div class="text-left">
                                         <label>Información del Ponente</label>
                                     </div>
-                                    <textarea class="form-control" id="infoPonente" rows="3" name="infoPonente" placeholder="Información, curriculum del ponente"></textarea>
+                                    <textarea class="form-control" id="infoPonente" rows="3" name="infoPonente" placeholder="Información, curriculum del ponente" required></textarea>
                                 </div>
                             </div>
                             <br>
@@ -122,7 +122,7 @@
                             <hr>
                             <div class="form-row">
                                 <div class="form-group col-lg-12" style="padding: 0 2% 0 2%">
-                                    <input type="file" name="imagenCurso" accept="image/*" onchange="loadFile(event)">
+                                    <input type="file" name="imagenCurso" accept="image/*" onchange="loadFile(event)" required>
                                     <div class="text-left">
                                         <img id="output" src="" />
                                     </div>
