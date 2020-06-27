@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Area;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
@@ -129,9 +130,36 @@ class UsuariosController extends Controller
     {
         $rol=Role::get();
         $user=User::findOrFail($id);
+        //Datos Medicos
+        $datosMedicos =  DB:: table('datos_medicos')
+        ->where('id_user', '=',$id)
+        ->select('*')
+        ->get();
+        
+        $datosEscolares = DB::table('datos_escolares')
+        ->where('id_user', '=',$id)
+        ->select('*')
+        ->get();
+       
+        $datosLaborales = DB::table('datos_laborales')
+        ->where('id_user', '=',$id)
+        ->select('*')
+        ->get();
+
+        $areas = DB::table('users')
+        ->leftJoin('areas', 'users.area_id', '=', 'areas.id')
+        ->select('users.*', 'areas.*')
+        ->where('users.id', '=', $id)
+        ->get();
+
         return view('usuarios.show',
             ['usuario'=>$user,
-             'rol'=>$rol
+             'rol'=>$rol,
+             'dataMe' => $datosMedicos,
+             'dataEs' =>$datosEscolares,
+             'dataLa' =>$datosLaborales,
+             'area' => $areas,
+             
             ]
         );
     }
@@ -141,9 +169,34 @@ class UsuariosController extends Controller
         if(Auth::user()->id == $id){
             $rol=Role::get();
             $user=User::findOrFail($id);
+
+            $datosMedicos =  DB:: table('datos_medicos')
+            ->where('id_user', '=',$id)
+            ->select('*')
+            ->get();
+            
+            $datosEscolares = DB::table('datos_escolares')
+            ->where('id_user', '=',$id)
+            ->select('*')
+            ->get();
+        
+            $datosLaborales = DB::table('datos_laborales')
+            ->where('id_user', '=',$id)
+            ->select('*')
+            ->get();
+
+            $areas = DB::table('users')
+            ->leftJoin('areas', 'users.area_id', '=', 'areas.id')
+            ->select('users.*', 'areas.*')
+            ->where('users.id', '=', $id)
+            ->get();
             return view('usuarios.show',
                 ['usuario'=>$user,
-                'rol'=>$rol
+                 'rol'=>$rol,
+                 'dataMe' => $datosMedicos,
+                 'dataEs' =>$datosEscolares,
+                 'dataLa' =>$datosLaborales,
+                 'area' => $areas,
                 ]
             );
         } else {
