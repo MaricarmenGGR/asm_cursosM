@@ -51,7 +51,7 @@
                                 <div class="card-header card-header_curso" id="headingOne">
                                 <h5 class="mb-0">
                                     <button class="btn btn-accordion" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Información general curso
+                                    Información general del curso
                                     </button>
                                     <a class="btn" onclick="editInfo()"><i class="fas fa-pencil-alt"></i></a>
                                 </h5>
