@@ -44,6 +44,12 @@ Route::get('/download/{id}' , 'MaterialCursoController@descargarMaterial');
 //CRUD AJAX
 Route::get('/getCInfo/{id}', 'CursosController@getCInfo');
 Route::put('/updateCInfo/{id}', 'CursosController@updateCInfo');
+
+Route::put('/editMedic/{id}','UsuariosController@editarInfoMedic');
+Route::put('/editSchool/{id}','UsuariosController@editarInfoEscolar');
+Route::put('/editPersonal/{id}','UsuariosController@edit');
+Route::put('/editLaboral/{id}','UsuariosController@editarInfoLaboral');
+
 Route::get('/listar/{id}','ProgramaCursoController@listar');
 Route::delete('/borrarAct/{id}','ProgramaCursoController@destroy');
 Route::get('/verMateriales/{id}','MaterialCursoController@verMateriales');
