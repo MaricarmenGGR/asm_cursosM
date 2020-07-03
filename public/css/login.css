@@ -23,7 +23,12 @@ html {
 .login_btn {
     width: 100%;
     background: rgb(40, 146, 157); 
-    color: white
+    color: white;
+}
+.login_btn:hover {
+    width: 100%;
+    background-color:rgb(35, 126, 136);
+    color: white;
 }
 .login_container {
     padding: 0 2rem;

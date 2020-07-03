@@ -39,22 +39,13 @@
                             <a class="nav-item nav-link" id="asistencia-tab" href="/{{$curso->id}}/asistencia" >Asistencia</a>
                             <a class="nav-item nav-link" id="invitacion-tab" href="/{{$curso->id}}/invitacion">Invitación</a>
                             <a class="nav-item nav-link" id="resultadosEva-tab" href="/{{$curso->id}}/resultados">Resultados</a>
-
-
-                            {{--<a onclick="viewInfoCurso(@php echo $curso->id @endphp)" class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
-                            <a onclick="eliminarTabla();verTabla(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa</a>
-                            <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp)"class="nav-item nav-link" id="materiales-tab"   data-toggle="tab" href="#materiales"   role="tab" aria-controls="materiales" aria-selected="false">Material</a>
-                            <a onclick="comprobarFechas(@php echo $curso->id @endphp);" class="nav-item nav-link" id="evaluacion-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación</a>
-                            <a class="nav-item nav-link" id="invitacion-tab" data-toggle="tab" href="#invitacion" role="tab" aria-controls="invitacion" aria-selected="false">Invitación</a>
-                            <a class="nav-item nav-link" id="resultadosEva-tab" data-toggle="tab" href="#resultadosEva" role="tab" aria-controls="resultadosEva" aria-selected="false">Resultados</a>
-                            --}}
                     </div>
                 </nav>
 
                 <div class="tab-content" id="nav-tabContent">
                 <!--INFO CURSO-->    
-                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab"><h2>Información del Curso</h2>
-                        <br>
+                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
+                        
                         <div id="accordion" style="margin-right: 10%; margin-left: 10%;">
                             <div class="card">
                                 <div class="card-header card-header_curso" id="headingOne">
@@ -68,7 +59,8 @@
 
                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
-                                    <p id="pInfo">{!! $curso->descripcionCurso !!}<p>
+                                    
+                                    <label> <strong>Descripción del curso:</strong> &nbsp; </label><p id="pInfo">{!! $curso->descripcionCurso !!}<p>
                                     <form id="infoForm">
                                         {{ csrf_field() }}
                                         <div class="form-row">
@@ -76,7 +68,7 @@
                                         </div>
 
                                         <div class="form-inline">
-                                            <label> Modalidad: &nbsp; </label>
+                                            <label> <strong>Modalidad:</strong> &nbsp; </label>
                                             <label id="pModalidad">{!! $curso->modalidad !!}</label>
                                             <select class="custom-select" name="modalidad_id" id="modalidad" style="margin-bottom: 5px;" hidden>
                                                 @foreach($modalidades as $modalidad)
@@ -90,16 +82,16 @@
                                         </div>
 
                                         <div class="form-inline">
-                                            <label> Lugar:&nbsp;</label>
+                                            <label> <strong>Lugar:</strong>&nbsp;</label>
                                             <label id="pLugar">{!! $curso->lugar !!}</label>
                                             <input hidden type="text" class="form-control" id="lugar" name="lugar" value="{!! $curso->lugar !!}" style="margin-bottom: 5px;">
                                         </div>
 
                                         <div class="form-inline">
-                                            <label>Del:&nbsp;</label>
+                                            <label><strong>Del:</strong>&nbsp;</label>
                                             <label id="pFechaInicio">{!! $curso->fechaInicio !!}</label>
                                             <input hidden type="date" class="form-control" id="fechaInicio" name="fechaInicio" value="{!! $curso->fechaInicio !!}" style="margin-bottom: 5px;">
-                                            <label>&nbsp;al:&nbsp;</label>
+                                            <label>&nbsp;<strong>al:</strong>&nbsp;</label>
                                             <label id="pFechaFin">{!! $curso->fechaFin !!}</label>
                                             <input hidden type="date" class="form-control" id="fechaFin" name="fechaFin" value="{!! $curso->fechaFin !!}" style="margin-bottom: 5px;">
                                         </div>
@@ -153,10 +145,10 @@
                                     <form id="horarioForm" class="form-group ">
                                         {{ csrf_field() }}
                                         <div class="form-inline">
-                                            <label>Horario actual:&nbsp;</label>
+                                            <label><strong>Horario actual:</strong>&nbsp;</label>
                                             <input hidden class="form-control" id="horaInicio" name="horaInicio" type="time" value="{{ $curso->horaInicio}}">
                                             <label id="pHoraInicio">{{ $curso->horaInicio}}</label>
-                                            <label>&nbsp;-&nbsp;</label>
+                                            <label>&nbsp;<strong>-</strong>&nbsp;</label>
                                             <input hidden class="form-control" id="horaFin" name="horaFin" type="time" value="{{ $curso->horaFin}}">
                                             <label id="pHoraFin">{{ $curso->horaFin}}</label>
                                         </div>
@@ -164,7 +156,7 @@
 
                                         <div class="form-inline">
 
-                                        <label>Horas Totales:&nbsp;</label>
+                                        <label><strong>Horas Totales:</strong>&nbsp;</label>
                                         <label id="pHorasTotales">{{ $curso->horasTotales}}</label>
                                         <input hidden class="form-control" id="horasTotales" name="horasTotales" type="number" value="{{ $curso->horasTotales}}">
                                         <a class="btn btn-secondary" id="cancelH" onclick="cancelHorario()" hidden style="margin-top: 10px; margin-bottom: 10px; margin-left: 15px; margin-right: 5px; color: white;">Cancelar</a>
@@ -475,83 +467,5 @@
         });
     });
 </script>
-
-<!--Crud Materiales con AJAX-->
-<script>
-    $('#materialNewForm').submit( function( e ) {
-        e.preventDefault();
-        var curso_id = $('#curso_id').val();
-        $.ajax({
-            url: '{{ route("materiales.store") }}',
-            type: 'POST',
-            data: new FormData( this ),
-            processData: false,
-            contentType: false,
-            success: function(response){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Se agregon los materiales',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                eliminarTablaMaterial();
-                verMateriales(curso_id);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Ha ocurrido un error',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-            }
-        });
-    });
-    function verMateriales(id){
-        $.ajax({
-            url:'/verMateriales/'+id,
-            type:'get',
-        }).done(function(res){
-            console.log(res)
-            var tablaDatos = $("#materialesCurso");
-            $(res).each(function(key,value){
-                tablaDatos.append(
-                '<tr class="hide">'+
-                '<td class="pt-3-half">'+value.curso_id+'</td>'+
-                '<td class="pt-3-half">'+value.url+'</td>'+
-                '<td>'+
-                '<span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light" value="'+value.id+'" onClick="EliminarMaterial(this);">Borrar</button></span>'+
-                '</td>'+
-                '</tr>')
-            });
-        });
-    }
-    function EliminarMaterial(btn){
-        var ruta = "/borrarMaterial/"+btn.value;
-        var token = '{{csrf_token()}}';
-        var curso_id = btn.value;
-        $.ajax({
-            url:ruta,
-            headers:{'X-CSRF-TOKEN':token},
-            type:'delete',
-            dataType : 'json',
-            success: function(response){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Archivo Eliminado',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                eliminarTablaMaterial();
-                verMateriales(curso_id);
-            }
-        });
-    }
-    function eliminarTablaMaterial(){
-        var tablaDatos = $("#materialesCurso");
-        tablaDatos.empty();
-    }
-</script>
-
 
 @endsection
