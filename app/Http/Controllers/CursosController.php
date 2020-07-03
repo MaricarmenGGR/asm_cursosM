@@ -13,6 +13,7 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\PDF;
+use Exception;
 use SebastianBergmann\Environment\Console;
 
 class CursosController extends Controller
@@ -202,14 +203,38 @@ class CursosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        //Borrar de materiales
-        $nombreMaterial = DB::table('materiales')
-        ->where('curso_id','=',$id)
-        ->select('url')
-        ->get();
-        foreach($nombreMaterial as $archivo){
-            $file = $archivo->url;
-          unlink('materials/'.$file);
+         //Borrar de materiales
+        try {
+            $nombreMaterial = DB::table('materiales')
+            ->where('curso_id','=',$id)
+            ->select('url')
+            ->get();
+            foreach($nombreMaterial as $archivo){
+                $file = $archivo->url;
+            unlink('materials/'.$file);
+            }
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        }
+
+        try{
+            //Borra de Uploads
+            $imagenCurso = DB:: table('cursos')
+            ->where('id','=',$id)
+            ->select('imagenCurso')
+            ->get();
+            foreach($imagenCurso as $imagen){
+                $file = $imagen->imagenCurso;
+                unlink('uploads/'.$file);
+            }
+        } catch(Exception $e){
+            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        }
+
+        try{
+
+        }catch(Exception $e){
+            
         }
         //Borrar de Invitaciones
        $invitaciones = DB:: table('invitaciones')
@@ -220,15 +245,7 @@ class CursosController extends Controller
             $file = $invitacion->documento;
             unlink('invitaciones/'.$file);
         }
-        //Borra de Uploads
-        $imagenCurso = DB:: table('cursos')
-        ->where('id','=',$id)
-        ->select('imagenCurso')
-        ->get();
-        foreach($imagenCurso as $imagen){
-            $file = $imagen->imagenCurso;
-            unlink('uploads/'.$file);
-        }
+        
         
         $material = DB::table('materiales')
         ->where('curso_id', '=',$id)

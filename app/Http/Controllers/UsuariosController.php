@@ -13,6 +13,8 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+
+
 class UsuariosController extends Controller
 {
     public function __construct()
@@ -210,8 +212,24 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit(Request $request, $id){
+        $user =  DB:: table('users')
+        ->where('id', '=',$id)
+        ->update([
+            'name' => $request->name,
+            'apPaterno' => $request->apPaterno,
+            'apMaterno' => $request->apMaterno,
+            'edad' => $request->edad,
+            'edoCivil' => $request->edoCivil,
+            'calle' => $request->calle,
+            'colonia' => $request->colonia,
+            'nCasa' => $request->nCasa,
+            'telfono' => $request->telfono,
+            'nHijos' => $request->nHijos,
+            'email' => $request->email
+        ]);
+        return response()->json($user);
+
     }
 
     /**
@@ -241,4 +259,61 @@ class UsuariosController extends Controller
     {
         return view('usuarios.perfil');
     }
+
+    public function editarInfoMedic(Request $request, $id){
+        $userMedico =  DB:: table('datos_medicos')
+        ->where('id_user', '=',$id)
+        ->update([
+            'tipoSangre' => $request->tipoSangre,
+            'noImss'=> $request->noImss,
+            'nombreEmergencia' => $request->nombreEmergencia,
+            'telEmergencia' => $request->telEmergencia,
+            'parentesco'=> $request->parentesco,
+            'alergias'=> $request->alergias,
+            'enfermedades' => $request->enfermedades
+        ]);
+        return response()->json($userMedico);
+       
+    }
+
+    public function editarInfoEscolar(Request $request, $id){
+        $userEscolar =  DB:: table('datos_escolares')
+        ->where('id_user', '=',$id)
+        ->update([
+            'Primaria' => $request->Primaria,
+            'Secundaria' => $request->Secundaria,
+            'Prepa' => $request->Prepa,
+            'cTecnica' => $request->cTecnica,
+            'cProfesional' => $request->cProfesional,
+            'nCTecnica' => $request->nCTecnica,
+            'nCProfesional' => $request->nCProfesional,
+            'diplomados' => $request->diplomados,
+            'noCedula' => $request->noCedula,
+            'Maestrias' => $request->Maestrias,
+            'cursosExtra' => $request->cursosExtra,
+            'hCapacidades' => $request->hCapacidades,
+            'habilidadesDesc' => $request->habilidadesDesc,
+        ]);
+        return response()->json($userEscolar);
+    }
+
+    public function editarInfoLaboral(Request $request, $id){
+        $userJob =  DB:: table('datos_laborales')
+        ->where('id_user', '=',$id)
+        ->update([
+            'actActuales' => $request->actActuales,
+            'actActualesDesc' => $request->actActualesDesc,
+            'responsabilidades' => $request->responsabilidades,
+            'Puesto'=> $request->Puesto,
+            'descPuesto' => $request->descPuesto,
+            'cursoInduccion' => $request->cursoInduccion,
+            'cursoInduccionDesc' => $request->cursoInduccionDesc,
+            'cargosAnt' => $request->cargosAnt,
+            'trabajosExt' => $request->trabajosExt
+        ]);
+        return response()->json($userJob);
+        
+    }
+
+    
 }

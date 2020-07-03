@@ -75,7 +75,7 @@ class MaterialCursoController extends Controller
     if($request->ajax()){
         foreach($request->file('url') as $archivo){
             // $fileName = time() . '.' . $archivo->extension();
-             $fileName = $archivo->getClientOriginalName();
+             $fileName = time().$archivo->getClientOriginalName();
              $archivo->move('materials', $fileName );
              Material::create([
                  'curso_id' =>$request->curso_id,

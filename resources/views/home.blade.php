@@ -78,6 +78,7 @@
                 location.reload();
             }
         });
+        location.reload();
         }
     </script>
 @endif
