@@ -14,7 +14,16 @@
     margin-left: 0px;
 }
 
-.btn-asm{background-color:rgb(40, 146, 157);color: #FFF;}
+.btn-asm{
+	background-color:rgb(40, 146, 157);
+	color: #FFF;
+}
+
+.btn-asm:hover{
+	color: #FFF;
+	background-color:rgb(35, 126, 136);
+}
+
 .btn-black:hover{color: #FFF;}
 
 img {
@@ -118,7 +127,7 @@ a{
 }
 a:hover{
 	text-decoration: none;
-	color: inherit;
+	color: rgba(80, 80, 80, 0.89);
 }
 
 hr {
@@ -142,6 +151,11 @@ nav a{
 
 .navbar-light .navbar-nav .nav-link {
     color: white;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+	color: white;
+	background-color:rgb(35, 126, 136);
 }
 
 .navbar-nav .nav-item {
@@ -318,5 +332,5 @@ float: left;
 }
 
 .meta a:hover {
-    color: rgba(0, 0, 0, .87);
+    color: rgba(80, 80, 80, 0.89);
 }

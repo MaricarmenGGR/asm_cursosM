@@ -12,12 +12,25 @@
                         <img class="card-img-top" src="../uploads/{{$curso->imagenCurso}}">
                         <div class="card-block">
                             <h4 class="card-title" style="text-align: center;">{!! $curso->nombreCurso !!}</h4>
-                            <div class="meta" style="text-align: left; color: gray;">
-                                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{!! $curso->fechaInicio !!}
-                                <button class="btn btn-asm text-center" onclick="borrarCurso();"><i class="fas fa-trash-alt">Borrar</i></button>
-                                <input type="hidden" id="curso_id" value="{{$curso->id}}">
-                                <a href="/pdfCurso/{{$curso->id}}"><button class="btn btn-asm text-center"><i class="fas fa-download">Descargar Curso</i></button></a>
+
+                            <div class="meta d-flex" >
+                                    <div class="mr-auto p-2" style="color: gray;">
+                                        <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{!! $curso->fechaInicio !!}
+                                    </div>
+                                    
+                                    <input type="hidden" id="curso_id" value="{{$curso->id}}">
+
+                                    <div class="p-2">
+                                        <a href="/pdfCurso/{{$curso->id}}" style="color: black;"><i class="fas fa-file-pdf"></i></a>
+                                    </div>
+
+                                    <div class="p-2">
+                                    <button onclick="borrarCurso();" style="padding: 0;border: none; background: none;color: red;"><i class="fas fa-trash-alt"></i></button>
+                                    </div>
+                                    
                             </div>
+
+
                             <div class="card-text" style="text-align: justify; color: black;">
                                 {!! $curso->descripcionCurso !!}
                             </div>
@@ -70,7 +83,7 @@
 @endif
 
 <!-- VISTA COMO USUARIO -->
-@if( Auth::user()->role->id == 2 )
+@if( Auth::user()->role->id != 1 )
     <div class="container-fluid">
         <div class="row">
         @foreach($cursos as $curso)

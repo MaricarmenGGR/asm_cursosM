@@ -37,4 +37,14 @@ class Curso extends Model
         if (!$result->isEmpty()) return true;
         else return false; //esta lleno
     }
+
+    public function cupoArea($curso, $area){
+        $result = DB::table('curso_areas')
+        ->where('curso_id', '=', $curso)
+        ->where('area_id', '=', $area)
+        ->get();
+
+        foreach($result as $r) return $r->disponible;
+        
+    }
 }

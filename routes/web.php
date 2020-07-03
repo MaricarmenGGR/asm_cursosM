@@ -41,6 +41,14 @@ Route::get('/verCurso', 'CursosController@show')->name('verCurso');
 Route::get('/crearCurso', 'CursosController@create')->name('crearCurso');
 Route::get('/download/{id}' , 'MaterialCursoController@descargarMaterial');
 
+
+Route::get('/{id}/programa', 'CursosController@showPrograma');
+Route::get('/{id}/material', 'CursosController@showMaterial');
+Route::get('/{id}/evaluacion', 'CursosController@showEvaluacion');
+Route::get('/{id}/asistencia', 'CursosController@showAsistencia');
+Route::get('/{id}/invitacion', 'CursosController@showInvitacion');
+Route::get('/{id}/resultados', 'CursosController@showResultados');
+
 //CRUD AJAX
 Route::get('/getCInfo/{id}', 'CursosController@getCInfo');
 Route::put('/updateCInfo/{id}', 'CursosController@updateCInfo');
@@ -56,6 +64,7 @@ Route::get('/resultadosGrafica/{id}','EvaluacionPonenteController@respuestaCurso
 Route::post('/agregarRespuesta','EvaluacionPonenteController@saveRespuesta');
 Route::get('/pdfCurso/{id}','CursosController@DescarganInfoCurso');
 Route::delete('/borrarCurso/{id}','CursosController@destroy');
+Route::post('/editarAreas/{id}', 'CursosController@editarAreas');
 
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////
 Route::resource('cursosUsuario','CursosUsuarioController');

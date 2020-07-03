@@ -40,20 +40,6 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
-
-                                    <tr>
-                                        <td>Curso 2</td>
-                                        <td>02/01/2020</td>
-                                        <td>02/01/2020</td>
-                                        <td>Planeando</td>
-                                        <td>NO</td>
-                                        <td>
-                                            <p class="text-center">
-                                                <a href={{route("verCurso")}}><i class="fas fa-eye"></i></a>
-                                            </p>
-                                        </td>
-                                    </tr>
                                 
                                 </tbody>
                         </table>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - ASM Cursos</title>
-
+    <link rel="icon" href="../img/favicon-asm.png">
     <!-- FONT -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Rubik:400,500,800">
 
@@ -30,16 +30,16 @@
             </nav>
         </header>
     </div>
-    <div class="text-center align-middle" style="background-color: rgb(40, 146, 157); height: 50px;">
-    <br>
-    <h1 class="text-light align-middle">INFORMACIÓN PERSONAL DE LA AUDITORÍA SUPERIOR DE MICHOACÁN</h1>
-    <br>
-    </div>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
             <div class="card-tabs">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="users-tab" data-toggle="tab" role="tab" aria-controls="users" aria-selected="true">REGISTRO DE USUARIO</a>
+                    </div>
+                </nav>
 
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
@@ -135,12 +135,6 @@
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
-                                        <label>Correo Electrónico</label>
-                                    </div>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
-                                </div>
-                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
-                                    <div class="text-center">
                                         <label>CURP</label>
                                     </div>
                                     <input type="text" class="form-control" id="curp" name="curp" placeholder="CURP" pattern="([A-Z][AEIOUX][A-Z]{2}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM](AS|BC|BS|CC|CL|CM|CS|CH|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[A-Z]{3}[0-9A-Z]\d)" required>
@@ -151,18 +145,6 @@
                                     </div>
                                     <input type="number" class="form-control" id="nHijos" name="nHijos" placeholder="Número de Hijos" maxlength="10" required>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <!--<div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
-                                    <div class="text-center">
-                                        <label>Cargo Actual</label>
-                                    </div>
-                                   <select class="custom-select" name="role_id" id="role_id">
-                                       <option value="1">Administrador</option>
-                                       <option value="2">Usuario</option>
-                                       <option value="5">Director</option>
-                                   </select>
-                                </div>-->
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Área de Trabajo</label>
@@ -179,6 +161,24 @@
                                         <option value="8">Unidad Gral de Asuntos Jurídicos</option>
                                         <option value="9">Dirección administrativa</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <!--<div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
+                                    <div class="text-center">
+                                        <label>Cargo Actual</label>
+                                    </div>
+                                   <select class="custom-select" name="role_id" id="role_id">
+                                       <option value="1">Administrador</option>
+                                       <option value="2">Usuario</option>
+                                       <option value="5">Director</option>
+                                   </select>
+                                </div>-->
+                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
+                                    <div class="text-center">
+                                        <label>Correo Electrónico</label>
+                                    </div>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <label for="password">Contraseña</label>
@@ -537,8 +537,11 @@
 
                             <div class="row">
                                 <div class="col-lg-3"></div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <button type="submit" name="submit" class="btn btn-asm btn-block">REGISTRARSE</button>
+                                </div>
+                                <div class="col-lg-3">
+                                    <a href="/" class="btn btn-secondary btn-block">CANCELAR</a>
                                 </div>
                                 <div class="col-lg-3"></div>
                             </div>

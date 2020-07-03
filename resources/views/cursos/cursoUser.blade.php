@@ -32,14 +32,14 @@
                         <br>
                         <div id="accordion">
                             <div class="card">
-                                <div class="card-header card-header_curso text-center font-weight-bold text-uppercase py-4" id="headingOne">
+                                <div class="card-header card-header_curso" id="headingOne">
                                 <h5 class="mb-0">
-                                    <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <h4 class="text-center font-weight-bold">Información general curso</h4>
+                                    <button class="btn btn-accordion" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Información general curso
                                     </button>
                                 </h5>
                                 </div>
-
+                                
                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
                                     {{$curso->descripcionCurso}}
@@ -47,10 +47,10 @@
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card-header card-header_curso text-center font-weight-bold text-uppercase py-4" id="headingTwo">
+                                <div class="card-header card-header_curso" id="headingTwo">
                                 <h5 class="mb-0">
-                                    <button class="btn collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <h4 class="text-center font-weight-bold">Horario</h4>
+                                    <button class="btn btn-accordion collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Horario
                                     </button>
                                 </h5>
                                 </div>
@@ -61,10 +61,10 @@
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card-header card-header_curso text-center font-weight-bold text-uppercase py-4" id="headingThree">
+                                <div class="card-header card-header_curso" id="headingThree">
                                 <h5 class="mb-0">
-                                    <button class="btn collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    <h4 class="text-center font-weight-bold">Informacion general del ponente</h4>
+                                    <button class="btn btn-accordion collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Información del ponente
                                     </button>
                                 </h5>
                                 </div>

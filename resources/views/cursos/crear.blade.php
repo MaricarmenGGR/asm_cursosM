@@ -214,7 +214,7 @@
     }
     $(document).ready(function(){
         $("#numero").change(function () {
-            var numeroAreas = parseInt( $("#numero").val());
+            /*var numeroAreas = parseInt( $("#numero").val());
             var text = "";
             var i;
             for (i = 0; i < numeroAreas; i++) {
@@ -240,7 +240,7 @@
                     "</div>"+
                 "</div>";
             }
-            document.getElementById("demo").innerHTML = text;
+            document.getElementById("demo").innerHTML = text;*/
         });
 
 

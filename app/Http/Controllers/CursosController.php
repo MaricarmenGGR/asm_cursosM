@@ -9,6 +9,7 @@ use App\Curso;
 use App\Curso_Area;
 use App\Curso_Usuario;
 use App\Modalidad;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\PDF;
@@ -123,18 +124,10 @@ class CursosController extends Controller
      */
     public function show($id)
     {
-        $areas = DB::table('curso_areas')
-        ->leftJoin('areas', 'curso_areas.area_id', '=', 'areas.id')
-        ->select('curso_areas.*', 'areas.*')
-        ->where('curso_areas.curso_id', '=', $id)
-        ->get();
-
-        /**/
-
+        /*$areas*/
         $curso = Curso::findOrFail($id);
         $vars = [
             'curso' => $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre),
-            'areas' => $areas,
             'modalidades' => Modalidad::get()
         ];
         return view('cursos.curso', $vars);
@@ -353,4 +346,104 @@ class CursosController extends Controller
     }
 
 
+    public function showPrograma($id)
+    {
+        $curso = Curso::findOrFail($id);
+        $vars = [
+            'curso' => $curso
+        ];
+        return view('cursos.curso2_programa', $vars);
+    }
+    public function showMaterial($id)
+    {
+        $curso = Curso::findOrFail($id);
+        $vars = [
+            'curso' => $curso
+        ];
+        return view('cursos.curso3_material', $vars);
+    }
+    public function showEvaluacion($id)
+    {
+        $curso = Curso::findOrFail($id);
+        $vars = [
+            'curso' => $curso
+        ];
+        return view('cursos.curso4_evaluaciones', $vars);
+    }
+    public function showAsistencia($id)
+    {
+        $curso = Curso::findOrFail($id);
+        
+        $inscritos = DB::table('users')
+        ->leftJoin('curso_usuarios', 'curso_usuarios.user_id', '=', 'users.id')
+        ->leftJoin('areas', 'areas.id', '=', 'users.area_id')
+        ->select('curso_usuarios.*', 'users.*', 'areas.*')
+        ->where('curso_usuarios.curso_id', '=', $id)
+        ->whereNull('curso_usuarios.deleted_at')
+        ->get();
+
+        $vars = [
+            'curso' => $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre),
+            'inscritos' => $inscritos,
+            'modalidades' => Modalidad::get()
+        ];
+        return view('cursos.curso5_asistencia', $vars);
+    }
+    public function showInvitacion($id)
+    {
+        $areas = Area::all();
+        $curso = Curso::findOrFail($id);
+        $vars = [
+            'curso' => $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre),
+            'areas' => $areas,
+            'modalidades' => Modalidad::get()
+        ];
+        return view('cursos.curso6_invitacion', $vars);
+    }
+    public function showResultados($id)
+    {
+        $curso = Curso::findOrFail($id);
+        $vars = [
+            'curso' => $curso
+        ];
+        return view('cursos.curso7_resultados', $vars);
+    }
+
+
+    public function editarAreas(Request $request, $id)
+    {
+        
+        //$id = $request->input('curso_id');
+        
+        DB::table('curso_areas')->where('curso_id', '=', $id)->delete();
+
+        $areas = $request->input('area');
+        $cupos = $request->input('cupo');
+        $ccupos = array();
+
+        foreach($cupos as $cupo){
+            if($cupo != "" || $cupo != '') array_push($ccupos, $cupo);
+        }
+
+        $reques = "";
+        $my_array = array_combine($areas, $ccupos);
+        foreach ($my_array as $area => $cupo) {
+            Curso_Area::create([
+                'curso_id' => $id,
+                'area_id' => $area,
+                'capacidad' => $cupo,
+                'disponible' => $cupo
+            ]);
+        }
+
+        $areas = Area::all();
+        $curso = Curso::findOrFail($id);
+        $vars = [
+            'curso' => $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre),
+            'areas' => $areas,
+            'modalidades' => Modalidad::get()
+        ];
+
+        return view('cursos.curso6_invitacion', $vars);
+    }
 }
