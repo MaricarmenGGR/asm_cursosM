@@ -104,3 +104,4 @@ Route::get('/pdf', function(){
 Route::get('/registro',function(){
     return view('usuarios.registro');
 });
+ //ROUTER
