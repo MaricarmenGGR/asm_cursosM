@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Invitacion;
+use App\Mail\InvitacionCursoASM;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class InvitacionController extends Controller
 {
@@ -94,5 +96,11 @@ class InvitacionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function enviarInvitaciones(Request $request){
+        
+        Mail :: to('miyamuraizumi20@gmail.com')->send(new InvitacionCursoASM);
+        return $request;
     }
 }
