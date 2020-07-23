@@ -58,7 +58,7 @@
                                                 
                                             </div>
                                             <br>
-                                            <button type="submit" class="btn btn-asm float-right" id="subeInvitacion">Subir</button>
+                                            <button type="submit" class="btn btn-asm float-right" id="subeInvitacion">Subir al Sistema</button>
                                             <br>
                                         </form>
                                     </div>
@@ -71,7 +71,7 @@
                                 </div>
                                     <input type="hidden" value="{{$curso->id}}" name="curso_id" id="curso_id">
                                 <div class="form-group">
-                                    <button class="btn btn-asm float-right" id="enviarInvitacionCorreo">Enviar</button>
+                                    <button class="btn btn-asm float-right" id="enviarInvitacionCorreo">Enviar a Correos</button>
                                     
                                 </div>
                             </form>
@@ -281,7 +281,7 @@ function showInput(checkbox){
             success: function(response){
                 Swal.fire({
                     icon: 'success',
-                    title: 'Invitacion Enviada',
+                    title: 'Invitación en el Sistema',
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -310,7 +310,7 @@ function showInput(checkbox){
         success: function(response){
             Swal.fire({
                 icon: 'success',
-                title: 'Invitacion Enviada',
+                title: 'Invitacion Enviada a correos propuestos',
                 showConfirmButton: false,
                 timer: 1500
             });

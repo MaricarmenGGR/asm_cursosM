@@ -40,6 +40,7 @@ Route::get('/cursos', 'CursosController@index')->name('cursos');
 Route::get('/verCurso', 'CursosController@show')->name('verCurso');
 Route::get('/crearCurso', 'CursosController@create')->name('crearCurso');
 Route::get('/download/{id}' , 'MaterialCursoController@descargarMaterial');
+Route::get('/downloadInvitacion/{documento}' , 'InvitacionController@descargaInvitacion');
 
 
 Route::get('/{id}/programa', 'CursosController@showPrograma');

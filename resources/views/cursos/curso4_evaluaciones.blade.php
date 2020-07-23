@@ -108,11 +108,11 @@
                                             <form id="examenPonenteActivarForm" class="form-group form-inline">
                                                 {{ csrf_field() }}
                                                     <div class="form-group form-inline" >
-                                                        <label>Fecha Inicio</label>&nbsp;&nbsp;
+                                                        <label>Fecha Inicio</label>
                                                         <input type="date" class="form-control" id="fechaActivarEva" name="fechaActivarEva" min="{{ $curso->fechaInicio }}" required><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
                                                     </div>
                                                     <div class="form-group form-inline">
-                                                        <label>Fecha Fin</label>&nbsp;&nbsp;
+                                                        <label>Fecha Fin</label>
                                                         <input type="date" class="form-control" id="fechaDesactivarEva" name="fechaDesactivarEva" min="{{ $curso->fechaFin }}" required><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
                                                     </div>
                                                 <input type="hidden" value="{{$curso->id}}" name="curso_id" id="curso_id">
