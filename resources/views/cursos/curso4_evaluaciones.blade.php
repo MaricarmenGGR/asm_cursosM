@@ -104,7 +104,13 @@
                                         <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Cuestionario de evaluación-reacción del curso</h4>
                                         <div class="card-body">
                                             
-                                            <label><strong>Activar encuesta</strong></label>
+                                            <label><strong>Activar encuesta</strong></label><br>
+                                            <div class="form-group form-inline">
+                                                <label><strong> Fecha Inicio: </strong></label> <input class="form-control" id="fEI" value="Fecha NO definida" disabled></input>
+                                                <label><strong> Fecha Termino: </strong></label> <input class="form-control" id="fET" value="Fecha NO definida" disabled></input>
+                                            </div>
+                                            
+
                                             <form id="examenPonenteActivarForm" class="form-group form-inline">
                                                 {{ csrf_field() }}
                                                     <div class="form-group form-inline" >
@@ -214,7 +220,8 @@ $( document ).ready(function() {
     //var curso_id = $('#curso_id').val();
     //eliminarTabla()
     //verTabla(curso_id)
-    comprobarFechas(curso_id)
+    comprobarFechas(curso_id);
+    ver(curso_id);
 });
 </script>
 
@@ -326,6 +333,42 @@ $( document ).ready(function() {
 
 <!--Evaluacion del ponente/Curso-->
 <script>
+    function ver(id){
+        var respuesta;
+      var FechaInicio;
+      var FechaTermino;
+      $.ajax({
+          async:false,
+          url:'/fechas/'+id,
+          type: 'GET',
+          success:(function(res){
+            $(res).each(function(key,value){
+                 FechaInicio = value.fechaEmision;
+                 FechaTermino = value.fechaTermino;
+                 respuesta = res;
+                });
+          })
+      });
+
+      console.log(respuesta);
+      console.log("Fecha inicio: "+FechaInicio);
+      console.log("Fecha termino: "+ FechaTermino);
+      if(FechaTermino == undefined & FechaInicio == undefined){
+        var resFNT = document.getElementById("fET").value = "Fecha no Establecida";
+        resFNT.value='Fecha no Establecida';
+        var resFNI = document.getElementById("fEI").value = "Fecha no Establecida";
+        resFNI.value='Fecha no Establecida';
+        console.log('es nula y no existe');
+      }else{
+        var resF = document.getElementById("fEI").value = FechaInicio;
+        var resFT = document.getElementById("fET").value = FechaTermino;
+
+      }
+      
+        
+    }
+
+    
 
     function comprobarFechas(id){
       var respuesta;
@@ -376,6 +419,7 @@ $( document ).ready(function() {
             console.log(data);
             const boton = document.getElementById("subirActivacionEncPonente");
             boton.disabled = true;
+            location.reload();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             Swal.fire({
@@ -406,6 +450,7 @@ $( document ).ready(function() {
             });
             const boton = document.getElementById("subirActivacionEncPonente");
             boton.disabled = false;
+            location.reload();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             Swal.fire({

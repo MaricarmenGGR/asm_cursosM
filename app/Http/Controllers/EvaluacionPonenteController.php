@@ -121,7 +121,7 @@ class EvaluacionPonenteController extends Controller
         $vars = [
             'fechas' => $fechas
         ];
-        return view('cursos.curso', $vars);
+        return view('cursos.curso4_evaluaciones', $vars);
     }
 
     public function saveRespuesta(Request $request){
