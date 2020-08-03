@@ -112,77 +112,128 @@
 
                                                 <div class="panel-group" id="accordionExamen" role="tablist" aria-multiselectable="true">            
                                                     @php $counter=0; @endphp
-                                                    @if( $curso->examen->tienePreguntas( $curso->examen->id ) ) 
+                                                    @if( ! $curso->examen->estaActivado( $curso->examen->id ) )
+                                                        
+                                                        @if( $curso->examen->tienePreguntas( $curso->examen->id ) ) 
+
+                                                            @php $preguntas = $curso->examen->obtenerPreguntas( $curso->examen->id ); @endphp    
+
+                                                            @foreach( $preguntas as $pregunta )
+                                                            
+                                                            @php $counter = $counter + 1; @endphp
+                                                            <div class="col-sm-12" style="margin-bottom: 0;">
+                                                                <div class="card panel panel-default" id="panel{{ $counter }}">
+                                                                    <div class="card-header panel-heading" role="tab" id="heading{{ $counter }}">
+                                                                        <h5 class="mb-0 panel-title">
+                                                                            <div class="d-flex">
+                                                                                <a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" aria-expanded="true" aria-controls="collapse{{ $counter }}"> 
+                                                                                    <p accesskey="{{ $counter }}" class="d-inline" id="pPregunta_{{ $counter }}">{{ $pregunta->preguntaTxt }} </p>
+                                                                                    
+                                                                                    <form action="/modificarPregunta" method="post" id="formMPregunta_{{ $counter }}">
+                                                                                        {{ csrf_field() }}
+                                                                                        <input hidden type="number" value="{{ $pregunta->id }}" name="pregunta_id">
+                                                                                        <input hidden type="text" value="{{ $pregunta->preguntaTxt }}" id="inputPregunta_{{ $counter }}" name="preguntaTxt" onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';">
+                                                                                        <button hidden type="submit" class="clean" id="btnGPregunta_{{ $counter }}" onclick="actualizarPregunta({{ $counter }})">
+                                                                                            <i class="fas fas fa-save"></i>
+                                                                                        </button> 
+                                                                                        <button hidden class="clean" onclick="cancelPregunta({{ $counter }})" id="btnCPregunta_{{ $counter }}">
+                                                                                            <i class="fas fa-window-close"></i>
+                                                                                        </button>
+                                                                                    </form>
+
+                                                                                    
+                                                                                </a>
+                                                                                    <a accesskey="{{ $counter }}" class="p-2 edit_ctg_label pull-right"><button class="clean"><i class="fas fa-pencil-alt"></i></button></a>
+
+                                                                                    <form action="/borrarPregunta" method="post" id="formBPregunta_{{ $counter }}">
+                                                                                        {{ csrf_field() }}
+                                                                                        <input hidden type="number" value="{{ $pregunta->id }}" name="pregunta_id">
+                                                                                    </form>
+                                                                                        <a style="color:#dd4b39;" href="" accesskey="{{ $counter }}" class="p-2 remove_ctg_panel exit-btn pull-right" onclick="borrarPregunta({{ $counter }})"><i class="fas fa-trash-alt"></i></a>
+                                                                                    
+                                                                            </div>
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+{{ $counter }}+'">
+                                                                        <form action="/guardarRespuestas" method="post" id="formGuardarRespuestas_{{ $counter }}" >
+                                                                            {{ csrf_field() }}
+                                                                            <input type="number" name="pregunta_id" value="{{ $pregunta->id }}" hidden>
+                                                                            <div class="card-body panel-body">
+                                                                                <div id="TextBoxDiv{{ $counter }}">
+                                                                                    @if( $pregunta->tieneRespuestas( $pregunta->id ) ) 
+                                                                                        @php $respuestas = $pregunta->obtenerRespuestas( $pregunta->id ); $c=0; @endphp 
+                                                                                        @foreach( $respuestas as $respuesta )
+                                                                                            @php $c=$c+1; @endphp
+                                                                                            <div class="col-lg-12 d-flex">
+                                                                                                <input type="text" name="ctgtext[]" class="p-2 form-control" style="width: 40%;" value="{{ $respuesta->respuestaTxt }}" id="input_ctgtext}" required/>
+                                                                                                @if($respuesta->correcto == 1)
+                                                                                                <input type="radio" class="form-check-input" name="ctgcorrecto" value="{{ $c }}" checked required/>
+                                                                                                @else
+                                                                                                <input type="radio" class="form-check-input" name="ctgcorrecto" value="{{ $c }}" required/>
+                                                                                                @endif
+                                                                                                <a href="" class="d-flex remove_field exit-btn"><i class="fas fa-trash-alt"></i></a>
+                                                                                            </div><br>
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                </div>
+                                                                                <a class="btn btn-xs btn-primary" accesskey="{{ $counter }}" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>
+                                                                                <!--<input type="submit" class="btn btn-xs btn-success" accesskey="1" id="guardarButton" value="Guardar Respuesta" />-->
+                                                                                <a class="btn btn-xs btn-success" accesskey="1" id="guardarButton" onclick="guardarRespuestas({{ $counter }})">Guardar Respuestas</a>
+                                                                            </div>
+
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @endforeach
+
+                                                        @endif
+
+                                                    @else
 
                                                         @php $preguntas = $curso->examen->obtenerPreguntas( $curso->examen->id ); @endphp    
 
                                                         @foreach( $preguntas as $pregunta )
                                                         
-                                                        @php $counter = $counter + 1; @endphp
-                                                        <div class="col-sm-12" style="margin-bottom: 0;">
-                                                            <div class="card panel panel-default" id="panel{{ $counter }}">
-                                                                <div class="card-header panel-heading" role="tab" id="heading{{ $counter }}">
-                                                                    <h5 class="mb-0 panel-title">
-                                                                        <div class="d-flex">
-                                                                            <a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" aria-expanded="true" aria-controls="collapse{{ $counter }}"> 
-                                                                                <p accesskey="{{ $counter }}" class="d-inline" id="pPregunta_{{ $counter }}">{{ $pregunta->preguntaTxt }} </p>
-                                                                                
-                                                                                <form action="/modificarPregunta" method="post" id="formMPregunta_{{ $counter }}">
-                                                                                    {{ csrf_field() }}
-                                                                                    <input hidden type="number" value="{{ $pregunta->id }}" name="pregunta_id">
-                                                                                    <input hidden type="text" value="{{ $pregunta->preguntaTxt }}" id="inputPregunta_{{ $counter }}" name="preguntaTxt" onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';">
-                                                                                    <button hidden type="submit" class="clean" id="btnGPregunta_{{ $counter }}" onclick="actualizarPregunta({{ $counter }})">
-                                                                                        <i class="fas fas fa-save"></i>
-                                                                                    </button> 
-                                                                                    <button hidden class="clean" onclick="cancelPregunta({{ $counter }})" id="btnCPregunta_{{ $counter }}">
-                                                                                        <i class="fas fa-window-close"></i>
-                                                                                    </button>
-                                                                                </form>
-
-                                                                                
-                                                                            </a>
-                                                                                <a accesskey="{{ $counter }}" class="p-2 edit_ctg_label pull-right"><button class="clean"><i class="fas fa-pencil-alt"></i></button></a>
-
-                                                                                <form action="/borrarPregunta" method="post" id="formBPregunta_{{ $counter }}">
-                                                                                    {{ csrf_field() }}
-                                                                                    <input hidden type="number" value="{{ $pregunta->id }}" name="pregunta_id">
-                                                                                </form>
-                                                                                    <a style="color:#dd4b39;" href="" accesskey="{{ $counter }}" class="p-2 remove_ctg_panel exit-btn pull-right" onclick="borrarPregunta({{ $counter }})"><i class="fas fa-trash-alt"></i></a>
-                                                                                
-                                                                        </div>
-                                                                    </h5>
-                                                                </div>
-                                                                <div class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+{{ $counter }}+'">
-                                                                    <form id="formGuardarRespuestas_{{ $counter }}">
-                                                                        {{ csrf_field() }}
-                                                                        <input type="number" name="pregunta_id" value="{{ $pregunta->id }}" hidden>
-                                                                        <div class="card-body panel-body">
-                                                                            <div id="TextBoxDiv{{ $counter }}">
-                                                                                @if( $pregunta->tieneRespuestas( $pregunta->id ) ) 
-                                                                                    @php $respuestas = $pregunta->obtenerRespuestas( $pregunta->id ); $c=0; @endphp 
-                                                                                    @foreach( $respuestas as $respuesta )
-                                                                                        @php $c=$c+1; @endphp
-                                                                                        <div class="col-lg-12 d-flex">
-                                                                                            <input type="text" name="ctgtext[]" class="p-2 form-control" style="width: 40%;" value="{{ $respuesta->respuestaTxt }}" id="input_ctgtext}" required/>
-                                                                                            @if($respuesta->correcto == 1)
-                                                                                            <input type="radio" class="form-check-input" name="ctgcorrecto" value="{{ $c }}" checked required/>
-                                                                                            @else
-                                                                                            <input type="radio" class="form-check-input" name="ctgcorrecto" value="{{ $c }}" required/>
-                                                                                            @endif
-                                                                                            <a href="" class="d-flex remove_field exit-btn"><i class="fas fa-trash-alt"></i></a>
-                                                                                        </div><br>
-                                                                                    @endforeach
-                                                                                @endif
+                                                            @php $counter = $counter + 1; @endphp
+                                                            <div class="col-sm-12" style="margin-bottom: 0;">
+                                                                <div class="card panel panel-default" id="panel{{ $counter }}">
+                                                                    <div class="card-header panel-heading" role="tab" id="heading{{ $counter }}">
+                                                                        <h5 class="mb-0 panel-title">
+                                                                            <div class="d-flex">
+                                                                                <a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" aria-expanded="true" aria-controls="collapse{{ $counter }}"> 
+                                                                                    <p accesskey="{{ $counter }}" class="d-inline" id="pPregunta_{{ $counter }}">{{ $pregunta->preguntaTxt }} </p>
+                                                                                </a>
                                                                             </div>
-                                                                            <a class="btn btn-xs btn-primary" accesskey="{{ $counter }}" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>
-                                                                            <!--<input type="submit" class="btn btn-xs btn-success" accesskey="1" id="guardarButton" value="Guardar Respuesta" />-->
-                                                                            <button class="btn btn-xs btn-success" accesskey="1" id="guardarButton" onclick="guardarRespuestas({{ $counter }})">Guardar Respuestas</button>
-                                                                        </div>
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+{{ $counter }}+'">
+                                                                        <form action="/guardarRespuestas" method="post" id="formGuardarRespuestas_{{ $counter }}" >
+                                                                            {{ csrf_field() }}
+                                                                            <input type="number" name="pregunta_id" value="{{ $pregunta->id }}" hidden>
+                                                                            <div class="card-body panel-body">
+                                                                                <div id="TextBoxDiv{{ $counter }}">
+                                                                                    @if( $pregunta->tieneRespuestas( $pregunta->id ) ) 
+                                                                                        @php $respuestas = $pregunta->obtenerRespuestas( $pregunta->id ); $c=0; @endphp 
+                                                                                        @foreach( $respuestas as $respuesta )
+                                                                                            @php $c=$c+1; @endphp
+                                                                                            <div class="col-lg-12 d-flex">
+                                                                                                <input type="text" name="ctgtext[]" class="p-2 form-control" style="width: 40%;" value="{{ $respuesta->respuestaTxt }}" id="input_ctgtext}" readonly/>
+                                                                                                @if($respuesta->correcto == 1)
+                                                                                                <input type="radio" class="form-check-input" name="ctgcorrecto" value="{{ $c }}" checked disabled/>
+                                                                                                @else
+                                                                                                <input type="radio" class="form-check-input" name="ctgcorrecto" value="{{ $c }}" disabled/>
+                                                                                                @endif
+                                                                                            </div><br>
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                </div>
+                                                                            </div>
 
-                                                                    </form>
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
                                                         @endforeach
 
                                                     @endif
@@ -192,12 +243,15 @@
 
                                                         
                                                 </div>
-                                                        <form action="/crearPregunta" method="post" id="formCrearPregunta">
-                                                            {{ csrf_field() }}
-                                                        </form>
-                                                        <div class="col-md-12 text-center" style="margin-top:15px;">
-                                                            <button class="btn btn-success" id="nuevaButton"><i class="fas fa-plus"></i>&nbsp;Nueva Pregunta</button>
-                                                        </div>
+
+                                                @if( ! $curso->examen->estaActivado( $curso->examen->id ) )
+                                                    <form action="/crearPregunta" method="post" id="formCrearPregunta">
+                                                        {{ csrf_field() }}
+                                                    </form>
+                                                    <div class="col-md-12 text-center" style="margin-top:15px;">
+                                                        <button class="btn btn-success" id="nuevaButton"><i class="fas fa-plus"></i>&nbsp;Nueva Pregunta</button>
+                                                    </div>
+                                                @endif
 
                                                     
                                                 </div>
@@ -561,6 +615,7 @@
             },
             error:function(x,xs,xt){
                 alert(x.responseText);
+            
             }
         });
     }
@@ -570,7 +625,13 @@
 
         if( numPreguntas > 0 ){
 
-            if( $( "#fechaDesactivarExm" ).val() == null || $( "#fechaDesactivarExm" ).val() == "" ){
+            if( $( "#fechaActivarExm" ).val() == null || $( "#fechaActivarExm" ).val() == "" ){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Debe colocar una fecha de inicio'
+                })
+            }else if( $( "#fechaDesactivarExm" ).val() == null || $( "#fechaDesactivarExm" ).val() == "" ){
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',

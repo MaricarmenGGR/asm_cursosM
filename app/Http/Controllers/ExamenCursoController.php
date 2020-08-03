@@ -98,7 +98,7 @@ class ExamenCursoController extends Controller
     public function guardarRespuestas(Request $request){
         $respuestasTxt = $request->input('ctgtext');
         $respuestasRd = $request->input('ctgcorrecto');
-        if( isset( $respuestasTxt ) || isset( $respuestasRd ) ){
+        if( !isset( $respuestasTxt ) || !isset( $respuestasRd ) ){
             return response()->json(['error' => 'Error msg'], 404); // Status code here
         } else {
             $v = \Validator::make($request->all(), [
