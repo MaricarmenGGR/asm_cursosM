@@ -17,8 +17,8 @@ class CreateExamensTable extends Migration
             $table->increments('id');
             $table->unsignedinteger('curso_id');
             $table->foreign('curso_id')->references('id')->on('cursos');
-            $table->date('fechaActivar');
-            $table->date('fechaDesactivar');
+            $table->date('fechaActivar')->nullable();
+            $table->date('fechaDesactivar')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

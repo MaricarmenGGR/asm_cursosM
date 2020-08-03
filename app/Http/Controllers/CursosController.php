@@ -10,6 +10,7 @@ use App\Curso_Area;
 use App\Curso_Usuario;
 use App\Modalidad;
 use App\User;
+use App\Examen;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\PDF;
@@ -112,7 +113,9 @@ class CursosController extends Controller
             ]);
         }
 
-        
+        Examen::create([
+            'curso_id' => $ultimaTupla->id,
+        ]);
         
         return redirect()->route('cursos.show',$ultimaTupla->id);
     }
@@ -382,6 +385,8 @@ class CursosController extends Controller
     public function showEvaluacion($id)
     {
         $curso = Curso::findOrFail($id);
+        $curso->setAttribute('examen', Examen::where('curso_id', '=', $id)->firstOrFail() );
+
         $vars = [
             'curso' => $curso
         ];

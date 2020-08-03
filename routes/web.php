@@ -72,6 +72,16 @@ Route::get('/pdfCurso/{id}','CursosController@DescarganInfoCurso');
 Route::delete('/borrarCurso/{id}','CursosController@destroy');
 Route::post('/editarAreas/{id}', 'CursosController@editarAreas');
 
+
+//ELABORACION EXAMEN
+Route::post('/crearPregunta', 'ExamenCursoController@crearPregunta')->name('crearPregunta');
+Route::post('/guardarRespuestas', 'ExamenCursoController@guardarRespuestas')->name('guardarRespuestas');
+Route::post('/borrarPregunta', 'ExamenCursoController@borrarPregunta')->name('borrarPregunta');
+Route::post('/modificarPregunta', 'ExamenCursoController@modificarPregunta')->name('modificarPregunta');
+
+Route::post('/activarExamen', 'ExamenCursoController@activarExamen')->name('activarExamen');
+Route::post('/desactivarExamen', 'ExamenCursoController@desactivarExamen')->name('desactivarExamen');
+
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////
 Route::resource('cursosUsuario','CursosUsuarioController');
 Route::post('/inscribirse', 'CursosUsuarioController@inscribirse');

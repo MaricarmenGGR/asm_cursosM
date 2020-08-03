@@ -334,3 +334,11 @@ float: left;
 .meta a:hover {
     color: rgba(80, 80, 80, 0.89);
 }
+
+button.clean{
+	padding: 0; border: none; background: none;
+}
+
+.btn{
+	color: white;
+}

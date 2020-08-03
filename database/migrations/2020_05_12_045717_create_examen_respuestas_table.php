@@ -18,6 +18,7 @@ class CreateExamenRespuestasTable extends Migration
             $table->unsignedinteger('pregunta_id');
             $table->foreign('pregunta_id')->references('id')->on('examen_preguntas');
             $table->longText('respuestaTxt');
+            $table->integer('correcto');
             $table->timestamps();
             $table->softDeletes();
         });

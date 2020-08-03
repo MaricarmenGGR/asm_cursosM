@@ -25,6 +25,9 @@
                 <input id="idCurso" type="number" hidden value="{{ $curso->id }}">
             </div>
 
+            <input id="curso_id" type="number" hidden value="{{ $curso->id }}">
+            <input id="examen_id" type="number" hidden value="{{ $curso->examen->id }}">
+
         </div>
     </div>
     <div class="row">
@@ -46,60 +49,9 @@
 
                 <!--EVALUACION-->    
                     <div class="tab-pane fade show active" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-10">
-                                    <div class="card">
-                                        <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Evaluación de conocimientos adquiridos</h4>
-                                        <div class="card-body">
-                                            <label><strong>Activar examen</strong></label>
-                                            <form id="examenActivarForm" class="form-group form-inline">
-                                                {{ csrf_field() }}
-                                                    
-                                                    <div class="form-group form-inline" >
-                                                        <label>Fecha Inicio</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaActivarExm" name="fechaActivar" min="{{ $curso->fechaInicio }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    </div>
-                                                    <div class="form-group form-inline">
-                                                        <label>Fecha Fin</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaDesactivarExm" name="fechaDesactivar" min="{{ $curso->fechaFin }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    </div>
-                                                
-                                                <input type="hidden" value="{{$curso->id}}" name="curso_id">
-                                                <div class="form-group">
-                                                    <button class="btn btn-asm float-right" id="subirActivacionExamen">Guardar</button>
-                                                </div>
-                                            </form>
-                                            <label><strong>Vista previa de examen</strong></label>
-                                            <form class="form-horizontal">
-                                                <div class="panel-body">
-                                                
-                                                        <div class="panel-group" id="accordionExamen" role="tablist"
-                                                            aria-multiselectable="true">
-                                                        </div>
-                                                        
-                                                        <div class="col-md-12 text-center" style="margin-top:15px;">
-                                                            <button class="btn btn-success" id="addButton" value=""><i class="fas fa-plus"></i>&nbsp;Nueva Pregunta</button>
-                                                        </div>
+                        <div class="row">    
+                            <div class="col-lg-4 justify-content-center">
 
-                                                    
-                                                </div>
-                                                <!-- /.panel-body -->
-                                                <div class="panel-footer">
-                                                    <div class="col-sm-offset-3 col-sm-6 text-center">
-                                                        
-                                                    </div>
-
-                                                </div>
-                                                <!-- /.box-footer -->
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </div>                                 
-                            </div>
-                            <br>
-                            <div class="row justify-content-center">
-                                <div class="col-lg-10">
                                     <div class="card">
                                         <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Cuestionario de evaluación-reacción del curso</h4>
                                         <div class="card-body">
@@ -124,9 +76,148 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div>                                
+                                                                
                             </div>
+                            <br>
+                            <div class="col-lg-8 justify-content-center">
+                                
+                                    <div class="card">
+                                        <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Evaluación de conocimientos adquiridos</h4>
+                                        <div class="card-body">
+                                            <label><strong>Activar examen</strong></label>
+                                            <form id="examenActivarForm" class="form-group form-inline">
+                                                {{ csrf_field() }}
+                                                    
+                                                    <div class="form-group form-inline" >
+                                                        <label>Fecha Inicio</label>&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaActivarExm" name="fechaActivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaActivar }}" required onchange="cambiarFechaFin()">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </div>
+                                                    <div class="form-group form-inline">
+                                                        <label>Fecha Fin</label>&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaDesactivarExm" name="fechaDesactivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaDesactivar }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @if( ! $curso->examen->estaActivado( $curso->examen->id ) )
+                                                            <a class="btn btn-asm float-right" id="activarExamen" onclick="activarExamen()" style="color: white;" >Activar</a>
+                                                        @else
+                                                            <a class="btn btn-danger float-right" id="desactivarExamen" onclick="desactivarExamen()" style="color: white;">Desactivar</a>
+                                                        @endif
+                                                        
+                                                        
+                                                    </div>
+                                            </form>
+                                            <label><strong>Vista previa de examen</strong></label>
+                                            
+                                                <div class="panel-body">
 
+                                                <div class="panel-group" id="accordionExamen" role="tablist" aria-multiselectable="true">            
+                                                    @php $counter=0; @endphp
+                                                    @if( $curso->examen->tienePreguntas( $curso->examen->id ) ) 
+
+                                                        @php $preguntas = $curso->examen->obtenerPreguntas( $curso->examen->id ); @endphp    
+
+                                                        @foreach( $preguntas as $pregunta )
+                                                        
+                                                        @php $counter = $counter + 1; @endphp
+                                                        <div class="col-sm-12" style="margin-bottom: 0;">
+                                                            <div class="card panel panel-default" id="panel{{ $counter }}">
+                                                                <div class="card-header panel-heading" role="tab" id="heading{{ $counter }}">
+                                                                    <h5 class="mb-0 panel-title">
+                                                                        <div class="d-flex">
+                                                                            <a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" aria-expanded="true" aria-controls="collapse{{ $counter }}"> 
+                                                                                <p accesskey="{{ $counter }}" class="d-inline" id="pPregunta_{{ $counter }}">{{ $pregunta->preguntaTxt }} </p>
+                                                                                
+                                                                                <form action="/modificarPregunta" method="post" id="formMPregunta_{{ $counter }}">
+                                                                                    {{ csrf_field() }}
+                                                                                    <input hidden type="number" value="{{ $pregunta->id }}" name="pregunta_id">
+                                                                                    <input hidden type="text" value="{{ $pregunta->preguntaTxt }}" id="inputPregunta_{{ $counter }}" name="preguntaTxt" onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';">
+                                                                                    <button hidden type="submit" class="clean" id="btnGPregunta_{{ $counter }}" onclick="actualizarPregunta({{ $counter }})">
+                                                                                        <i class="fas fas fa-save"></i>
+                                                                                    </button> 
+                                                                                    <button hidden class="clean" onclick="cancelPregunta({{ $counter }})" id="btnCPregunta_{{ $counter }}">
+                                                                                        <i class="fas fa-window-close"></i>
+                                                                                    </button>
+                                                                                </form>
+
+                                                                                
+                                                                            </a>
+                                                                                <a accesskey="{{ $counter }}" class="p-2 edit_ctg_label pull-right"><button class="clean"><i class="fas fa-pencil-alt"></i></button></a>
+
+                                                                                <form action="/borrarPregunta" method="post" id="formBPregunta_{{ $counter }}">
+                                                                                    {{ csrf_field() }}
+                                                                                    <input hidden type="number" value="{{ $pregunta->id }}" name="pregunta_id">
+                                                                                </form>
+                                                                                    <a style="color:#dd4b39;" href="" accesskey="{{ $counter }}" class="p-2 remove_ctg_panel exit-btn pull-right" onclick="borrarPregunta({{ $counter }})"><i class="fas fa-trash-alt"></i></a>
+                                                                                
+                                                                        </div>
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+{{ $counter }}+'">
+                                                                    <form id="formGuardarRespuestas_{{ $counter }}">
+                                                                        {{ csrf_field() }}
+                                                                        <input type="number" name="pregunta_id" value="{{ $pregunta->id }}" hidden>
+                                                                        <div class="card-body panel-body">
+                                                                            <div id="TextBoxDiv{{ $counter }}">
+                                                                                @if( $pregunta->tieneRespuestas( $pregunta->id ) ) 
+                                                                                    @php $respuestas = $pregunta->obtenerRespuestas( $pregunta->id ); $c=0; @endphp 
+                                                                                    @foreach( $respuestas as $respuesta )
+                                                                                        @php $c=$c+1; @endphp
+                                                                                        <div class="col-lg-12 d-flex">
+                                                                                            <input type="text" name="ctgtext[]" class="p-2 form-control" style="width: 40%;" value="{{ $respuesta->respuestaTxt }}" id="input_ctgtext}" required/>
+                                                                                            @if($respuesta->correcto == 1)
+                                                                                            <input type="radio" class="form-check-input" name="ctgcorrecto" value="{{ $c }}" checked required/>
+                                                                                            @else
+                                                                                            <input type="radio" class="form-check-input" name="ctgcorrecto" value="{{ $c }}" required/>
+                                                                                            @endif
+                                                                                            <a href="" class="d-flex remove_field exit-btn"><i class="fas fa-trash-alt"></i></a>
+                                                                                        </div><br>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                            </div>
+                                                                            <a class="btn btn-xs btn-primary" accesskey="{{ $counter }}" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>
+                                                                            <!--<input type="submit" class="btn btn-xs btn-success" accesskey="1" id="guardarButton" value="Guardar Respuesta" />-->
+                                                                            <button class="btn btn-xs btn-success" accesskey="1" id="guardarButton" onclick="guardarRespuestas({{ $counter }})">Guardar Respuestas</button>
+                                                                        </div>
+
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+
+                                                    @endif
+
+                                                    <input hidden type="number" id="counter" value="{{ $counter }}" > 
+
+
+                                                        
+                                                </div>
+                                                        <form action="/crearPregunta" method="post" id="formCrearPregunta">
+                                                            {{ csrf_field() }}
+                                                        </form>
+                                                        <div class="col-md-12 text-center" style="margin-top:15px;">
+                                                            <button class="btn btn-success" id="nuevaButton"><i class="fas fa-plus"></i>&nbsp;Nueva Pregunta</button>
+                                                        </div>
+
+                                                    
+                                                </div>
+                                                <!-- /.panel-body -->
+                                                <div class="panel-footer">
+                                                    <div class="col-sm-offset-3 col-sm-6 text-center">
+                                                        
+                                                    </div>
+
+                                                </div>
+                                                <!-- /.box-footer -->
+                                            
+
+                                        </div>
+                                    </div>
+                                 
+                            </div>
+                        </div>
+                    </div>
+                                </div>                                
                     </div>
                     
                 </div>
@@ -134,6 +225,9 @@
         </div>
     </div>
 </div>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
 
 <!--Modificar Info del Curso-->
 <script>
@@ -210,94 +304,110 @@
 </script>
 
 <script>
-$( document ).ready(function() {
-    //var curso_id = $('#curso_id').val();
-    //eliminarTabla()
-    //verTabla(curso_id)
-    comprobarFechas(curso_id)
-});
+    $( document ).ready(function() {
+        //var curso_id = $('#curso_id').val();
+        //eliminarTabla()
+        //verTabla(curso_id)
+        comprobarFechas(curso_id)
+        
+        function resizeInput() {
+            $(this).attr('size', $(this).val().length);
+        }
+
+        $('input[type="text"]')
+            // event handler
+            .keyup(resizeInput)
+            // resize on page load
+            .each(resizeInput);
+            });
 </script>
 
 <!-- EVALUACION CONOCIMIENTOS ADQUIRIDOS -->
 <script>
-    
+    var curso_id = $('#curso_id').val();
+    var examen_id = $('#examen_id').val();
+
     $(document).ready(function(){
-	    var counter = 1;
+	    var counter = $("#counter").val()+1;
 	    var wrapper = $("#accordionExamen");
-	
-		 $("#addButton").on("click", function(e){ 
-	    	e.preventDefault();
-	    	var catgName = prompt("Redacte la pregunta");
-			if(catgName == ''){
-				catgName = 'Catg#'+counter;
-			}
-			if(catgName != null){
+        
+        $("#nuevaButton").on("click", function(e){ 
+            e.preventDefault();
+            
+            Swal.fire({
+                title: 'Redacte la pregunta',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Añadir Pregunta',
+                showLoaderOnConfirm: true,
+                preConfirm: (preguntaTxt) => {
+                    $('#formCrearPregunta').append('<input type="text" name="preguntaTxt" hidden value="'+preguntaTxt+'" >');
+                    $('#formCrearPregunta').append('<input type="number" name="curso_id" hidden value='+curso_id+' >');
+                    $('#formCrearPregunta').append('<input type="number" name="examen_id" hidden value='+examen_id+' >');
+                    $("#formCrearPregunta").submit();
+                }
+            })
 
-                /*$.ajax({
-                    url: '{{-- route("cuestionario.store") --}}',
-                    type: 'POST',
-                    data: {pregunta: catgName},
-                    processData: false,
-                    contentType: false,
-                    async: false,
-                    success: function(response){*/
-                                
-                        $(wrapper).append(
-                            '<div class="col-sm-12" style="margin-bottom: 0;">'+
-                                '<div class="card panel panel-default" id="panel'+ counter +'">' + 
-                                    '<div class="card-header panel-heading" role="tab" id="heading'+ counter +'">'+
-                                        '<h5 class="mb-0 panel-title">'+
-                                            '<div class="d-flex">'+
-                                                '<a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" href="#collapse'+ counter +'" ' + 'aria-expanded="true" aria-controls="collapse'+ counter +'"> '+catgName+' </a>'+
-                                                '<a href="#" accesskey="'+ counter +'" class="p-2 edit_ctg_label pull-right"><i class="fas fa-pencil-alt"></i></a>' +
-                                                '<a style="color:#dd4b39;" href="#" accesskey="'+ counter +'" class="p-2 remove_ctg_panel exit-btn pull-right"><i class="fas fa-trash-alt"></i></a>' +
-                                            '</div>'+
-                                        '</h5>'+
-                                    '</div>' +
-                                    '<div id="collapse'+ counter +'" class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+ counter +'">'+
-                                        '<div class="card-body panel-body">'+
-                                            '<div id="TextBoxDiv'+ counter +'"></div>'+
-                                            '<a class="btn btn-xs btn-primary" accesskey="'+ counter +'" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>' +
-                                            '<a class="btn btn-xs btn-success" accesskey="1" id="ajax_submit_button">Guardar</a>'+
-                                        '</div>'+
+        });
+
+        /*$("#addButton2").on("click", function(e){ 
+            e.preventDefault();
+            var catgName = prompt("Redacte la pregunta");
+            if(catgName == ''){
+                catgName = 'Catg#'+counter;
+            }
+            if(catgName != null){
+                $(wrapper).append(
+                    '<div class="col-sm-12" style="margin-bottom: 0;">'+
+                        '<div class="card panel panel-default" id="panel'+ counter +'">' + 
+                            '<div class="card-header panel-heading" role="tab" id="heading'+ counter +'">'+
+                                '<h5 class="mb-0 panel-title">'+
+                                    '<div class="d-flex">'+
+                                        '<a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" href="#collapse'+ counter +'" ' + 'aria-expanded="true" aria-controls="collapse'+ counter +'"> '+catgName+' </a>'+
+                                        '<a href="#" accesskey="'+ counter +'" class="p-2 edit_ctg_label pull-right"><i class="fas fa-pencil-alt"></i></a>' +
+                                        '<a style="color:#dd4b39;" href="#" accesskey="'+ counter +'" class="p-2 remove_ctg_panel exit-btn pull-right"><i class="fas fa-trash-alt"></i></a>' +
                                     '</div>'+
+                                '</h5>'+
+                            '</div>' +
+                            '<div id="collapse'+ counter +'" class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+ counter +'">'+
+                                '<div class="card-body panel-body">'+
+                                    '<div id="TextBoxDiv'+ counter +'"></div>'+
+                                    '<a class="btn btn-xs btn-primary" accesskey="'+ counter +'" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>' +
+                                    '<a class="btn btn-xs btn-success" accesskey="1" id="guardarButton">Guardar Respuestas</a>'+
                                 '</div>'+
-                            '</div>'
-                        );
-                        counter++;
-                        
-                    /*},
-                    error: function(XMLHttpRequest, textStatus, errorThrown){
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Ha ocurrido un error',
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-                    }
-                });*/
-
-
-			}
-			
-	     });
+                            '</div>'+
+                        '</div>'+
+                    '</div>'
+                );
+                counter++;
+            }
+        
+        });*/
 		
-		var x = 1;
+		/*var x = 1;
 	     $(wrapper).on("click",".remove_ctg_panel", function(e){ 
 				 e.preventDefault(); 
 				 var accesskey = $(this).attr('accesskey');
 		        $('#panel'+accesskey).remove();
 				counter--;
 				x--;
-	     });
+	     });*/
 		 
-	     var y = 1; 
+	     var y = 0; 
 	     $(wrapper).on("click","#addButton3", function(e){
 	         e.preventDefault();
 			 var accesskey = $(this).attr('accesskey');
 			 y++; 
-			 $('#panel'+accesskey).find('#TextBoxDiv'+accesskey).append('<div class="col-lg-12 d-flex"><input type="text" name="ctgtext[]" class="p-2 form-control" style="width: 40%;"/><a href="#" class="d-flex remove_field exit-btn"><i class="fas fa-trash-alt"></i></a></div><br>');
-	        
+			 $('#panel'+accesskey).find('#TextBoxDiv'+accesskey).append(
+                '<div class="col-lg-12 d-flex">'+
+                    '<input type="text" name="ctgtext[]" class="p-2 form-control" style="width: 40%;" required id="input_ctgtext"/>'+
+                    '<input type="radio" class="form-check-input" name="ctgcorrecto" value="'+y+'" required/>'+
+                    '<a href="" class="d-flex remove_field exit-btn"><i class="fas fa-trash-alt"></i></a>'+
+                '</div><br>');
+	         
 	     });
 	     
 	     $(wrapper).on("click",".remove_field", function(e){
@@ -307,21 +417,226 @@ $( document ).ready(function() {
 	  	
 	     $(wrapper).on("click",".edit_ctg_label", function(e){ 
 	    	var panelId = $(this).attr('accesskey');
-			var catgName = prompt("Edite la pregunta");
-			if(catgName == ''){
-				   return false;
-			}
-			 if(catgName != null){
-				 $('#panel'+panelId).find("#panel-lebel"+panelId).html('').html(catgName);
-			}		
+			
+            document.getElementById("inputPregunta_"+panelId).removeAttribute("hidden");
+            document.getElementById("btnGPregunta_"+panelId).removeAttribute("hidden");
+            document.getElementById("btnCPregunta_"+panelId).removeAttribute("hidden");
+
+            document.getElementById("pPregunta_"+panelId).classList.remove('d-inline');
+            document.getElementById("pPregunta_"+panelId).classList.add('d-none');
 		});
     });
 
-    function guardarPregunta(){
+    function cancelPregunta(id){
+        document.getElementById("inputPregunta_"+id).setAttribute("hidden", true);
+        document.getElementById("btnGPregunta_"+id).setAttribute("hidden", true);
+        document.getElementById("btnCPregunta_"+id).setAttribute("hidden", true);
+
+        document.getElementById("pPregunta_"+id).classList.remove('d-none');
+        document.getElementById("pPregunta_"+id).classList.add('d-inline');
+
+        $("#inputPregunta_"+id).val($("#pPregunta_"+id).text().trim());
+    }
+
+    function actualizarPregunta(id){
+        var frm=$("#formMPregunta_"+id);
+        var datos = frm.serialize();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:'POST',
+            url:'/modificarPregunta',
+            data:datos,
+            success:function(data){
+                location.reload();
+            },
+            error:function(x,xs,xt){
+                alert(x.responseText);
+            }
+        });
+        
+    }
+
+    function borrarPregunta(id){
+        var frm=$("#formBPregunta_"+id);
+        var datos = frm.serialize();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:'POST',
+            url:'/borrarPregunta',
+            data:datos,
+            success:function(data){
+                location.reload();
+            },
+            error:function(x,xs,xt){
+                alert(x.responseText);
+            }
+        });
+    }
+
+    function guardarRespuestas(id){
+            var valido = false;
+
+        
+            var frm=$("#formGuardarRespuestas_"+id);
+            var datos = frm.serialize();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'POST',
+                url:'/guardarRespuestas',
+                data:datos,
+                success:function(data){
+                    location.reload();
+                },
+                error:function(e){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Verifique que no haya dejado campos vacios y haya seleccionado una respuesta correcta'
+                    })
+                }
+            });
+            
+
+        
+    }
+
+    $( "#formCrearPregunta" ).submit(function( e ) {
+        e.preventDefault();
+        var frm=$("#formCrearPregunta");
+        var datos = frm.serialize();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:'POST',
+            url:'/crearPregunta',
+            data:datos,
+            success:function(data){
+                location.reload();
+            },
+            error:function(x,xs,xt){
+                alert(x.responseText);
+            }
+        });
+        
+    });
+
+
+
+
+</script>
+
+<!-- ACTIVAR / DESACTIVAR EXAMEN -->
+<script>
+    var examen_id = $('#examen_id').val();
+    function desactivarExamen(){
+        var frm=$("#examenActivarForm");
+        frm.append('<input type="number" name="examen_id" hidden value='+examen_id+' >');
+        var datos = frm.serialize();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:'POST',
+            url:'/desactivarExamen',
+            data:datos,
+            success:function(data){
+                location.reload();
+            },
+            error:function(x,xs,xt){
+                alert(x.responseText);
+            }
+        });
+    }
+
+    function activarExamen(){
+        var numPreguntas = $("#counter").val();
+
+        if( numPreguntas > 0 ){
+
+            if( $( "#fechaDesactivarExm" ).val() == null || $( "#fechaDesactivarExm" ).val() == "" ){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Debe colocar una fecha de fin'
+                })
+            } else if( new Date( $( "#fechaDesactivarExm" ).val() ) < new Date( $( "#fechaActivarExm" ).val() ) ){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'La fecha de inicio debe ser antes de la fecha de fin'
+                })
+            } else {
+
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Una vez que active el examen no podrá modificarlo',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ok',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.value) {
+                        
+                        var frm=$("#examenActivarForm");
+                        frm.append('<input type="number" name="examen_id" hidden value='+examen_id+' >');
+                        var datos = frm.serialize();
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            type:'POST',
+                            url:'/activarExamen',
+                            data:datos,
+                            success:function(data){
+                                location.reload();
+                            },
+                            error:function(x,xs,xt){
+                                alert(x.responseText);
+                            }
+                        });
+                        
+                    }
+                })
+
+            }
+
+
+
+
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El examen no tiene preguntas'
+            })
+        }
 
     }
 
-
+    function cambiarFechaFin(){
+        $("#fechaDesactivarExm").removeAttr( "min" )
+        $("#fechaDesactivarExm").attr( "min", $("#fechaActivarExm").val()  );
+    }
 </script>
 
 <!--Evaluacion del ponente/Curso-->
@@ -343,9 +658,6 @@ $( document ).ready(function() {
                 });
           })
       });
-      //console.log(respuesta);
-      //console.log("Fecha inicio: "+FechaInicio);
-        //console.log("Fecha termino: "+ FechaTermino);
         if(respuesta === undefined){
             
         }else{
@@ -418,147 +730,7 @@ $( document ).ready(function() {
         });
     });
 
-
 </script>
 
-
-<!--Grafica Resultados de Evaluacion-Curso-->
-<script>
-    var respuesta;
-    var curso_id = $('#curso_id').val();
-    var ExcelenteRes = new Array();
-    var BuenoRes = new Array();
-    var RegularRes = new Array();
-    var DeficienteRes = new Array();
-    //VARPROMEDIO
-    var promedioExc;
-    var promedioBue;
-    var promedioReg;
-    var promedioDef;
-
-            $.ajax({
-                async: false,
-                url: '/resultadosGrafica/'+curso_id,
-                type:'GET',
-                success:(function(res){
-                    $(res).each(function(key,value){
-                    respuesta = res;
-                    ExcelenteRes.push(value.Excelente);
-                    BuenoRes.push(value.Bueno);
-                    RegularRes.push(value.Regular);
-                    DeficienteRes.push(value.Deficiente);
-                    });
-                })
-            });
-
-            var arrayExcelentes = new Array();
-            for (var i = 0; i < ExcelenteRes.length; i++) {
-                var ExceNum = parseInt(ExcelenteRes[i]);
-                arrayExcelentes.push(ExceNum);
-            }
-            var arrayBuenos = new Array();
-            for (var i = 0; i < BuenoRes.length; i++) {
-                var Num = parseInt(BuenoRes[i]);
-                arrayBuenos.push(Num);
-            }
-            var arrayRegulares = new Array();
-            for (var i = 0; i < RegularRes.length; i++) {
-                var Num = parseInt(RegularRes[i]);
-                arrayRegulares.push(Num);
-            }
-            var arrayDeficientes = new Array();
-            for (var i = 0; i < DeficienteRes.length; i++) {
-                var Num = parseInt(DeficienteRes[i]);
-                arrayDeficientes.push(Num);
-            }
-
-            //PROMEDIOS DATOS DE GRAFICA
-            var sum = 0;
-            for(var j = 0; j<arrayExcelentes.length; j++){
-                sum += arrayExcelentes[j];
-            }
-            promedioExc = sum/arrayExcelentes.length;
-
-            var sum1 = 0;
-            for(var j = 0; j<arrayBuenos.length; j++){
-                sum1 += arrayBuenos[j];
-            }
-            promedioBue = sum1/arrayBuenos.length;
-
-            var sum2 = 0;
-            for(var j = 0; j<arrayRegulares.length; j++){
-                sum2 += arrayRegulares[j];
-            }
-            promedioReg = sum2/arrayRegulares.length;
-
-            var sum3 = 0;
-            for(var j = 0; j<arrayDeficientes.length; j++){
-                sum3 += arrayDeficientes[j];
-            }
-            promedioDef = sum3/arrayDeficientes.length;
-
-        Highcharts.chart('grafica', {
-
-    title: {
-        text: 'Resultado de Evaluación - Reacción de la capacitación'
-    },
-
-    subtitle: {
-        text: 'Curso y Ponente'
-    },
-
-    yAxis: {
-        title: {
-            text: 'Promedio de Respuestas'
-        }
-    },
-
-    xAxis: {
-        title:{
-            text:'Respuestas'
-        },
-        categories: ['Excelente','Bueno','Regular','Deficiente']
-        
-        
-    },
-    //Leyendas
-    legend: {
-        layout: 'horizontal',
-        align: 'right',
-        verticalAlign: 'middle'
-    },
-
-    plotOptions: {
-        series: {
-            label: {
-                connectorAllowed: false
-            },
-            
-        }
-    },
-
-    series: [{
-        type: 'column',
-        name: 'Respuesta',
-        data: [promedioExc,promedioBue,promedioReg,promedioDef]
-    }],
-
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 100
-            },
-            chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
-                }
-            }
-        }]
-    }
-
-    });
-</script>
 
 @endsection
