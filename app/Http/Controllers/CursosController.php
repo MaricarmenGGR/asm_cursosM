@@ -232,19 +232,20 @@ class CursosController extends Controller
         }
 
         try{
+            //Borrar de Invitaciones
+       $invitaciones = DB:: table('invitaciones')
+       ->where('curso_id','=',$id)
+       ->select('documento')
+       ->get();
+       foreach($invitaciones as $invitacion){
+           $file = $invitacion->documento;
+           unlink('invitaciones/'.$file);
+       }
 
         }catch(Exception $e){
             
         }
-        //Borrar de Invitaciones
-       $invitaciones = DB:: table('invitaciones')
-        ->where('curso_id','=',$id)
-        ->select('documento')
-        ->get();
-        foreach($invitaciones as $invitacion){
-            $file = $invitacion->documento;
-            unlink('invitaciones/'.$file);
-        }
+        
         
         
         $material = DB::table('materiales')
