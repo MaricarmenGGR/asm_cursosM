@@ -21,7 +21,6 @@ class Examen_Usuario extends Model
         ->where('respuesta_id', '=', $respuesta_id)
         ->get();
 
-
         foreach($result as $r){
             return $r;
         }

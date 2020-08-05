@@ -82,6 +82,10 @@ Route::post('/modificarPregunta', 'ExamenCursoController@modificarPregunta')->na
 Route::post('/activarExamen', 'ExamenCursoController@activarExamen')->name('activarExamen');
 Route::post('/desactivarExamen', 'ExamenCursoController@desactivarExamen')->name('desactivarExamen');
 
+//ASISTENCIA
+Route::post('/registrarEntrada', 'AsistenciaController@registrarEntrada')->name('registrarEntrada');
+Route::post('/registrarSalida', 'AsistenciaController@registrarSalida')->name('registrarSalida');
+
 //////////////////////////// RUTAS CURSOS (USUARIOS) ////////////////////////////////
 Route::resource('cursosUsuario','CursosUsuarioController');
 Route::post('/inscribirse', 'CursosUsuarioController@inscribirse');

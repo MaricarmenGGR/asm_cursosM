@@ -404,9 +404,17 @@ class CursosController extends Controller
         ->whereNull('curso_usuarios.deleted_at')
         ->get();
 
+        $asistencias = DB::table('users')
+        ->leftJoin('asistencias', 'asistencias.user_id', '=', 'users.id')
+        ->select('asistencias.*', 'users.*')
+        ->where('asistencias.curso_id', '=', $id)
+        ->whereNull('asistencias.deleted_at')
+        ->get();
+
         $vars = [
             'curso' => $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre),
             'inscritos' => $inscritos,
+            'asistencias' => $asistencias,
             'modalidades' => Modalidad::get()
         ];
         return view('cursos.curso5_asistencia', $vars);

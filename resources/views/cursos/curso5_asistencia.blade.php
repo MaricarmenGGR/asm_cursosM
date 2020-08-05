@@ -60,19 +60,31 @@
                                                         <th scope="col">Nombre</th>
                                                         <th scope="col">CURP</th>
                                                         <th scope="col">Área</th>
+                                                        <th scope="col">Registro</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="bodyTableAsistencia">
                                                         
                                                         @php $c=0; @endphp
                                                         @foreach($inscritos as $inscrito)
-                                                        @php $c=$c+1; @endphp 
-                                                        <tr>
-                                                            <th scope="row">{{ $c }}</th>
-                                                            <td>{{ $inscrito->name  }} {{ $inscrito->apPaterno }} {{ $inscrito->apMaterno }} </td>
-                                                            <td>{{ $inscrito->curp }}</td>
-                                                            <td>{{ $inscrito->nombre }}</td>
-                                                        </tr>
+                                                            @php $c=$c+1; @endphp 
+                                                            <tr>
+                                                                <th scope="row">{{ $c }}</th>
+                                                                <td>{{ $inscrito->name  }} {{ $inscrito->apPaterno }} {{ $inscrito->apMaterno }} </td>
+                                                                <td>{{ $inscrito->curp }}</td>
+                                                                <td>{{ $inscrito->nombre }}</td>
+                                                                <td> 
+                                                                    <form id="formAsistencia_{{ $inscrito->user_id }}">
+                                                                        {{ csrf_field() }}
+                                                                        <input type="number" name="user_id" value="{{ $inscrito->user_id }}" hidden>
+                                                                        <input id="curso_id" name="curso_id" type="number"  value="{{ $curso->id }}" hidden>
+                                                                    </form>
+                                                                    <button type="button" class="btn btn-success" onclick="registrarEntrada({{ $inscrito->user_id }})">Entrada</button>
+                                                                    <button type="button" class="btn btn-danger" onclick="registrarSalida({{ $inscrito->user_id }})">Salida</button>
+                                                                </td>
+                                                            </tr>
+
+                                                            
                                                         @endforeach
                                                             
                                                         
@@ -90,7 +102,8 @@
                                     <div class="card">
                                         <h4 class="card-header card-header_curso text-center text-uppercase py-3">Lista de asistencia</h4>
                                         <div class="card-body">
-                                        
+
+
                                             <div class="table-responsive">
                                                 <table id="tableAsistencia" class="table mx-auto col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <thead class="thead-dark">
@@ -103,19 +116,16 @@
                                                     </thead>
                                                     <tbody id="bodyTableAsistencia">
                                                         
-                                                        
-
+                                                        @php $c=0; @endphp
+                                                        @foreach($asistencias as $asistencia)
+                                                            @php $c=$c+1; @endphp 
                                                             <tr>
-                                                                
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                
-
-                                                        </tr>
-                                                            
-                                                        
+                                                                <td>{{ $asistencia->name }} {{ $asistencia->apPaterno }} {{ $asistencia->apMaterno }} </td>
+                                                                <td>{{ $asistencia->fecha }}</td>
+                                                                <td>{{ $asistencia->entrada }}</td>
+                                                                <td>{{ $asistencia->salida }}</td>
+                                                            </tr>    
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -235,6 +245,58 @@ $( document ).ready(function() {
     } );
     
 });
+
+var curso_id = $('#curso_id').val();
+    function registrarEntrada(id){
+
+        
+        
+        
+        var frm=$("#formAsistencia_"+id);
+        var datos = frm.serialize();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:'POST',
+            url:'/registrarEntrada',
+            data:datos,
+            success:function(data){
+                location.reload();
+            },
+            error:function(x,xs,xt){
+                alert(x.responseText);
+            
+            }
+        });
+        
+    }
+
+    function registrarSalida(id){
+        //$("#formAsistencia_"+id).submit();
+        var frm=$("#formAsistencia_"+id);
+        var datos = frm.serialize();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:'POST',
+            url:'/registrarSalida',
+            data:datos,
+            success:function(data){
+                location.reload();
+            },
+            error:function(x,xs,xt){
+                alert(x.responseText);
+            
+            }
+        });
+    }
+
 </script>
 
 @endsection

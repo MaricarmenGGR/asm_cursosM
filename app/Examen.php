@@ -51,12 +51,19 @@ class Examen extends Model
         ->where('user_id', '=', $user_id)
         ->get();
 
-        foreach( $result as $r ){
-            $res = $r;
+        if (!$result->isEmpty()){
+            foreach( $result as $r ){
+                $res = $r;
+            }
+            return $r;
         }
-        
-        if (!$result->isEmpty()) return $r;
         else return null;
+    }
+
+    public function haSidoContestado($examen_id){
+        $result = Examen_Usuario::where('examen_id', '=', $examen_id)->get();
+        if (!$result->isEmpty()) return true; // HA SIDO CONTESTADO
+        else return false; //NO HA SIDO CONTESTADO
     }
 
 

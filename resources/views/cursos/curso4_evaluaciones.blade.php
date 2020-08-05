@@ -49,8 +49,8 @@
 
                 <!--EVALUACION-->    
                     <div class="tab-pane fade show active" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
-                        <div class="row">    
-                            <div class="col-lg-4 justify-content-center">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
 
                                     <div class="card">
                                         <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Cuestionario de evaluación-reacción del curso</h4>
@@ -78,8 +78,10 @@
                                     </div>
                                                                 
                             </div>
-                            <br>
-                            <div class="col-lg-8 justify-content-center">
+                        </div>
+                        <br>
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
                                 
                                     <div class="card">
                                         <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Evaluación de conocimientos adquiridos</h4>
@@ -108,9 +110,11 @@
                                                         <label>Fecha Fin</label>&nbsp;&nbsp;
                                                         <input type="date" class="form-control" id="fechaDesactivarExm" name="fechaDesactivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaDesactivar }}" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
+                                                    @if( ! $curso->examen->haSidoContestado( $curso->examen->id ) )
                                                     <div class="form-group">
                                                             <a class="btn btn-danger float-right" id="desactivarExamen" onclick="desactivarExamen()" style="color: white;">Desactivar</a>
                                                     </div>
+                                                    @endif
                                                 @endif
                                             </form>
                                             <label><strong>Vista previa de examen</strong></label>
@@ -183,9 +187,9 @@
                                                                                         @endforeach
                                                                                     @endif
                                                                                 </div>
-                                                                                <a class="btn btn-xs btn-primary" accesskey="{{ $counter }}" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>
+                                                                                <a style="color:white;" class="btn btn-xs btn-primary" accesskey="{{ $counter }}" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>
                                                                                 <!--<input type="submit" class="btn btn-xs btn-success" accesskey="1" id="guardarButton" value="Guardar Respuesta" />-->
-                                                                                <a class="btn btn-xs btn-success" accesskey="1" id="guardarButton" onclick="guardarRespuestas({{ $counter }})">Guardar Respuestas</a>
+                                                                                <a style="color:white;" class="btn btn-xs btn-success" accesskey="1" id="guardarButton" onclick="guardarRespuestas({{ $counter }})">Guardar Respuestas</a>
                                                                             </div>
 
                                                                         </form>
@@ -209,7 +213,7 @@
                                                                         <h5 class="mb-0 panel-title">
                                                                             <div class="d-flex">
                                                                                 <a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" aria-expanded="true" aria-controls="collapse{{ $counter }}"> 
-                                                                                    <p accesskey="{{ $counter }}" class="d-inline" id="pPregunta_{{ $counter }}">{{ $pregunta->preguntaTxt }} </p>
+                                                                                    <p accesskey="{{ $counter }}" class="d-inline" id="pPregunta_{{ $counter }}">Pregunta #{{ $counter }}: {{ $pregunta->preguntaTxt }} </p>
                                                                                 </a>
                                                                             </div>
                                                                         </h5>
@@ -225,9 +229,9 @@
                                                                                         @foreach( $respuestas as $respuesta )
                                                                                             @php $c=$c+1; @endphp
                                                                                             <div class="col-lg-12 d-flex">
-                                                                                                <input type="text" name="ctgtext[]" class="p-2 form-control" style="width: 40%;" value="{{ $respuesta->respuestaTxt }}" id="input_ctgtext}" readonly/>
+                                                                                                <label for="">{{ $respuesta->respuestaTxt }} </label>
                                                                                                 @if($respuesta->correcto == 1)
-                                                                                                <input type="radio" class="form-check-input" name="ctgcorrecto" value="{{ $c }}" checked disabled/>
+                                                                                                <input type="radio" class="form-check-input" name="ctgcorrecto" value="{{ $c }}" checked/>
                                                                                                 @else
                                                                                                 <input type="radio" class="form-check-input" name="ctgcorrecto" value="{{ $c }}" disabled/>
                                                                                                 @endif
@@ -236,10 +240,10 @@
                                                                                     @endif
                                                                                 </div>
                                                                             </div>
-
                                                                         </form>
                                                                     </div>
                                                                 </div>
+                                                                <br>
                                                             </div>
                                                         @endforeach
 
