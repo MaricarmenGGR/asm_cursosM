@@ -290,30 +290,36 @@ class CursosController extends Controller
         ->select('*')
         ->delete();
 
+//update or delete on table \"examen_preguntas\" violates foreign key constraint 
+// \"examen_respuestas_pregunta_id_foreign\" on table \"examen_respuestas\"\nDETAIL:  
+// Key (id)=(1) is still referenced from table \"examen_respuestas\". 
+//(SQL: delete from \"examen_preguntas\" where \"examen_id\" = 1)",
 
-        $examen = Examen::where('curso_id','=',$id)->firstOrFail();
+        $examen = Examen::where('curso_id','=',$id)->first();
 
-        $examen_usuario = Examen_Usuario::where('examen_id','=',$examen->id)->firstOrFail();
-        
-        //Borrar respuestas de los usuarioas 
-        Examen_Usuario_Respuestas::where('examen_usuario_id','=',$examen_usuario->id)->forceDelete();
+        if( $examen != null ){
+            $examen_usuario = Examen_Usuario::where('examen_id','=',$examen->id)->first();
 
-        $examen_preguntas = Examen_Preguntas::where('examen_id','=',$examen->id)->get();
+            if( $examen_usuario != null ){
+                //Borrar respuestas de los usuarioas 
+                Examen_Usuario_Respuestas::where('examen_usuario_id','=',$examen_usuario->id)->forceDelete();
+                
+                //Borrar examen usuario
+                Examen_Usuario::where('examen_id','=',$examen->id)->forceDelete();
+            }
 
-        //Borrar respuestas de examen
-        foreach($examen_preguntas as $exp){
-            Examen_Respuestas::where('pregunta_id','=',$exp->id)->forceDelete();
+            $examen_preguntas = Examen_Preguntas::where('examen_id','=',$examen->id)->get();
+    
+            //Borrar respuestas de examen
+            foreach($examen_preguntas as $exp){
+                Examen_Respuestas::where('pregunta_id','=',$exp->id)->forceDelete();
+            }
+
+            //Borrar preguntas examen
+            Examen_Preguntas::where('examen_id','=',$examen->id)->forceDelete();
+            //Borrar examen
+            Examen::where('curso_id','=',$id)->forceDelete();
         }
-        //Borrar preguntas examen
-        Examen_Preguntas::where('examen_id','=',$examen->id)->forceDelete();
-
-        //Borrar examen usuario
-        Examen_Usuario::where('examen_id','=',$examen->id)->forceDelete();
-
-        //Borrar examen
-        Examen::where('curso_id','=',$id)->forceDelete();
-
-
 
         $invitaciones = DB:: table('asistencias')
         ->where('curso_id','=',$id)
