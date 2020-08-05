@@ -11,6 +11,10 @@ use App\Curso_Usuario;
 use App\Modalidad;
 use App\User;
 use App\Examen;
+use App\Examen_Usuario;
+use App\Examen_Usuario_Respuestas;
+use App\Examen_Preguntas;
+use App\Examen_Respuestas;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\PDF;
@@ -282,6 +286,36 @@ class CursosController extends Controller
         ->delete();
 
         $invitaciones = DB:: table('invitaciones')
+        ->where('curso_id','=',$id)
+        ->select('*')
+        ->delete();
+
+
+        $examen = Examen::where('curso_id','=',$id)->firstOrFail();
+
+        $examen_usuario = Examen_Usuario::where('examen_id','=',$examen->id)->firstOrFail();
+        
+        //Borrar respuestas de los usuarioas 
+        Examen_Usuario_Respuestas::where('examen_usuario_id','=',$examen_usuario->id)->forceDelete();
+
+        $examen_preguntas = Examen_Preguntas::where('examen_id','=',$examen->id)->get();
+
+        //Borrar respuestas de examen
+        foreach($examen_preguntas as $exp){
+            Examen_Respuestas::where('pregunta_id','=',$exp->id)->forceDelete();
+        }
+        //Borrar preguntas examen
+        Examen_Preguntas::where('examen_id','=',$examen->id)->forceDelete();
+
+        //Borrar examen usuario
+        Examen_Usuario::where('examen_id','=',$examen->id)->forceDelete();
+
+        //Borrar examen
+        Examen::where('curso_id','=',$id)->forceDelete();
+
+
+
+        $invitaciones = DB:: table('asistencias')
         ->where('curso_id','=',$id)
         ->select('*')
         ->delete();
