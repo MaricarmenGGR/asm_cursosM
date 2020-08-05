@@ -78,7 +78,7 @@
                         </div>
                                     
                         <br>
-                       <!-- <h3>Titular de área: Nombre del Titular del Area</h3><h3>Estatus:(Vista) o (No Vista)</h3>
+                        
                         <br>
                         <h3>AREAS</h3>
                         <form method="POST" action="/editarAreas/{{ $curso->id }}" id="modificarAreasForm">
@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="col-lg-3"></div>
                             </div>
-                        </form>-->
+                        </form>
                     </div>
                     
                 </div>
