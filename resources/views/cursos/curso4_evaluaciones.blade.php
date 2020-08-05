@@ -87,7 +87,7 @@
                                             <label><strong>Activar examen</strong></label>
                                             <form id="examenActivarForm" class="form-group form-inline">
                                                 {{ csrf_field() }}
-                                                    
+                                                @if( ! $curso->examen->estaActivado( $curso->examen->id ) )
                                                     <div class="form-group form-inline" >
                                                         <label>Fecha Inicio</label>&nbsp;&nbsp;
                                                         <input type="date" class="form-control" id="fechaActivarExm" name="fechaActivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaActivar }}" required onchange="cambiarFechaFin()">&nbsp;&nbsp;&nbsp;&nbsp;
@@ -97,14 +97,21 @@
                                                         <input type="date" class="form-control" id="fechaDesactivarExm" name="fechaDesactivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaDesactivar }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                     <div class="form-group">
-                                                        @if( ! $curso->examen->estaActivado( $curso->examen->id ) )
                                                             <a class="btn btn-asm float-right" id="activarExamen" onclick="activarExamen()" style="color: white;" >Activar</a>
-                                                        @else
-                                                            <a class="btn btn-danger float-right" id="desactivarExamen" onclick="desactivarExamen()" style="color: white;">Desactivar</a>
-                                                        @endif
-                                                        
-                                                        
                                                     </div>
+                                                @else
+                                                    <div class="form-group form-inline" >
+                                                        <label>Fecha Inicio</label>&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaActivarExm" name="fechaActivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaActivar }}" onchange="cambiarFechaFin()" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </div>
+                                                    <div class="form-group form-inline">
+                                                        <label>Fecha Fin</label>&nbsp;&nbsp;
+                                                        <input type="date" class="form-control" id="fechaDesactivarExm" name="fechaDesactivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaDesactivar }}" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <a class="btn btn-danger float-right" id="desactivarExamen" onclick="desactivarExamen()" style="color: white;">Desactivar</a>
+                                                    </div>
+                                                @endif
                                             </form>
                                             <label><strong>Vista previa de examen</strong></label>
                                             

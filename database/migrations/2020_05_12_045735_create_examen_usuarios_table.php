@@ -19,7 +19,9 @@ class CreateExamenUsuariosTable extends Migration
             $table->foreign('examen_id')->references('id')->on('examen');
             $table->unsignedinteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->boolean('terminado');
+            $table->boolean('terminado')->nullable();
+            $table->integer('aciertos')->nullable();
+            $table->float('calificacion')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

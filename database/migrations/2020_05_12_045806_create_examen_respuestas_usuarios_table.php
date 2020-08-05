@@ -21,6 +21,7 @@ class CreateExamenRespuestasUsuariosTable extends Migration
             $table->foreign('pregunta_id')->references('id')->on('examen_preguntas');
             $table->unsignedinteger('respuesta_id');
             $table->foreign('respuesta_id')->references('id')->on('examen_respuestas');
+            $table->boolean('correcto');
             $table->timestamps();
             $table->softDeletes();
         });

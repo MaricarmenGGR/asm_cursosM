@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Curso;
 use App\Curso_Usuario;
 use App\Curso_Area;
+use App\Examen;
+use App\Examen_Respuestas;
+use App\Examen_Preguntas;
+use App\Examen_Usuario;
+use App\Examen_Usuario_Respuestas;
+use Illuminate\Support\Facades\DB;
 
 class CursosUsuarioController extends Controller
 {
@@ -50,7 +56,7 @@ class CursosUsuarioController extends Controller
     public function show($id)
     {
         $vars = [
-            'curso' => Curso::findOrFail($id),
+            'curso' => Curso::findOrFail($id)->setAttribute('examen', Examen::where('curso_id', '=', $id)->firstOrFail() )
         ];
         return view('cursos.cursoUser', $vars);
     }
@@ -108,5 +114,38 @@ class CursosUsuarioController extends Controller
         $cupo->update();
 
         return redirect()->route('cursosUsuario.show',$request->idCurso);
+    }
+
+    // PARA CONTESTAR EXAMEN
+    public function responderExamen(Request $request){
+        Examen_Usuario::create([
+            'user_id' => Auth::user()->id,
+            'examen_id' => $request->examen_id,
+            'terminado' => 1
+        ]);
+
+        $ultimaTupla = DB::table('examen_usuario')->latest('id')->first();
+
+        $contadorAciertos = 0;
+        for( $i=1; $i <= $request->contador_preguntas ; $i++ ){
+            list($pregunta_id,$respuesta_id) = explode('_', $request->input('respuesta_'.$i)  );
+            
+            $respuesta = Examen_Respuestas::findOrFail($respuesta_id);
+            Examen_Usuario_Respuestas::create([
+                'examen_usuario_id' => $ultimaTupla->id,
+                'pregunta_id' => $pregunta_id,
+                'respuesta_id' => $respuesta_id,
+                'correcto' => $respuesta->correcto
+            ]);
+            
+            $contadorAciertos += $respuesta->correcto;
+        }
+
+        Examen_Usuario::findOrFail($ultimaTupla->id)->update([
+            'terminado' => 1,
+            'aciertos' => $contadorAciertos,
+            'calificacion' => $contadorAciertos * 10 / $request->contador_preguntas
+        ]);
+
     }
 }

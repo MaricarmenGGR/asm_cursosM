@@ -78,7 +78,7 @@ Route::post('/crearPregunta', 'ExamenCursoController@crearPregunta')->name('crea
 Route::post('/guardarRespuestas', 'ExamenCursoController@guardarRespuestas')->name('guardarRespuestas');
 Route::post('/borrarPregunta', 'ExamenCursoController@borrarPregunta')->name('borrarPregunta');
 Route::post('/modificarPregunta', 'ExamenCursoController@modificarPregunta')->name('modificarPregunta');
-
+//ACTIVAR - DESACTIVAR EXAMEN
 Route::post('/activarExamen', 'ExamenCursoController@activarExamen')->name('activarExamen');
 Route::post('/desactivarExamen', 'ExamenCursoController@desactivarExamen')->name('desactivarExamen');
 
@@ -113,3 +113,6 @@ Route::get('/pdf', function(){
 Route::get('/registro',function(){
     return view('usuarios.registro');
 });
+
+//RESPONDER EXAMEN
+Route::post('/responderExamen', 'CursosUsuarioController@responderExamen')->name('responderExamen');
