@@ -51,34 +51,38 @@
                     <div class="tab-pane fade show active" id="evaluacion" role="tabpanel" aria-labelledby="evaluacion-tab">
                         <div class="row justify-content-center">
                             <div class="col-lg-10">
-
-                                    <div class="card">
-                                        <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Cuestionario de evaluación-reacción del curso</h4>
-                                        <div class="card-body">
-                                            
-                                            <label><strong>Activar encuesta</strong></label>
-                                            <form id="examenPonenteActivarForm" class="form-group form-inline">
-                                                {{ csrf_field() }}
-                                                    <div class="form-group form-inline" >
-                                                        <label>Fecha Inicio</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaActivarEva" name="fechaActivarEva" min="{{ $curso->fechaInicio }}" required><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
-                                                    </div>
-                                                    <div class="form-group form-inline">
-                                                        <label>Fecha Fin</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaDesactivarEva" name="fechaDesactivarEva" min="{{ $curso->fechaFin }}" required><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
-                                                    </div>
-                                                <input type="hidden" value="{{$curso->id}}" name="curso_id" id="curso_id">
-                                                <div class="form-group">
-                                                    <button class="btn btn-asm float-right" id="subirActivacionEncPonente">Activar</button>
-                                                    <br>
-                                                    <button class="btn btn-danger float-right" id="quitarActivacionEncPonente">Desactivar</button>
-                                                </div>
-                                            </form>
+                                <div class="card">
+                                    <h4 class="card-header card-header_curso text-center font-weight-bold text-uppercase py-3">Cuestionario de evaluación-reacción del curso</h4>
+                                    <div class="card-body">
+                                        
+                                        <label><strong>Activar encuesta</strong></label><br>
+                                        <div class="form-group form-inline">
+                                            <label><strong> Fecha Inicio: </strong></label> <input class="form-control" id="fEI" value="Fecha NO definida" disabled></input>
+                                            <label><strong> Fecha Termino: </strong></label> <input class="form-control" id="fET" value="Fecha NO definida" disabled></input>
                                         </div>
+                                        
+
+                                        <form id="examenPonenteActivarForm" class="form-group form-inline">
+                                            {{ csrf_field() }}
+                                                <div class="form-group form-inline" >
+                                                    <label>Fecha Inicio</label>
+                                                    <input type="date" class="form-control" id="fechaActivarEva" name="fechaActivarEva" min="{{ $curso->fechaInicio }}" required><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                                </div>
+                                                <div class="form-group form-inline">
+                                                    <label>Fecha Fin</label>
+                                                    <input type="date" class="form-control" id="fechaDesactivarEva" name="fechaDesactivarEva" min="{{ $curso->fechaFin }}" required><!--&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                                </div>
+                                            <input type="hidden" value="{{$curso->id}}" name="curso_id" id="curso_id">
+                                            <div class="form-group">
+                                                <button class="btn btn-asm float-right" id="subirActivacionEncPonente">Activar</button>
+                                                <br>
+                                                <button class="btn btn-danger float-right" id="quitarActivacionEncPonente">Desactivar</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                                                
-                            </div>
-                        </div>
+                                </div>
+                            </div> 
+                        </div>   
                         <br>
                         <div class="row justify-content-center">
                             <div class="col-lg-10">
@@ -282,8 +286,6 @@
                             </div>
                         </div>
                     </div>
-                                </div>                                
-                    </div>
                     
                 </div>
             </div>
@@ -374,7 +376,7 @@
         //eliminarTabla()
         //verTabla(curso_id)
         comprobarFechas(curso_id)
-        
+        ver(curso_id);
         function resizeInput() {
             $(this).attr('size', $(this).val().length);
         }
@@ -713,6 +715,42 @@
 
 <!--Evaluacion del ponente/Curso-->
 <script>
+    function ver(id){
+        var respuesta;
+      var FechaInicio;
+      var FechaTermino;
+      $.ajax({
+          async:false,
+          url:'/fechas/'+id,
+          type: 'GET',
+          success:(function(res){
+            $(res).each(function(key,value){
+                 FechaInicio = value.fechaEmision;
+                 FechaTermino = value.fechaTermino;
+                 respuesta = res;
+                });
+          })
+      });
+
+      console.log(respuesta);
+      console.log("Fecha inicio: "+FechaInicio);
+      console.log("Fecha termino: "+ FechaTermino);
+      if(FechaTermino == undefined & FechaInicio == undefined){
+        var resFNT = document.getElementById("fET").value = "Fecha no Establecida";
+        resFNT.value='Fecha no Establecida';
+        var resFNI = document.getElementById("fEI").value = "Fecha no Establecida";
+        resFNI.value='Fecha no Establecida';
+        console.log('es nula y no existe');
+      }else{
+        var resF = document.getElementById("fEI").value = FechaInicio;
+        var resFT = document.getElementById("fET").value = FechaTermino;
+
+      }
+      
+        
+    }
+
+    
 
     function comprobarFechas(id){
       var respuesta;
@@ -760,6 +798,7 @@
             console.log(data);
             const boton = document.getElementById("subirActivacionEncPonente");
             boton.disabled = true;
+            location.reload();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             Swal.fire({
@@ -790,6 +829,7 @@
             });
             const boton = document.getElementById("subirActivacionEncPonente");
             boton.disabled = false;
+            location.reload();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             Swal.fire({

@@ -58,12 +58,27 @@
                                                 
                                             </div>
                                             <br>
-                                            <button type="submit" class="btn btn-asm float-right" id="subeInvitacion">Subir</button>
+                                            <button type="submit" class="btn btn-asm float-right" id="subeInvitacion">Subir al Sistema</button>
                                             <br>
                                         </form>
                                     </div>
+                        <div class="card-body">
+                            <form id="correosInvitacionForm" class="form-group">
+                            {{ csrf_field() }}
+                                <div class="form-group" >
+                                    <label>Agregar los correos electrónicos separados por una coma (,) Ej. example@email.com,example2@email.com</label><br>
+                                    <textarea class="form-control" id="correosInvitados" name="correosInvitados" placeholder="Correos Electrónicos"></textarea>
+                                </div>
+                                    <input type="hidden" value="{{$curso->id}}" name="curso_id" id="curso_id">
+                                <div class="form-group">
+                                    <button class="btn btn-asm float-right" id="enviarInvitacionCorreo">Enviar a Correos</button>
+                                    
+                                </div>
+                            </form>
+                        </div>
+                                    
                         <br>
-                        <h3>Titular de área: Nombre del Titular del Area</h3><h3>Estatus:(Vista) o (No Vista)</h3>
+                       <!-- <h3>Titular de área: Nombre del Titular del Area</h3><h3>Estatus:(Vista) o (No Vista)</h3>
                         <br>
                         <h3>AREAS</h3>
                         <form method="POST" action="/editarAreas/{{ $curso->id }}" id="modificarAreasForm">
@@ -108,7 +123,7 @@
                                 </div>
                                 <div class="col-lg-3"></div>
                             </div>
-                        </form>
+                        </form>-->
                     </div>
                     
                 </div>
@@ -266,7 +281,7 @@ function showInput(checkbox){
             success: function(response){
                 Swal.fire({
                     icon: 'success',
-                    title: 'Invitacion Enviada',
+                    title: 'Invitación en el Sistema',
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -277,6 +292,36 @@ function showInput(checkbox){
                     title: 'Ha ocurrido un error',
                     showConfirmButton: false,
                     timer: 2000
+                });
+            }
+        });
+    });
+
+    $("#enviarInvitacionCorreo").click(function (e) {
+        e.preventDefault();
+        var curso_id = $('#curso_id').val();
+        var correos = $('#correosInvitados').val();
+        var token = '{{csrf_token()}}';
+        var data={_token:token,curso_id:curso_id,correosInvitados:correos};
+        $.ajax({
+        type: "POST",
+        url: "/enviarCorreos",
+        data: data,
+        success: function(response){
+            Swal.fire({
+                icon: 'success',
+                title: 'Invitacion Enviada a correos propuestos',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            console.log(data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+            Swal.fire({
+                icon: 'error',
+                title: 'Ha ocurrido un error',
+                showConfirmButton: false,
+                timer: 2000
                 });
             }
         });

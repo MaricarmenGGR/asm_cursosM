@@ -73,7 +73,7 @@
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                 <div class="card-body">
                                     Nombre del ponente:  {!! $curso->nombrePonente !!} <br>
-                                    Curriculom:  {!! $curso->descripcionPonente !!}
+                                    Curriculum:  {!! $curso->infoPonente !!}
                                 </div>
                                 </div>
                             </div>
