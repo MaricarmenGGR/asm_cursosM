@@ -80,7 +80,7 @@
                         <br>
                         
                         <br>
-                        <h3>AREAS</h3>
+                        <!--<h3>AREAS</h3>
                         <form method="POST" action="/editarAreas/{{ $curso->id }}" id="modificarAreasForm">
                             {{ csrf_field() }}
                             <input type="hidden" value="{{$curso->id}}" name="curso_id">
@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="col-lg-3"></div>
                             </div>
-                        </form>
+                        </form>-->
                     </div>
                     
                 </div>
