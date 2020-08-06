@@ -9,7 +9,9 @@
             @foreach($cursos as $curso)
                 <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
                     <div class="card">
+                        
                         <img class="card-img-top" src="../uploads/{{$curso->imagenCurso}}">
+                        
                         <div class="card-block">
                             <h4 class="card-title" style="text-align: center;">{!! $curso->nombreCurso !!}</h4>
 
@@ -19,6 +21,8 @@
                                     </div>
                                     
                                     <input type="hidden" id="curso_id" value="{{$curso->id}}">
+
+                                  
 
                                     <div class="p-2">
                                         <a href="/pdfCurso/{{$curso->id}}" style="color: black;"><i class="fas fa-file-pdf"></i></a>

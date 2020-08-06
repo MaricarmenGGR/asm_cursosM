@@ -199,6 +199,38 @@ class CursosController extends Controller
         return view('cursos.curso', $vars);
     }
 
+    public function editImagenCurso(Request $request,$id){
+        try{
+            //Borra de Uploads
+            $imagenCurso = DB:: table('cursos')
+            ->where('id','=',$id)
+            ->select('imagenCurso')
+            ->get();
+            foreach($imagenCurso as $imagen){
+                $file = $imagen->imagenCurso;
+                unlink('uploads/'.$file);
+            }
+        } catch(Exception $e){
+            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        }
+
+        if ($request->hasFile('imagenCurso')) {
+            $imagePath = $request->file('imagenCurso');
+            $imageName = time() . '.' . $imagePath ->getClientOriginalExtension();
+
+            $imagePath ->move('uploads', $imageName );
+        };
+        
+
+        $imaEdita =  DB:: table('cursos')
+        ->where('id', '=',$id)
+        ->update([
+            'imagenCurso' => $imageName,
+            
+        ]);
+        return response()->json($imaEdita);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
