@@ -272,17 +272,17 @@ class CursosController extends Controller
 
         try{
             //Borrar de Invitaciones
-       $invitaciones = DB:: table('invitaciones')
-       ->where('curso_id','=',$id)
-       ->select('documento')
-       ->get();
-       foreach($invitaciones as $invitacion){
-           $file = $invitacion->documento;
-           unlink('invitaciones/'.$file);
-       }
+            $invitaciones = DB:: table('invitaciones')
+            ->where('curso_id','=',$id)
+            ->select('documento')
+            ->get();
+            foreach($invitaciones as $invitacion){
+                $file = $invitacion->documento;
+                unlink('invitaciones/'.$file);
+            }
 
         }catch(Exception $e){
-            
+            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
         }
         
         
@@ -321,11 +321,6 @@ class CursosController extends Controller
         ->where('curso_id','=',$id)
         ->select('*')
         ->delete();
-
-//update or delete on table \"examen_preguntas\" violates foreign key constraint 
-// \"examen_respuestas_pregunta_id_foreign\" on table \"examen_respuestas\"\nDETAIL:  
-// Key (id)=(1) is still referenced from table \"examen_respuestas\". 
-//(SQL: delete from \"examen_preguntas\" where \"examen_id\" = 1)",
 
         $examen = Examen::where('curso_id','=',$id)->first();
 

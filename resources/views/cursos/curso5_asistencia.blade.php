@@ -264,7 +264,14 @@ var curso_id = $('#curso_id').val();
             url:'/registrarEntrada',
             data:datos,
             success:function(data){
-                location.reload();
+                if(data.flag == 1){
+                    location.reload()
+                } else {
+                    Swal.fire({
+                        text: data.mensaje,
+                        icon: 'warning'
+                    })
+                } 
             },
             error:function(x,xs,xt){
                 alert(x.responseText);
@@ -288,7 +295,15 @@ var curso_id = $('#curso_id').val();
             url:'/registrarSalida',
             data:datos,
             success:function(data){
-                location.reload();
+                if(data.flag == 1){
+                    location.reload()
+                } else {
+                    Swal.fire({
+                        text: data.mensaje,
+                        icon: 'warning'
+                    })
+                } 
+                
             },
             error:function(x,xs,xt){
                 alert(x.responseText);

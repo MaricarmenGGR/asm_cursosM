@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Exception;
 use App\Examen_Respuestas;
 use App\Examen_Preguntas;
+use App\Examen_Usuario;
 use App\Examen;
 use App\Curso;
 use Illuminate\Support\Facades\DB;
@@ -163,5 +164,12 @@ class ExamenCursoController extends Controller
         ]);
     }
     
+    public function resultadosGraficaExamen($id){
+        $examen = Examen::where('curso_id','=',$id)->first();
+        $respuestas = Examen_Usuario::where('examen_id','=',$examen->id)->get();
+        return response()->json(
+            $respuestas
+        );
+    }
 
 }

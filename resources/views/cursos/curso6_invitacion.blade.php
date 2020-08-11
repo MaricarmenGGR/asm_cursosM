@@ -45,7 +45,7 @@
                 <div class="tab-content" id="nav-tabContent">
                 <!--INVITACION-->    
                     <div class="tab-pane fade show active" id="invitacion" role="tabpanel" aria-labelledby="invitacion-tab">
-                        <h1>INVITACIÓN</h1>
+                        <h3>INVITACIÓN</h3>
                         <!--Podemos subir el oficio-->
                         <div class="card-body">
                                         <form id="subirInvitacion" method="POST" enctype="multipart/form-data">

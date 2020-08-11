@@ -84,7 +84,8 @@ Route::post('/modificarPregunta', 'ExamenCursoController@modificarPregunta')->na
 //ACTIVAR - DESACTIVAR EXAMEN
 Route::post('/activarExamen', 'ExamenCursoController@activarExamen')->name('activarExamen');
 Route::post('/desactivarExamen', 'ExamenCursoController@desactivarExamen')->name('desactivarExamen');
-
+//GRAFICAR RESULTADOS EXAMEN
+Route::get('/resultadosGraficaExamen/{id}','ExamenCursoController@resultadosGraficaExamen');
 //ASISTENCIA
 Route::post('/registrarEntrada', 'AsistenciaController@registrarEntrada')->name('registrarEntrada');
 Route::post('/registrarSalida', 'AsistenciaController@registrarSalida')->name('registrarSalida');

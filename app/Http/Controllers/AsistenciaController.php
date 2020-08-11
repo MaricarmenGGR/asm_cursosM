@@ -84,6 +84,7 @@ class AsistenciaController extends Controller
     }
 
     public function registrarEntrada(Request $request){
+        date_default_timezone_set('America/Mexico_City');
         $result = Asistencia::where('curso_id','=',$request->curso_id)
         ->where('user_id','=',$request->user_id)
         ->get();
@@ -95,13 +96,19 @@ class AsistenciaController extends Controller
                 'fecha' => date('Y-m-d'),
                 'entrada' => date('H:i:s')
             ]);
+            return response()->json(
+                ["mensaje"=> "Se ha registrado la entrada del día de hoy", "flag"=>1]
+            );
         } else {
-
+            return response()->json(
+                ["mensaje"=> "El usuario ya ha registrado su entrada el día de hoy", "flag"=>0]
+            );
         }
 
     }
 
     public function registrarSalida(Request $request){
+        date_default_timezone_set('America/Mexico_City');
         $result = Asistencia::where('curso_id','=',$request->curso_id)
         ->where('user_id','=',$request->user_id)->first();
 
@@ -109,6 +116,13 @@ class AsistenciaController extends Controller
             $result->update([
                 'salida' => date('H:i:s')
             ]);
+            return response()->json(
+                ["mensaje"=> "Se ha registrado la salida del día de hoy", "flag"=>1]
+            );
+        } else {
+            return response()->json(
+                ["mensaje"=> "El usuario ya ha registrado su salida el día de hoy", "flag"=>0]
+            );
         }
 
     }
