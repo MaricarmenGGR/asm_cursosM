@@ -564,7 +564,7 @@
                             <div class="col-lg-8">
 
                                 <h2 class="text-center">Evaluación de Conocimientos Adquiridos</h2> <br>
-                                    @php $examen_contestado = $curso->examen->estaContestado( $curso->examen->id, Auth::user()->id )  @endphp
+                                    @php $examen_contestado = $curso->examen->estaContestado( $curso->examen->id, Auth::user()->id );  @endphp
                                     @if( $examen_contestado == null  )
                                     <form action="/responderExamen" method="post" id="formResponderExamen" >   
                                         {{ csrf_field() }} 

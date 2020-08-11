@@ -41,9 +41,10 @@ class Examen extends Model
     }
 
     public function vencioLimite($examen_id){
+        date_default_timezone_set('America/Mexico_City');
         $result = Examen::findOrFail($examen_id);
-        if( date_parse($result->fechaDesactivar." 23:59:00") > date_parse( date('Y/m/d H:i:s') ) ) return true;
-        else return false;
+        if( strtotime(date("d-m-Y H:i:s",time())) > strtotime($result->fechaDesactivar." 23:59:00") ) return true; //VENCIO
+        else return false; //NO VENCIO
     }
 
     public function estaContestado($examen_id,$user_id){
