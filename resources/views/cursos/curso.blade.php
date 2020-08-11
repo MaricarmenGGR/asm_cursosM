@@ -166,6 +166,37 @@
                                 </div>
                                 </div>
                             </div>
+
+                            <div class="card">
+                            <div class="card-header card-header_curso" id="headingFour">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-accordion collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Imagen
+                                    </button>
+                                    <a class="btn" onclick="editarImagenF()"><i class="fas fa-pencil-alt"></i></a>
+                                </h5>
+                                </div>
+                                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                                <div class="card-body text-center">
+                                    <form id="imagenForm" class="form-group" method="POST" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <div class="form-group col-lg-12" style="padding: 0 30% 0 30%">
+                                            <img class="card-img-top" src="../uploads/{{$curso->imagenCurso}}">
+                                        </div>
+                                        <div class="form-group col-lg-12" style="padding: 0 2% 0 2%">
+                                            <input hidden id="nombreImgNew" type="file" name="imagenCurso" accept="image/*" onchange="loadFile(event)">
+                                            <div class="text-left">
+                                                <img id="output" src="" />
+                                            </div>
+                                        </div>
+                                        <a class="btn btn-secondary" id="btnCanImg" onclick="cancelarImagenF()" hidden style="margin-top: 10px; margin-bottom: 10px; margin-left: 15px; margin-right: 5px; color: white;">Cancelar</a>
+                                        <button type="submit" class="btn btn-asm" id="btnEdiImg" hidden style="margin-top: 10px; margin-bottom: 10px;">Guardar</button>
+
+                                    </form>
+                                </div>
+
+
+                            </div>
                             <!--
                             <div class="card">
                                 <div class="card-header" id="headingFour">
@@ -204,6 +235,7 @@
 
 <!--Modificar Info del Curso-->
 <script>
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -468,4 +500,58 @@
     });
 </script>
 
+<script>
+
+    function editarImagenF(){
+        document.getElementById("btnEdiImg").removeAttribute("hidden");
+        document.getElementById("btnCanImg").removeAttribute("hidden");
+        document.getElementById("nombreImgNew").removeAttribute("hidden");
+        
+    }
+    function cancelarImagenF(){
+        document.getElementById("btnEdiImg").setAttribute("hidden", true);
+        document.getElementById("btnCanImg").setAttribute("hidden",true);
+        document.getElementById("nombreImgNew").setAttribute("hidden",true);
+       
+    }
+    $('#imagenForm').on('submit', function(e){
+        e.preventDefault();
+        var id = $('#idCurso').val();
+        var formData = new FormData( this );
+        $.ajax({
+            type: 'POST',
+            url: "/editImage/"+id,
+            dataType: "json",
+            data:formData,
+            contentType: false,
+            processData: false,
+            success: function(response){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se ha cambiado la Imagen',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                location.reload();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ha ocurrido un error',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+        });
+    });
+
+
+</script>
+
+<script type="text/javascript">
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>
 @endsection

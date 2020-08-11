@@ -58,6 +58,7 @@ Route::put('/editMedic/{id}','UsuariosController@editarInfoMedic');
 Route::put('/editSchool/{id}','UsuariosController@editarInfoEscolar');
 Route::put('/editPersonal/{id}','UsuariosController@edit');
 Route::put('/editLaboral/{id}','UsuariosController@editarInfoLaboral');
+Route::post('/editImage/{id}','CursosController@editImagenCurso');
 
 Route::get('/listar/{id}','ProgramaCursoController@listar');
 Route::delete('/borrarAct/{id}','ProgramaCursoController@destroy');
