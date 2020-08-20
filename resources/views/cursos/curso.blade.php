@@ -301,30 +301,28 @@
                                     <button class="btn btn-accordion collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
                                     Status del Curso
                                     </button>
-                                    <a class="btn" onclick="editarStatus()"><i class="fas fa-pencil-alt"></i></a>
+                                    
                                 </h5>
                                 </div>
                                 <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
                                 <div class="card-body">
 
-                                    <form action="">
+                                    <form id="statusForm">
+                                        {{ csrf_field() }}
                                         <div class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                                <label class="form-check-label" for="inlineRadio1">En Planeación</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                                <label class="form-check-label" for="inlineRadio2">En Curso</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-                                                <label class="form-check-label" for="inlineRadio3">Terminado</label>
-                                            </div>
+                                            @foreach( $status as $statu )
+                                                <div class="form-check form-check-inline">
+                                                    @if( $curso->status_id == $statu->id )
+                                                        <input class="form-check-input" type="radio" name="status" value="{{ $statu->id }}" checked>
+                                                    @else
+                                                        <input class="form-check-input" type="radio" name="status" value="{{ $statu->id }}">
+                                                    @endif
+                                                        <label class="form-check-label">{{ $statu->descripcion }}</label>
+                                                </div>
+                                            @endforeach
                                             <br><br>
-                                            <button type="submit" class="btn btn-asm mb-2">Guardar</button>
+                                            <a style="color:white;" class="btn btn-asm mb-2" onclick="cambiarStatus()">Guardar</a>
                                         </div>
-
                                     </form>
 
                                 </div>
@@ -663,123 +661,121 @@
 
 <!--Modificar Areas-->
 <script>
-function editarAreas(){
-    var total_areas = $('#total_areas').val();
+    function editarAreas(){
+        var total_areas = $('#total_areas').val();
 
-    for(var i=1; i<=total_areas; i++){
-        document.getElementById("area_"+i).removeAttribute("hidden");
-        document.getElementById("larea_"+i).removeAttribute("hidden");
-        document.getElementById("2larea_"+i).setAttribute("hidden", true);
-        if( $("#cupo_"+i).val() != null ){
-            document.getElementById("cupo_"+i).removeAttribute("hidden");
-        }
-    }
-
-    document.getElementById("guardarAreasButton").removeAttribute("hidden");
-    document.getElementById("cancelarAreasButton").removeAttribute("hidden");
-}
-
-function cancelarEditarAreas(){
-    var total_areas = $('#total_areas').val();
-
-    for(var i=1; i<=total_areas; i++){
-        document.getElementById("area_"+i).setAttribute("hidden", true);
-        document.getElementById("larea_"+i).setAttribute("hidden", true);
-        if( $("#cupo_"+i).attr('accesskey') == 1  ){
-            document.getElementById("2larea_"+i).removeAttribute("hidden");
-        }
-        document.getElementById("cupo_"+i).setAttribute("hidden", true);
-        
-    }
-
-    document.getElementById("guardarAreasButton").setAttribute("hidden", true);
-    document.getElementById("cancelarAreasButton").setAttribute("hidden", true);
-}
-
-function confirmar(e)
-{
-    e.preventDefault();
-
-    var flag=0;
-    var total_areas = $('#total_areas').val();
-
-    for(var i=1; i<=total_areas; i++){
-        
-        if( $("#area_"+i).prop('checked') ){
-            
-            if( $('#cupo_'+i).val() < 1){
-                Swal.fire({
-                    icon: 'error',
-                    text: 'El cupo de cada área invitada debe ser mayor a 1',
-                })
-                flag=1;
+        for(var i=1; i<=total_areas; i++){
+            document.getElementById("area_"+i).removeAttribute("hidden");
+            document.getElementById("larea_"+i).removeAttribute("hidden");
+            document.getElementById("2larea_"+i).setAttribute("hidden", true);
+            if( $("#cupo_"+i).val() != null ){
+                document.getElementById("cupo_"+i).removeAttribute("hidden");
             }
+        }
+
+        document.getElementById("guardarAreasButton").removeAttribute("hidden");
+        document.getElementById("cancelarAreasButton").removeAttribute("hidden");
+    }
+
+    function cancelarEditarAreas(){
+        var total_areas = $('#total_areas').val();
+
+        for(var i=1; i<=total_areas; i++){
+            document.getElementById("area_"+i).setAttribute("hidden", true);
+            document.getElementById("larea_"+i).setAttribute("hidden", true);
+            if( $("#cupo_"+i).attr('accesskey') == 1  ){
+                document.getElementById("2larea_"+i).removeAttribute("hidden");
+            }
+            document.getElementById("cupo_"+i).setAttribute("hidden", true);
             
         }
+
+        document.getElementById("guardarAreasButton").setAttribute("hidden", true);
+        document.getElementById("cancelarAreasButton").setAttribute("hidden", true);
     }
 
-    if(flag==0){
-        Swal.fire({
-            icon: 'warning',
-            text: 'Los trabajadores inscritos serán expulsados del curso ¿desea continuar con la operación?',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí',
-            cancelButtonText: 'No'
-        }).then((result) => {
-            if (result.value) {
-                        
-                var frm=$("#modificarAreasForm");
-                var datos = frm.serialize();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type:'POST',
-                    url:'/editarAreas/'+$("#curso_id").val(),
-                    data:datos,
-                    success:function(data){
-                        location.reload();
-                    },
-                    error:function(x,xs,xt){
-                        alert(x.responseText);
-                    }
-                });
+    function confirmar(e){
+        e.preventDefault();
 
+        var flag=0;
+        var total_areas = $('#total_areas').val();
+
+        for(var i=1; i<=total_areas; i++){
+            
+            if( $("#area_"+i).prop('checked') ){
+                
+                if( $('#cupo_'+i).val() < 1){
+                    Swal.fire({
+                        icon: 'error',
+                        text: 'El cupo de cada área invitada debe ser mayor a 1',
+                    })
+                    flag=1;
+                }
+                
             }
-        })
+        }
+
+        if(flag==0){
+            var frm=$("#modificarAreasForm");
+            var datos = frm.serialize();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'POST',
+                url:'/editarAreas/'+$("#curso_id").val(),
+                data:datos,
+                success:function(data){
+                    location.reload();
+                },
+                error:function(x,xs,xt){
+                    alert(x.responseText);
+                }
+            });
+        }
+
     }
 
-}
-
-function showInput(checkbox){
-    var numero = checkbox.id;
-    var num = numero.split("_");
-    
-    if($(checkbox).prop('checked')) {
-        $('#cupo_'+num[1]).css('display','block');
-        $('#cupo_'+num[1]).prop("disabled", false);
-    } else {
-        $('#cupo_'+num[1]).css('display','none');
-        $('#cupo_'+num[1]).attr("required", false);
-        $('#totalCupos').val( $('#totalCupos').val() - $('#cupo_'+num[1]).val() );
-        $('#cupo_'+num[1]).val("");
+    function showInput(checkbox){
+        var numero = checkbox.id;
+        var num = numero.split("_");
+        
+        if($(checkbox).prop('checked')) {
+            $('#cupo_'+num[1]).css('display','block');
+            $('#cupo_'+num[1]).prop("disabled", false);
+        } else {
+            $('#cupo_'+num[1]).css('display','none');
+            $('#cupo_'+num[1]).attr("required", false);
+            $('#totalCupos').val( $('#totalCupos').val() - $('#cupo_'+num[1]).val() );
+            $('#cupo_'+num[1]).val("");
+        }
     }
-}
 </script>
 
 <!-- Modificar status -->
 <script>
-function editarStatus(){
-
-}
-
-function cancelarEditarStatus(){
-    
-}
+    function cambiarStatus(){
+        var frm=$("#statusForm");
+        var datos = frm.serialize();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:'POST',
+            url:'/editarStatus/'+$("#curso_id").val(),
+            data:datos,
+            success:function(data){
+                location.reload();
+            },
+            error:function(x,xs,xt){
+                alert(x.responseText);
+            }
+        });
+    }
 </script>
 
 @endsection

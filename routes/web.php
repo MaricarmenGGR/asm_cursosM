@@ -71,6 +71,7 @@ Route::get('/verificarRespuestas/{id_curso}/{id_user}','EvaluacionPonenteControl
 Route::get('/resultadosGrafica/{id}','EvaluacionPonenteController@respuestaCursoGrafica');
 Route::post('/agregarRespuesta','EvaluacionPonenteController@saveRespuesta');
 Route::post('/enviarCorreos', 'InvitacionController@enviarInvitaciones');
+Route::post('/editarStatus/{id}', 'CursosController@editarStatus');
 Route::get('/pdfCurso/{id}','CursosController@DescarganInfoCurso');
 Route::delete('/borrarCurso/{id}','CursosController@destroy');
 Route::post('/editarAreas/{id}', 'CursosController@editarAreas');

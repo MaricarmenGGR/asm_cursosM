@@ -8,7 +8,7 @@
             <div class="card-tabs">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="users-tab" data-toggle="tab" role="tab" aria-controls="users" aria-selected="true">Lista de cursos</a>
+                        <a class="nav-item nav-link active" id="users-tab" data-toggle="tab" role="tab" aria-controls="users" aria-selected="true">Histórico de cursos</a>
                     </div>
                 </nav>
 
@@ -21,7 +21,6 @@
                                         <th>Fecha Inicio</th>
                                         <th>Fecha Termino</th>
                                         <th>Status</th>
-                                        <th>Publicado</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -31,11 +30,10 @@
                                             <td>{!! $curso->nombreCurso !!}</td>
                                             <td>{!! $curso->fechaInicio !!}</td>
                                             <td>{!! $curso->fechaFin !!}</td>
-                                            <td>{!! $curso->status_id !!}</td>
-                                            <td>{!! $curso->publicado !!}</td>
+                                            <td>{!! $curso->descripcion !!}</td>
                                             <td>
                                                 <p class="text-center">
-                                                    <a href={{route("cursos.show",$curso->id)}}><i class="fas fa-eye"></i></a>
+                                                    <a href="{{route('cursos.show',$curso->id)}}"><i class="fas fa-eye"></i></a>
                                                 </p>
                                             </td>
                                         </tr>

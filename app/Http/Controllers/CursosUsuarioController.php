@@ -12,6 +12,7 @@ use App\Examen_Respuestas;
 use App\Examen_Preguntas;
 use App\Examen_Usuario;
 use App\Examen_Usuario_Respuestas;
+use App\Modalidad;
 use Illuminate\Support\Facades\DB;
 
 class CursosUsuarioController extends Controller
@@ -55,8 +56,11 @@ class CursosUsuarioController extends Controller
      */
     public function show($id)
     {
+        $curso = Curso::findOrFail($id)->setAttribute('examen', Examen::where('curso_id', '=', $id)->firstOrFail() );
+        $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre);
         $vars = [
-            'curso' => Curso::findOrFail($id)->setAttribute('examen', Examen::where('curso_id', '=', $id)->firstOrFail() )
+            'curso' => $curso,
+            'modalidades' => Modalidad::get()
         ];
         return view('cursos.cursoUser', $vars);
     }

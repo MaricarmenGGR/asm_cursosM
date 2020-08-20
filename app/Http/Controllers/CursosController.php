@@ -15,6 +15,7 @@ use App\Examen_Usuario;
 use App\Examen_Usuario_Respuestas;
 use App\Examen_Preguntas;
 use App\Examen_Respuestas;
+use App\Status;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\PDF;
@@ -35,7 +36,9 @@ class CursosController extends Controller
      */
     public function index()
     {
-        $cursos = Curso::get();
+        $cursos = Curso::select('cursos.*', 'status.descripcion')
+        ->leftJoin('status', 'status.id', '=', 'cursos.status_id')
+        ->get();
         /*$cursos = DB::table('cursos')
         ->leftJoin('curso_areas', 'curso_areas.curso_id', '=', 'cursos.id')
         ->select('curso_areas.area_id', 'curso_areas.curso_id', 'cursos.*')
@@ -134,11 +137,13 @@ class CursosController extends Controller
     {
         /*$areas*/
         $areas = Area::all();
+        $status = Status::all();
         $curso = Curso::findOrFail($id);
         $vars = [
             'curso' => $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre),
             'areas' => $areas,
-            'modalidades' => Modalidad::get()
+            'modalidades' => Modalidad::get(),
+            'status' => $status
         ];
         return view('cursos.curso', $vars);
     }
@@ -535,15 +540,11 @@ class CursosController extends Controller
                 'disponible' => $cupo
             ]);
         }
+    }
 
-        $areas = Area::all();
-        $curso = Curso::findOrFail($id);
-        $vars = [
-            'curso' => $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre),
-            'areas' => $areas,
-            'modalidades' => Modalidad::get()
-        ];
-
-        return view('cursos.curso6_invitacion', $vars);
+    function editarStatus(Request $request, $curso_id){
+        Curso::findOrFail($curso_id)->update([
+            'status_id' => $request->status
+        ]);
     }
 }

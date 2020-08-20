@@ -7,45 +7,47 @@
         <!--<div class="cartas-curso"> --><div class="row">
 
             @foreach($cursos as $curso)
-                <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
-                    <div class="card">
-                        
-                        <img class="card-img-top" src="../uploads/{{$curso->imagenCurso}}">
-                        
-                        <div class="card-block">
-                            <h4 class="card-title" style="text-align: center;">{!! $curso->nombreCurso !!}</h4>
+                @if( $curso->status_id != 3 )
+                    <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                        <div class="card">
+                            
+                            <img class="card-img-top" src="../uploads/{{$curso->imagenCurso}}">
+                            
+                            <div class="card-block">
+                                <h4 class="card-title" style="text-align: center;">{!! $curso->nombreCurso !!}</h4>
 
-                            <div class="meta d-flex" >
-                                    <div class="mr-auto p-2" style="color: gray;">
-                                        <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{!! $curso->fechaInicio !!}
-                                    </div>
+                                <div class="meta d-flex" >
+                                        <div class="mr-auto p-2" style="color: gray;">
+                                            <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{!! $curso->fechaInicio !!}
+                                        </div>
+                                        
+                                        <input type="hidden" id="curso_id" value="{{$curso->id}}">
+
                                     
-                                    <input type="hidden" id="curso_id" value="{{$curso->id}}">
 
-                                  
+                                        <div class="p-2">
+                                            <a href="/pdfCurso/{{$curso->id}}" style="color: black;"><i class="fas fa-file-pdf"></i></a>
+                                        </div>
 
-                                    <div class="p-2">
-                                        <a href="/pdfCurso/{{$curso->id}}" style="color: black;"><i class="fas fa-file-pdf"></i></a>
-                                    </div>
+                                        <div class="p-2">
+                                        <button onclick="borrarCurso();" style="padding: 0;border: none; background: none;color: red;"><i class="fas fa-trash-alt"></i></button>
+                                        </div>
+                                        
+                                </div>
 
-                                    <div class="p-2">
-                                    <button onclick="borrarCurso();" style="padding: 0;border: none; background: none;color: red;"><i class="fas fa-trash-alt"></i></button>
-                                    </div>
-                                    
+
+                                <div class="card-text" style="text-align: justify; color: black;">
+                                    {!! $curso->descripcionCurso !!}
+                                </div>
                             </div>
-
-
-                            <div class="card-text" style="text-align: justify; color: black;">
-                                {!! $curso->descripcionCurso !!}
+                            <div class="card-footer">
+                                <a class="btn btn-asm btn-block" href="/cursos/{{$curso->id}}" >
+                                    Editar
+                                </a>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <a class="btn btn-asm btn-block" href="/cursos/{{$curso->id}}" >
-                                Editar
-                            </a>
                         </div>
                     </div>
-                </div>
+                @endif
             @endforeach
 
                 <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
@@ -91,7 +93,7 @@
     <div class="container-fluid">
         <div class="row">
         @foreach($cursos as $curso)
-            @if($curso->verificarArea($curso->id, Auth::user()->area_id ))
+            @if($curso->verificarArea($curso->id, Auth::user()->area_id ) && $curso->status_id == 2 )
                 <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
                     <div class="card">
                         <img class="card-img-top" style="width:100%;" src="../uploads/{{$curso->imagenCurso}}">
