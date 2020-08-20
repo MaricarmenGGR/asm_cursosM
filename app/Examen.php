@@ -34,16 +34,16 @@ class Examen extends Model
     public function estaActivado($examen_id){
         $result = Examen::findOrFail($examen_id);
         if( $result->fechaActivar == null ){
-            return false; //ESTÁ ACTIVADO
+            return false; //ESTÁ DESACTIVADO
         } else {
-            return true; //ESTA DESACTIVADO
+            return true; //ESTA ACTIVADO
         }
     }
 
     public function vencioLimite($examen_id){
         date_default_timezone_set('America/Mexico_City');
         $result = Examen::findOrFail($examen_id);
-        if( strtotime(date("d-m-Y H:i:s",time())) > strtotime($result->fechaDesactivar." 23:59:00") ) return true; //VENCIO
+        if( strtotime(date("d-m-Y H:i:s",time())) > strtotime($result->fechaDesactivar) ) return true; //VENCIO
         else return false; //NO VENCIO
     }
 

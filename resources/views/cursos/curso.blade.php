@@ -224,6 +224,112 @@
                                 </div>
                             </div>
                             -->
+                            <div class="card">
+                                <div class="card-header card-header_curso" id="headingFive">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-accordion collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    Áreas invitadas
+                                    </button>
+                                    <a class="btn" onclick="editarAreas()"><i class="fas fa-pencil-alt"></i></a>
+                                </h5>
+                                </div>
+                                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                                <div class="card-body">
+
+                                    <form id="modificarAreasForm">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" value="{{$curso->id}}" name="curso_id" id="curso_id">
+                                        <div class="form-row">
+                                            <div class="form-group col-lg-6" style="padding: 0 2% 0 2%">
+                                            @php $c=0; @endphp
+                                            @foreach($areas as $area)
+                                                
+                                                @php $c=$c+1; @endphp  
+                                                <div class="form-check">
+                                                    @if($curso->verificarArea( $curso->id , $area->id ) )
+                                                    <input class="form-check-input" type="checkbox" id="area_{!! $area->id !!}" name="area[]" value="{!! $area->id !!}" checked onclick="showInput(this)" hidden>
+                                                    <label class="form-check-label" for="defaultCheck1" id="larea_{!! $area->id !!}" hidden>
+                                                        {!! $area->nombre !!}
+                                                    </label>
+                                                    <label class="form-check-label" for="defaultCheck1" id="2larea_{!! $area->id !!}">
+                                                        <strong>{!! $area->nombre !!}</strong> - Cupos restantes: {!! $curso->cupoArea( $curso->id, $area->id ) !!}
+                                                    </label>
+                                                    @else
+                                                    <input class="form-check-input" type="checkbox" id="area_{!! $area->id !!}" name="area[]" value="{!! $area->id !!}" onclick="showInput(this)" hidden>
+                                                    <label class="form-check-label" for="defaultCheck1" hidden id="larea_{!! $area->id !!}" hidden>
+                                                        {!! $area->nombre !!}
+                                                    </label>
+                                                    <label class="form-check-label" for="defaultCheck1" hidden id="2larea_{!! $area->id !!}">
+                                                        <strong>{!! $area->nombre !!}</strong> - Cupos restantes: {!! $curso->cupoArea( $curso->id, $area->id ) !!}
+                                                    </label>
+                                                    @endif
+                                                </div>
+                                                
+                                                @if($curso->verificarArea( $curso->id , $area->id ) )
+                                                <div class="form-group col-lg-6">
+                                                    <input placeholder="Cupo" type="number" class="form-control form-control-sm" id="cupo_{!! $area->id !!}" name="cupo[]" min=1 value="{!! $curso->cupoArea( $curso->id, $area->id ) !!}" hidden accesskey="1">
+                                                </div>
+                                                @else
+                                                <div class="form-group col-lg-6">
+                                                    <input placeholder="Cupo" style="display: none;" type="number" class="form-control form-control-sm" id="cupo_{!! $area->id !!}" name="cupo[]" min=1 hidden accesskey="0">
+                                                </div>
+                                                @endif
+
+                                            @endforeach
+                                            <input type="number" id="total_areas" value="{{ $c }}" hidden>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3"></div>
+                                            <div class="col-lg-3">
+                                                <button type="submit" class="btn btn-asm btn-block" onclick="return confirmar(event)" id="guardarAreasButton" hidden>Guardar</button>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <a style="color: white" class="btn btn-secondary btn-block" onclick="cancelarEditarAreas()" id="cancelarAreasButton" hidden>Cancelar</a>
+                                            </div>
+                                            <div class="col-lg-3"></div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header card-header_curso" id="headingSix">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-accordion collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                    Status del Curso
+                                    </button>
+                                    <a class="btn" onclick="editarStatus()"><i class="fas fa-pencil-alt"></i></a>
+                                </h5>
+                                </div>
+                                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                                <div class="card-body">
+
+                                    <form action="">
+                                        <div class="text-center">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                <label class="form-check-label" for="inlineRadio1">En Planeación</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                                <label class="form-check-label" for="inlineRadio2">En Curso</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                                                <label class="form-check-label" for="inlineRadio3">Terminado</label>
+                                            </div>
+                                            <br><br>
+                                            <button type="submit" class="btn btn-asm mb-2">Guardar</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -554,4 +660,126 @@
         output.src = URL.createObjectURL(event.target.files[0]);
     };
 </script>
+
+<!--Modificar Areas-->
+<script>
+function editarAreas(){
+    var total_areas = $('#total_areas').val();
+
+    for(var i=1; i<=total_areas; i++){
+        document.getElementById("area_"+i).removeAttribute("hidden");
+        document.getElementById("larea_"+i).removeAttribute("hidden");
+        document.getElementById("2larea_"+i).setAttribute("hidden", true);
+        if( $("#cupo_"+i).val() != null ){
+            document.getElementById("cupo_"+i).removeAttribute("hidden");
+        }
+    }
+
+    document.getElementById("guardarAreasButton").removeAttribute("hidden");
+    document.getElementById("cancelarAreasButton").removeAttribute("hidden");
+}
+
+function cancelarEditarAreas(){
+    var total_areas = $('#total_areas').val();
+
+    for(var i=1; i<=total_areas; i++){
+        document.getElementById("area_"+i).setAttribute("hidden", true);
+        document.getElementById("larea_"+i).setAttribute("hidden", true);
+        if( $("#cupo_"+i).attr('accesskey') == 1  ){
+            document.getElementById("2larea_"+i).removeAttribute("hidden");
+        }
+        document.getElementById("cupo_"+i).setAttribute("hidden", true);
+        
+    }
+
+    document.getElementById("guardarAreasButton").setAttribute("hidden", true);
+    document.getElementById("cancelarAreasButton").setAttribute("hidden", true);
+}
+
+function confirmar(e)
+{
+    e.preventDefault();
+
+    var flag=0;
+    var total_areas = $('#total_areas').val();
+
+    for(var i=1; i<=total_areas; i++){
+        
+        if( $("#area_"+i).prop('checked') ){
+            
+            if( $('#cupo_'+i).val() < 1){
+                Swal.fire({
+                    icon: 'error',
+                    text: 'El cupo de cada área invitada debe ser mayor a 1',
+                })
+                flag=1;
+            }
+            
+        }
+    }
+
+    if(flag==0){
+        Swal.fire({
+            icon: 'warning',
+            text: 'Los trabajadores inscritos serán expulsados del curso ¿desea continuar con la operación?',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.value) {
+                        
+                var frm=$("#modificarAreasForm");
+                var datos = frm.serialize();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type:'POST',
+                    url:'/editarAreas/'+$("#curso_id").val(),
+                    data:datos,
+                    success:function(data){
+                        location.reload();
+                    },
+                    error:function(x,xs,xt){
+                        alert(x.responseText);
+                    }
+                });
+
+            }
+        })
+    }
+
+}
+
+function showInput(checkbox){
+    var numero = checkbox.id;
+    var num = numero.split("_");
+    
+    if($(checkbox).prop('checked')) {
+        $('#cupo_'+num[1]).css('display','block');
+        $('#cupo_'+num[1]).prop("disabled", false);
+    } else {
+        $('#cupo_'+num[1]).css('display','none');
+        $('#cupo_'+num[1]).attr("required", false);
+        $('#totalCupos').val( $('#totalCupos').val() - $('#cupo_'+num[1]).val() );
+        $('#cupo_'+num[1]).val("");
+    }
+}
+</script>
+
+<!-- Modificar status -->
+<script>
+function editarStatus(){
+
+}
+
+function cancelarEditarStatus(){
+    
+}
+</script>
+
 @endsection

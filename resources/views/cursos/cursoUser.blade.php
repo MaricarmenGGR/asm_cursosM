@@ -20,7 +20,7 @@
                             <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Información General</a>
                             @if( Auth::user()->estaInscrito($curso->id) )
                                 <a onclick="eliminarTablaMaterial();verMateriales(@php echo $curso->id @endphp);eliminarTabla();verActMat(@php echo $curso->id @endphp)" class="nav-item nav-link" id="programa-tab" data-toggle="tab" href="#programa" role="tab" aria-controls="programa" aria-selected="false">Programa y Material</a>
-                                @if( $curso->examen->estaActivado( $curso->examen->id ) )
+                                @if( $curso->examen->fechaActivar != null )
                                     <a class="nav-item nav-link" id="evaluacionCurso-tab" data-toggle="tab" href="#evaluacionCurso" role="tab" aria-controls="evaluacionCurso" aria-selected="false">Evaluación de Conocimientos</a>
                                 @endif
                                 <a onclick="DesactivarNav();DesactivarNavUser();" class="nav-item nav-link" id="evaluacionPonente-tab" data-toggle="tab" href="#evaluacion" role="tab" aria-controls="evaluacion" aria-selected="false">Evaluación del Ponente y Desarrollo del Curso</a>
@@ -564,138 +564,152 @@
                             <div class="col-lg-8">
 
                                 <h2 class="text-center">Evaluación de Conocimientos Adquiridos</h2> <br>
-                                    @php $examen_contestado = $curso->examen->estaContestado( $curso->examen->id, Auth::user()->id );  @endphp
-                                    @if( $examen_contestado == null  )
-                                    <form action="/responderExamen" method="post" id="formResponderExamen" >   
-                                        {{ csrf_field() }} 
-                                        @php $preguntas = $curso->examen->obtenerPreguntas( $curso->examen->id ); $counter=0; @endphp    
+                                    @php 
+                                        date_default_timezone_set('America/Mexico_City'); 
+                                        $examen_contestado = $curso->examen->estaContestado( $curso->examen->id, Auth::user()->id );  
+                                        $horaActual = strtotime(date("d-m-Y H:i:s",time()));
+                                        $horaLimite = strtotime($curso->examen->fechaDesactivar);
+                                    @endphp
+                                    @if( $examen_contestado == null ) 
+                                        <!-- examen no ha sido contestado ni ha vencido -->
+                                        @if($horaActual < $horaLimite) 
+                                        <form action="/responderExamen" method="post" id="formResponderExamen" >   
+                                            {{ csrf_field() }} 
+                                            @php $preguntas = $curso->examen->obtenerPreguntas( $curso->examen->id ); $counter=0; @endphp    
 
-                                        @foreach( $preguntas as $pregunta )
-                                        
-                                            @php $counter = $counter + 1; @endphp
+                                            @foreach( $preguntas as $pregunta )
                                             
-                                                <div class="card panel panel-default" id="panel{{ $counter }}">
-                                                    <div class="card-header panel-heading" role="tab" id="heading{{ $counter }}">
-                                                        <h5 class="mb-0 panel-title">
-                                                            <div class="d-flex">
-                                                                <a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" aria-expanded="true" aria-controls="collapse{{ $counter }}"> 
-                                                                    <p accesskey="{{ $counter }}" class="d-inline" id="pPregunta_{{ $counter }}"> Pregunta #{{ $counter }}: {{ $pregunta->preguntaTxt }}</p> 
-                                                                </a>
-                                                            </div>
-                                                        </h5>
-                                                    </div>
-                                                    <div class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+{{ $counter }}+'">
-                                                        
-                                                            
-                                                            <div class="card-body panel-body">
-                                                                <div id="TextBoxDiv{{ $counter }}">
-                                                                    @if( $pregunta->tieneRespuestas( $pregunta->id ) ) 
-                                                                        @php $respuestas = $pregunta->obtenerRespuestas( $pregunta->id ); @endphp 
-                                                                        @foreach( $respuestas as $respuesta )
-                                                                            <div class="col-lg-12 d-flex">
-                                                                                <label for="respuesta_{{ $counter }}">{{ $respuesta->respuestaTxt }}</label>
-                                                                                <input type="radio" class="form-check-input" name="respuesta_{{ $counter }}" value="{{ $pregunta->id }}_{{ $respuesta->id }}" id="respuesta_{{ $counter }}" required/>
-                                                                            </div>
-                                                                            
-                                                                        @endforeach
-                                                                    @endif
+                                                @php $counter = $counter + 1; @endphp
+                                                
+                                                    <div class="card panel panel-default" id="panel{{ $counter }}">
+                                                        <div class="card-header panel-heading" role="tab" id="heading{{ $counter }}">
+                                                            <h5 class="mb-0 panel-title">
+                                                                <div class="d-flex">
+                                                                    <a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" aria-expanded="true" aria-controls="collapse{{ $counter }}"> 
+                                                                        <p accesskey="{{ $counter }}" class="d-inline" id="pPregunta_{{ $counter }}"> Pregunta #{{ $counter }}: {{ $pregunta->preguntaTxt }}</p> 
+                                                                    </a>
                                                                 </div>
-                                                            </div>
-
-                                                        
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            
-                                        @endforeach
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-lg-3"></div>
-                                            <div class="col-lg-6">
-                                                <!--<button class="btn btn-asm btn-block" onclick="enviarEvaluacion()"></button>-->
-                                                <input type="number" name="contador_preguntas" hidden value="{{ $counter }}">
-                                                <input type="number" name="examen_id" hidden value="{{ $curso->examen->id }}">
-                                                <a class="btn btn-asm btn-block" onclick="enviarEvaluacion()" style="color: white;">Enviar Evaluación</a>
-                                            </div>
-                                            <div class="col-lg-2"></div>
-                                        </div>
-                                    </form>
-                                    @elseif( $examen_contestado != null && $curso->examen->vencioLimite( $curso->examen->id ) )
-                                    
-                                    <form action="/responderExamen" method="post" id="formResponderExamen2" >   
-                                        
-                                        @php $preguntas = $curso->examen->obtenerPreguntas( $curso->examen->id ); $counter=0; @endphp    
-
-                                        @foreach( $preguntas as $pregunta )
-                                        
-                                            @php $counter = $counter + 1; @endphp
-                                            
-                                                <div class="card panel panel-default" id="panel{{ $counter }}">
-                                                    <div class="card-header panel-heading" role="tab" id="heading{{ $counter }}">
-                                                        <h5 class="mb-0 panel-title">
-                                                            <div class="d-flex">
-                                                                <a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" aria-expanded="true" aria-controls="collapse{{ $counter }}"> 
-                                                                    <p accesskey="{{ $counter }}" class="d-inline" id="pPregunta_{{ $counter }}"> Pregunta #{{ $counter }}: {{ $pregunta->preguntaTxt }}</p> 
-                                                                </a>
-                                                            </div>
-                                                        </h5>
-                                                    </div>
-                                                    <div class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+{{ $counter }}+'">
-                                                        
+                                                            </h5>
+                                                        </div>
+                                                        <div class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+{{ $counter }}+'">
                                                             
-                                                            <div class="card-body panel-body">
-                                                                <div id="TextBoxDiv{{ $counter }}">
-                                                                    @if( $pregunta->tieneRespuestas( $pregunta->id ) ) 
-                                                                        @php $respuestas = $pregunta->obtenerRespuestas( $pregunta->id ); @endphp 
-                                                                        @foreach( $respuestas as $respuesta )
-                                                                            <div class="col-lg-12 d-flex">
+                                                                
+                                                                <div class="card-body panel-body">
+                                                                    <div id="TextBoxDiv{{ $counter }}">
+                                                                        @if( $pregunta->tieneRespuestas( $pregunta->id ) ) 
+                                                                            @php $respuestas = $pregunta->obtenerRespuestas( $pregunta->id ); @endphp 
+                                                                            @foreach( $respuestas as $respuesta )
+                                                                                <div class="col-lg-12 d-flex">
+                                                                                    <label for="respuesta_{{ $counter }}">{{ $respuesta->respuestaTxt }}</label>
+                                                                                    <input type="radio" class="form-check-input" name="respuesta_{{ $counter }}" value="{{ $pregunta->id }}_{{ $respuesta->id }}" id="respuesta_{{ $counter }}" required/>
+                                                                                </div>
                                                                                 
-                                                                            @php $contestacion = $examen_contestado->obtenerContestacionUsuario( $examen_contestado->id,$pregunta->id,$respuesta->id )  @endphp
-                                                                            
-                                                                            @if( $contestacion != null )
-                                                                                
-                                                                                @if( $contestacion->correcto == 1 )
-                                                                                    <label for="" style="color: green;">{{ $respuesta->respuestaTxt }} ✓ </label>
-                                                                                @else
-                                                                                    <label for="" style="color: red;"><s>{{ $respuesta->respuestaTxt }}</s></label>
-                                                                                @endif
-                                                                                    <input class="form-check-input" type="radio" name="" checked >
-                                                                            @else
-                                                                                
-                                                                                @if( $respuesta->correcto == 1 )
-                                                                                    <label for=""><strong>{{ $respuesta->respuestaTxt }} ← </strong></label>
-                                                                                @else
-                                                                                    <label for="">{{ $respuesta->respuestaTxt }}</label>
-                                                                                @endif
-                                                                                    <input class="form-check-input" type="radio" name="" disabled >
-                                                                            @endif
-                                                                            </div>
-
-                                                                        @endforeach
-                                                                        
-                                                                    @endif
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
-                                                        
+                                                            
+                                                        </div>
                                                     </div>
+                                                    <br>
+                                                
+                                            @endforeach
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-lg-3"></div>
+                                                <div class="col-lg-6">
+                                                    <!--<button class="btn btn-asm btn-block" onclick="enviarEvaluacion()"></button>-->
+                                                    <input type="number" name="contador_preguntas" hidden value="{{ $counter }}">
+                                                    <input type="number" name="examen_id" hidden value="{{ $curso->examen->id }}">
+                                                    <a class="btn btn-asm btn-block" onclick="enviarEvaluacion()" style="color: white;">Enviar Evaluación</a>
                                                 </div>
-                                                <br>
-                                            
-                                        @endforeach
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-lg-3"></div>
-                                            <div class="col-lg-6"> 
-                                                <h3 class="text-center">Calificación: {{$examen_contestado->calificacion}} </h3> <br>
+                                                <div class="col-lg-2"></div>
                                             </div>
-                                            <div class="col-lg-2"></div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                        @else
+                                        <br>
+                                        <h3 class="text-center">El exámen ya ha vencido</h3> <br>
+                                        @endif
+                                    @elseif( $examen_contestado != null )
+                                        @if($horaActual > $horaLimite) 
+                                        <!-- examen ha sido contestado y vencio el limite -->
+                                        <form action="/responderExamen" method="post" id="formResponderExamen2" >   
+                                            
+                                            @php $preguntas = $curso->examen->obtenerPreguntas( $curso->examen->id ); $counter=0; @endphp    
 
-                                    @else
-                                        <br><br>
+                                            @foreach( $preguntas as $pregunta )
+                                            
+                                                @php $counter = $counter + 1; @endphp
+                                                
+                                                    <div class="card panel panel-default" id="panel{{ $counter }}">
+                                                        <div class="card-header panel-heading" role="tab" id="heading{{ $counter }}">
+                                                            <h5 class="mb-0 panel-title">
+                                                                <div class="d-flex">
+                                                                    <a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" aria-expanded="true" aria-controls="collapse{{ $counter }}"> 
+                                                                        <p accesskey="{{ $counter }}" class="d-inline" id="pPregunta_{{ $counter }}"> Pregunta #{{ $counter }}: {{ $pregunta->preguntaTxt }}</p> 
+                                                                    </a>
+                                                                </div>
+                                                            </h5>
+                                                        </div>
+                                                        <div class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+{{ $counter }}+'">
+                                                            
+                                                                
+                                                                <div class="card-body panel-body">
+                                                                    <div id="TextBoxDiv{{ $counter }}">
+                                                                        @if( $pregunta->tieneRespuestas( $pregunta->id ) ) 
+                                                                            @php $respuestas = $pregunta->obtenerRespuestas( $pregunta->id ); @endphp 
+                                                                            @foreach( $respuestas as $respuesta )
+                                                                                <div class="col-lg-12 d-flex">
+                                                                                    
+                                                                                @php $contestacion = $examen_contestado->obtenerContestacionUsuario( $examen_contestado->id,$pregunta->id,$respuesta->id )  @endphp
+                                                                                
+                                                                                @if( $contestacion != null )
+                                                                                    
+                                                                                    @if( $contestacion->correcto == 1 )
+                                                                                        <label for="" style="color: green;">{{ $respuesta->respuestaTxt }} ✓ </label>
+                                                                                    @else
+                                                                                        <label for="" style="color: red;"><s>{{ $respuesta->respuestaTxt }}</s></label>
+                                                                                    @endif
+                                                                                        <input class="form-check-input" type="radio" name="" checked >
+                                                                                @else
+                                                                                    
+                                                                                    @if( $respuesta->correcto == 1 )
+                                                                                        <label for=""><strong>{{ $respuesta->respuestaTxt }} ← </strong></label>
+                                                                                    @else
+                                                                                        <label for="">{{ $respuesta->respuestaTxt }}</label>
+                                                                                    @endif
+                                                                                        <input class="form-check-input" type="radio" name="" disabled >
+                                                                                @endif
+                                                                                </div>
+
+                                                                            @endforeach
+                                                                            
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                
+                                            @endforeach
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-lg-3"></div>
+                                                <div class="col-lg-6"> 
+                                                    <h3 class="text-center">Calificación: {{$examen_contestado->calificacion}} </h3> <br>
+                                                </div>
+                                                <div class="col-lg-2"></div>
+                                            </div>
+                                        </form>
+                                        @else
+                                        <br>
                                         <h3 class="text-center">Más tarde se le mostrarán sus resultados</h3> <br>
+                                        @endif
+                                    @elseif( $horaActual > $horaLimite )
+
 
                                     @endif
 
@@ -709,8 +723,26 @@
 
                         </div>
                     </div>
+                    @php
 
-                    
+                        $date1 = new DateTime($curso->examen->fechaDesactivar);
+                        $date2 = new DateTime("now");
+                        $diff = $date2->diff($date1);
+                        
+                        echo print_r($date1);
+                        echo " - ";
+                        echo print_r($date2);
+                        echo " / ";
+
+                        echo ( ($diff->days * 24 ) * 60 ) + $diff->i .' minutes '. $diff->s . ' seconds';
+
+                        echo " || ";
+                        echo print_r($diff);
+                        
+                        echo ($diff->invert == 1 ) ? ' passed ' : ' to go ';
+
+                    @endphp
+
             </div>
         </div>
     </div>
@@ -969,5 +1001,30 @@
     }
 </script>
 
+<!-- Cronometro -->
+<script>
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    var fiveMinutes = 60 * 5,
+        display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+};
+</script>
 
 @endsection

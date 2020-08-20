@@ -93,14 +93,14 @@
                                             <label><strong>Activar examen</strong></label>
                                             <form id="examenActivarForm" class="form-group form-inline">
                                                 {{ csrf_field() }}
-                                                @if( ! $curso->examen->estaActivado( $curso->examen->id ) )
+                                                @if( $curso->examen->fechaActivar == null ) <!--Examen está desactivado-->
                                                     <div class="form-group form-inline" >
                                                         <label>Fecha Inicio</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaActivarExm" name="fechaActivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaActivar }}" required onchange="cambiarFechaFin()">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="datetime-local" class="form-control" id="fechaActivarExm" name="fechaActivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaActivar }}" required onchange="cambiarFechaFin()">&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                     <div class="form-group form-inline">
                                                         <label>Fecha Fin</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaDesactivarExm" name="fechaDesactivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaDesactivar }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="datetime-local" class="form-control" id="fechaDesactivarExm" name="fechaDesactivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaDesactivar }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                     <div class="form-group">
                                                             <a class="btn btn-asm float-right" id="activarExamen" onclick="activarExamen()" style="color: white;" >Activar</a>
@@ -108,11 +108,11 @@
                                                 @else
                                                     <div class="form-group form-inline" >
                                                         <label>Fecha Inicio</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaActivarExm" name="fechaActivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaActivar }}" onchange="cambiarFechaFin()" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="input" class="form-control" id="fechaActivarExm" name="fechaActivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaActivar }}" onchange="cambiarFechaFin()" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                     <div class="form-group form-inline">
                                                         <label>Fecha Fin</label>&nbsp;&nbsp;
-                                                        <input type="date" class="form-control" id="fechaDesactivarExm" name="fechaDesactivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaDesactivar }}" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="input" class="form-control" id="fechaDesactivarExm" name="fechaDesactivar" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" value="{{ $curso->examen->fechaDesactivar }}" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                     @if( ! $curso->examen->haSidoContestado( $curso->examen->id ) )
                                                     <div class="form-group">
@@ -127,7 +127,7 @@
 
                                                 <div class="panel-group" id="accordionExamen" role="tablist" aria-multiselectable="true">            
                                                     @php $counter=0; @endphp
-                                                    @if( ! $curso->examen->estaActivado( $curso->examen->id ) )
+                                                    @if( $curso->examen->fechaActivar == null ) <!--Examen está desactivado-->
                                                         
                                                         @if( $curso->examen->tienePreguntas( $curso->examen->id ) ) 
 
@@ -192,7 +192,6 @@
                                                                                     @endif
                                                                                 </div>
                                                                                 <a style="color:white;" class="btn btn-xs btn-primary" accesskey="{{ $counter }}" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>
-                                                                                <!--<input type="submit" class="btn btn-xs btn-success" accesskey="1" id="guardarButton" value="Guardar Respuesta" />-->
                                                                                 <a style="color:white;" class="btn btn-xs btn-success" accesskey="1" id="guardarButton" onclick="guardarRespuestas({{ $counter }})">Guardar Respuestas</a>
                                                                             </div>
 
@@ -259,7 +258,7 @@
                                                         
                                                 </div>
 
-                                                @if( ! $curso->examen->estaActivado( $curso->examen->id ) )
+                                                @if( $curso->examen->fechaActivar == null ) <!--Examen está desactivado-->
                                                     <form action="/crearPregunta" method="post" id="formCrearPregunta">
                                                         {{ csrf_field() }}
                                                     </form>
@@ -419,49 +418,6 @@
             })
 
         });
-
-        /*$("#addButton2").on("click", function(e){ 
-            e.preventDefault();
-            var catgName = prompt("Redacte la pregunta");
-            if(catgName == ''){
-                catgName = 'Catg#'+counter;
-            }
-            if(catgName != null){
-                $(wrapper).append(
-                    '<div class="col-sm-12" style="margin-bottom: 0;">'+
-                        '<div class="card panel panel-default" id="panel'+ counter +'">' + 
-                            '<div class="card-header panel-heading" role="tab" id="heading'+ counter +'">'+
-                                '<h5 class="mb-0 panel-title">'+
-                                    '<div class="d-flex">'+
-                                        '<a class="mr-auto p-2" id="panel-lebel'+ counter +'" role="button" data-toggle="collapse" data-parent="#accordionExamen" href="#collapse'+ counter +'" ' + 'aria-expanded="true" aria-controls="collapse'+ counter +'"> '+catgName+' </a>'+
-                                        '<a href="#" accesskey="'+ counter +'" class="p-2 edit_ctg_label pull-right"><i class="fas fa-pencil-alt"></i></a>' +
-                                        '<a style="color:#dd4b39;" href="#" accesskey="'+ counter +'" class="p-2 remove_ctg_panel exit-btn pull-right"><i class="fas fa-trash-alt"></i></a>' +
-                                    '</div>'+
-                                '</h5>'+
-                            '</div>' +
-                            '<div id="collapse'+ counter +'" class="panel-collapse collapse show"role="tabpanel" aria-labelledby="heading'+ counter +'">'+
-                                '<div class="card-body panel-body">'+
-                                    '<div id="TextBoxDiv'+ counter +'"></div>'+
-                                    '<a class="btn btn-xs btn-primary" accesskey="'+ counter +'" id="addButton3" ><i class="fas fa-plus"></i>&nbsp;Añadir Respuesta</a>' +
-                                    '<a class="btn btn-xs btn-success" accesskey="1" id="guardarButton">Guardar Respuestas</a>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'
-                );
-                counter++;
-            }
-        
-        });*/
-		
-		/*var x = 1;
-	     $(wrapper).on("click",".remove_ctg_panel", function(e){ 
-				 e.preventDefault(); 
-				 var accesskey = $(this).attr('accesskey');
-		        $('#panel'+accesskey).remove();
-				counter--;
-				x--;
-	     });*/
 		 
 	     var y = 0; 
 	     $(wrapper).on("click","#addButton3", function(e){
@@ -498,10 +454,8 @@
         document.getElementById("inputPregunta_"+id).setAttribute("hidden", true);
         document.getElementById("btnGPregunta_"+id).setAttribute("hidden", true);
         document.getElementById("btnCPregunta_"+id).setAttribute("hidden", true);
-
         document.getElementById("pPregunta_"+id).classList.remove('d-none');
         document.getElementById("pPregunta_"+id).classList.add('d-inline');
-
         $("#inputPregunta_"+id).val($("#pPregunta_"+id).text().trim());
     }
 
@@ -550,8 +504,6 @@
 
     function guardarRespuestas(id){
             var valido = false;
-
-        
             var frm=$("#formGuardarRespuestas_"+id);
             var datos = frm.serialize();
             $.ajaxSetup({
@@ -574,9 +526,6 @@
                     })
                 }
             });
-            
-
-        
     }
 
     $( "#formCrearPregunta" ).submit(function( e ) {
@@ -601,9 +550,6 @@
         });
         
     });
-
-
-
 
 </script>
 
@@ -668,7 +614,6 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.value) {
-                        
                         var frm=$("#examenActivarForm");
                         frm.append('<input type="number" name="examen_id" hidden value='+examen_id+' >');
                         var datos = frm.serialize();
@@ -691,11 +636,7 @@
                         
                     }
                 })
-
             }
-
-
-
 
         } else {
             Swal.fire({
@@ -732,25 +673,17 @@
           })
       });
 
-      console.log(respuesta);
-      console.log("Fecha inicio: "+FechaInicio);
-      console.log("Fecha termino: "+ FechaTermino);
       if(FechaTermino == undefined & FechaInicio == undefined){
         var resFNT = document.getElementById("fET").value = "Fecha no Establecida";
         resFNT.value='Fecha no Establecida';
         var resFNI = document.getElementById("fEI").value = "Fecha no Establecida";
         resFNI.value='Fecha no Establecida';
-        console.log('es nula y no existe');
       }else{
         var resF = document.getElementById("fEI").value = FechaInicio;
         var resFT = document.getElementById("fET").value = FechaTermino;
-
       }
-      
         
     }
-
-    
 
     function comprobarFechas(id){
       var respuesta;
@@ -795,7 +728,6 @@
                 showConfirmButton: false,
                 timer: 1500
             });
-            console.log(data);
             const boton = document.getElementById("subirActivacionEncPonente");
             boton.disabled = true;
             location.reload();

@@ -206,65 +206,6 @@
     });
 </script>
 
-<!--Modificar Areas-->
-<script>
-function confirmar(e)
-{
-    e.preventDefault();
-
-    var flag=0;
-    var total_areas = $('#total_areas').val();
-
-    for(var i=1; i<=total_areas; i++){
-        
-        if( $("#area_"+i).prop('checked') ){
-            
-            if( $('#cupo_'+i).val() < 1){
-                Swal.fire({
-                    icon: 'error',
-                    text: 'El cupo de cada área invitada debe ser mayor a 1',
-                })
-                flag=1;
-            }
-            
-        }
-    }
-
-    if(flag==0){
-        Swal.fire({
-            icon: 'warning',
-            text: 'Los trabajadores inscritos serán expulsados del curso ¿desea continuar con la operación?',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí',
-            cancelButtonText: 'No'
-        }).then((result) => {
-            if (result.value) {
-                document.getElementById("modificarAreasForm").submit();
-            }
-        })
-    }
-
-}
-
-function showInput(checkbox){
-    var numero = checkbox.id;
-    var num = numero.split("_");
-    
-    if($(checkbox).prop('checked')) {
-        $('#cupo_'+num[1]).css('display','block');
-        $('#cupo_'+num[1]).prop("disabled", false);
-    } else {
-        $('#cupo_'+num[1]).css('display','none');
-        $('#cupo_'+num[1]).attr("required", false);
-        $('#totalCupos').val( $('#totalCupos').val() - $('#cupo_'+num[1]).val() );
-        $('#cupo_'+num[1]).val("");
-    }
-}
-</script>
-
-
 <!--Invitaciones-->
 <script>
     $('#subirInvitacion').submit( function( e ) {

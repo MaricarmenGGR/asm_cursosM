@@ -133,9 +133,11 @@ class CursosController extends Controller
     public function show($id)
     {
         /*$areas*/
+        $areas = Area::all();
         $curso = Curso::findOrFail($id);
         $vars = [
             'curso' => $curso->setAttribute('modalidad', Modalidad::findOrFail($curso->modalidad_id)->nombre),
+            'areas' => $areas,
             'modalidades' => Modalidad::get()
         ];
         return view('cursos.curso', $vars);
