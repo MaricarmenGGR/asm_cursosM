@@ -89,6 +89,10 @@ class DatabaseSeeder extends Seeder
             'id'=>9,
             'nombre'=>'Dirección administrativa'
         ]);
+        DB::table('areas')->insert([
+            'id'=>10,
+            'nombre'=>'Externa'
+        ]);
 
         //ROLES SEED
         DB::table('roles')->insert([

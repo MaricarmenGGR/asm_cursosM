@@ -1,5 +1,40 @@
 @extends('layouts.menu')
 @section('content')
+
+@if( Auth::user()->area_id == 10 )
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-tabs">
+                <nav>
+                    <div class="nav nav-tabs nav-fill text-center" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Datos Personales</a>
+                        
+                    </div>
+                </nav>
+
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
+                        <input hidden id="id_User" value="{{$usuario->id}}">
+                        <h3 class="text-center">INFORMACIÓN PERSONAL DEL USUARIO</h3>
+                        <div><label id="Mnombre">Nombre: {{$usuario->name}} {{$usuario->apPaterno}} {{$usuario->apMaterno}}</label></div>
+                        <div><label id="Mcorreo">Correo: {{$usuario->email}}</label></div>
+                        <div><label id="Medad">Edad: {{$usuario->edad}}</label></div>
+                        <div><label id="Msexo">Sexo: {{$usuario->sexo}}</label></div>
+                        <div><label id="MedoCivil">Localidad: {{$usuario->edoCivil}}</label></div>
+                        <div><label id="Mdireccion">Dirección: {{$usuario->calle}} #{{$usuario->nCasa}} Col. {{$usuario->colonia}}</label></div>
+                        <div><label id="Mcelular">Teléfono Celular: {{$usuario->telfono}}</label></div>
+                        <div><label id="Mcurp">CURP: {{$usuario->curp}}</label></div>
+                        <div><label id="Marea">Área de trabajo: {{$area[0]->nombre}}</label></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@else
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6">
@@ -19,7 +54,7 @@
                         <div><label id="Mcorreo">Correo: {{$usuario->email}}</label></div>
                         <div><label id="Medad">Edad: {{$usuario->edad}}</label></div>
                         <div><label id="Msexo">Sexo: {{$usuario->sexo}}</label></div>
-                        <div><label id="MedoCivil">Civil: {{$usuario->edoCivil}}</label></div>
+                        <div><label id="MedoCivil">Estado Civil: {{$usuario->edoCivil}}</label></div>
                         <div><label id="Mdireccion">Dirección: {{$usuario->calle}} #{{$usuario->nCasa}} Col. {{$usuario->colonia}}</label></div>
                         <div><label id="Mcelular">Teléfono Celular: {{$usuario->telfono}}</label></div>
                         <div><label id="Mcurp">CURP: {{$usuario->curp}}</label></div>
@@ -340,6 +375,7 @@
         </div>
     </div>
 </div>
+@endif
 
 <script>
     //Edicion de Datos personales//

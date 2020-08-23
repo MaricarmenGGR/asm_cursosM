@@ -119,6 +119,29 @@ class UsuariosController extends Controller
         ]);
         return view('auth.login');
     }
+
+    public function userExternoStore(Request $request){
+        User::create([
+            'name' => $request->name,
+            'apPaterno' => $request->apPaterno,
+            'apMaterno' => $request->apMaterno,
+            'edad' => $request->edad,
+            'sexo' => $request->sexo,
+            'edoCivil' => $request->edoCivil,
+            'calle' => $request->calle,
+            'colonia' => $request->colonia,
+            'nCasa' => $request->nCasa,
+            'telfono' => $request->telfono,
+            'curp' => $request->curp,
+            'nHijos' => 0,
+            'email' => $request->email,
+            'role_id' => 2,
+            'password' => Hash::make($request->password),
+            'area_id' => 10,
+        ]);
+        return view('auth.login');
+
+    }
     
 
     /**

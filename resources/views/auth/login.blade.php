@@ -127,7 +127,11 @@
                         </div>
                         
                         <div class="d-flex justify-content-center mt-3 login_container">
-                            <a href="/registro" class="btn login_btn">Registrarse</a>
+                            <a href="/registro" class="btn login_btn">Registro Interno</a>
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <a href="/registroExterno" class="btn login_btn">Registro Externo</a>
                         </div>
                         
                     </form>
@@ -143,9 +147,9 @@
                             </a>
                         @endif-->
 
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModalCenter">
+                            <!--<button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModalCenter">
                                 ¿Olvidó su contraseña?
-                            </button>
+                            </button>-->
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

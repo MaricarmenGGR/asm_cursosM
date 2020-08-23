@@ -75,6 +75,7 @@ Route::post('/editarStatus/{id}', 'CursosController@editarStatus');
 Route::get('/pdfCurso/{id}','CursosController@DescarganInfoCurso');
 Route::delete('/borrarCurso/{id}','CursosController@destroy');
 Route::post('/editarAreas/{id}', 'CursosController@editarAreas');
+Route::post('/agregaExterno','UsuariosController@userExternoStore');
 
 
 //ELABORACION EXAMEN
@@ -121,6 +122,10 @@ Route::get('/pdf', function(){
 
 Route::get('/registro',function(){
     return view('usuarios.registro');
+});
+
+Route::get('/registroExterno',function(){
+    return view('usuarios.registroExterno');
 });
 
 //RESPONDER EXAMEN
