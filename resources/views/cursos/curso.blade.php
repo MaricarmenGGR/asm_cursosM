@@ -769,7 +769,12 @@
             url:'/editarStatus/'+$("#curso_id").val(),
             data:datos,
             success:function(data){
-                location.reload();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se han guardado los cambios',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             },
             error:function(x,xs,xt){
                 alert(x.responseText);
