@@ -132,7 +132,7 @@
                                         </div>
                                         <div class="col-lg-1"></div>
                                     </div>
-                                @elseif( ! $curso->hayCupo($curso->id, Auth::user()->area_id) )
+                                @elseif( ! $curso->hayCupo($curso->id, Auth::user()->area_id) && !Auth::user()->estaInscrito($curso->id) )
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">

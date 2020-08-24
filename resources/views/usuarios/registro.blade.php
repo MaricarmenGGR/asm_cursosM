@@ -43,7 +43,7 @@
 
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
-                        <form  method="POST" action="{{ route('usuarios.store') }}" enctype="multipart/form-data">
+                        <form id="formRegistro">
                             <h3 class="text-center">DATOS PERSONALES</h3>
                             <hr> 
                             {{ csrf_field() }}
@@ -131,7 +131,7 @@
                                     <div class="text-center">
                                         <label>Telefóno celular</label>
                                     </div>
-                                    <input type="text" class="form-control" id="telfono" name="telfono" placeholder="Teléfono Celular" maxlength="10" required>
+                                    <input type="text" class="form-control" id="telfono" name="telfono" placeholder="Teléfono Celular" pattern="[0-9]{7,10}" required>
                                 </div>
                                 <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
@@ -174,24 +174,29 @@
                                        <option value="5">Director</option>
                                    </select>
                                 </div>-->
-                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
+                                <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
                                     <div class="text-center">
                                         <label>Correo Electrónico</label>
                                     </div>
                                     <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
                                 </div>
-                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
-                                    <label for="password">Contraseña</label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
+                                    <div class="text-center" for="password">
+                                        <label>Contraseña</label>
+                                    </div>
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" pattern="^(?=.*?[a-z])(?=.*?[0-9]).{8,}$" placeholder="Contraseña" required autocomplete="new-password" title="La contraseña debe tener mínimo 8 caracteres, al menos un número y una letra">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-lg-3" style="padding: 0 2% 0 2%">
-                                    <label for="password-confirm">Confirma Contreseña</label>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <div class="form-group col-lg-4" style="padding: 0 2% 0 2%">
+                                    <div class="text-center" for="password">
+                                        <label>Confirma contraseña</label>
+                                    </div>
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña" required autocomplete="new-password">
+                                    <span id='message'></span>
                                 </div>
 
                             </div>
@@ -538,15 +543,19 @@
                             <div class="row">
                                 <div class="col-lg-3"></div>
                                 <div class="col-lg-3">
-                                    <button type="submit" name="submit" class="btn btn-asm btn-block">REGISTRARSE</button>
+                                    <button type="submit" name="submit" class="btn btn-asm btn-block">Registrarse</button>
                                 </div>
                                 <div class="col-lg-3">
-                                    <a href="/" class="btn btn-secondary btn-block">CANCELAR</a>
+                                    <a href="/" class="btn btn-secondary btn-block">Cancelar</a>
                                 </div>
                                 <div class="col-lg-3"></div>
                             </div>
 
                         
+                        </form>
+
+                        <form method="POST" action="{{ route('login') }}" id="loginForm">
+                            @csrf
                         </form>
 
                     </div>
@@ -557,18 +566,15 @@
 
     </div>
 </div>
-    
-</body>
-</html>
 
 <!--Script para solo letras en el nombre-->
 <script>
-     function soloLetras(e) {
+    function soloLetras(e) {
         key = e.keyCode || e.which;
         tecla = String.fromCharCode(key).toLowerCase();
         letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
         especiales = [8, 37, 39, 46];
-        tecla_especial = false
+        tecla_especial = false;
         for(var i in especiales) {
             if(key == especiales[i]) {
                 tecla_especial = true;
@@ -576,6 +582,56 @@
             }
         }
         if(letras.indexOf(tecla) == -1 && !tecla_especial)
-        return false;
-     }
+            return false;
+    }
+
+    $('#password, #password-confirm').on('keyup', function () {
+        if( $('#password-confirm').val() != ""){
+            if( ! comprobarContrasena() ) $('#message').html('Contraseñas no conciden').css('color', 'red');
+            else $('#message').html('');
+        }
+    });
+
+    function comprobarContrasena(){
+        if ($('#password').val() == $('#password-confirm').val()){
+            return true;    
+        } else {
+            return false;
+        }
+    }
+
+    $('#formRegistro').on('submit', function(e){
+        e.preventDefault();
+        if( comprobarContrasena() ){
+            var frm=$("#formRegistro");
+            var datos = frm.serialize();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'POST',
+                url:'{{ route('usuarios.store') }}',
+                data:datos,
+                success:function(data){
+                    var frm=$("#loginForm");
+                    frm.append('<input name="email" hidden value="'+$("#email").val()+'">');
+                    frm.append('<input name="password" hidden value="'+$("#password").val()+'">');
+                    frm.submit()
+                },
+                error:function(x,xs,xt){
+                    Swal.fire({
+                    icon: 'error',
+                    text: 'Este correo ya está registrado, intente con otro',
+                    showConfirmButton: true,
+                });
+                }
+            });
+        }
+    });
+    
 </script>
+
+</body>
+</html>

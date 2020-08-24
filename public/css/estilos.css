@@ -93,10 +93,6 @@ position: static;
 body{
 	background: #ededed;
 }
-h1, h2, h3, h4, h5, h6 {
-
-	font-weight: bold;
-}
 h1{
 	letter-spacing: 2px;
 	text-transform: uppercase;
@@ -231,7 +227,7 @@ nav > div a.nav-item.nav-link:focus
 }
 .btn-accordion {
 	font-family : inherit;
-	font-weight: bold;
+	
 	font-size: 16px;
 	color: rgb(248, 245, 245);
 	text-transform: uppercase;
@@ -239,7 +235,7 @@ nav > div a.nav-item.nav-link:focus
 }
 .btn-accordion:hover {
 	font-family : inherit;
-	font-weight: bold;
+	
 	font-size: 16px;
 	color: rgb(248, 245, 245);
 	text-transform: uppercase;
@@ -250,7 +246,7 @@ nav > div a.nav-item.nav-link:focus
 #accordionExamen .panel-title>a {
 	display: block;
 	outline: none;
-	font-weight: bold;
+	
 	text-decoration: none;
 }
 

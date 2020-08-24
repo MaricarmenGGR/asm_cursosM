@@ -117,7 +117,7 @@ class UsuariosController extends Controller
             'cargosAnt'=>$request->cargosAnt,
             'trabajosExt'=>$request->trabajosExt,
         ]);
-        return view('auth.login');
+        
     }
 
     public function userExternoStore(Request $request){
@@ -125,22 +125,15 @@ class UsuariosController extends Controller
             'name' => $request->name,
             'apPaterno' => $request->apPaterno,
             'apMaterno' => $request->apMaterno,
-            'edad' => $request->edad,
-            'sexo' => $request->sexo,
-            'edoCivil' => $request->edoCivil,
-            'calle' => $request->calle,
-            'colonia' => $request->colonia,
-            'nCasa' => $request->nCasa,
             'telfono' => $request->telfono,
-            'curp' => $request->curp,
-            'nHijos' => 0,
+            'puesto' => $request->puesto,
+            'cargo' => $request->cargo,
+            'dependencia' => $request->dependencia,
             'email' => $request->email,
             'role_id' => 2,
             'password' => Hash::make($request->password),
             'area_id' => 10,
         ]);
-        return view('auth.login');
-
     }
     
 

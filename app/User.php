@@ -23,7 +23,7 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $fillable = [
         'name','apPaterno','apMaterno','edad','sexo','edoCivil','calle','colonia','nCasa','telfono',
-        'curp','nHijos','email','role_id','password','area_id',
+        'curp','nHijos','cargo','puesto','dependencia','email','role_id','password','area_id',
     ];
 
     /**
@@ -46,6 +46,11 @@ class User extends Authenticatable
 
     public function role(){
         return $this->belongsTo('App\Role');
+        //return $this->belongsTo('App\Role','role_id','id');
+    }
+
+    public function area(){
+        return $this->belongsTo('App\Area');
         //return $this->belongsTo('App\Role','role_id','id');
     }
 

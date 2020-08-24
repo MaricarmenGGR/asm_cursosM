@@ -1,7 +1,7 @@
 @extends('layouts.menu')
 @section('content')
 
-@if( Auth::user()->area_id == 10 )
+@if( Auth::user()->area_id == 10  || $usuario->area->id == 10 )
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -16,16 +16,12 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
                         <input hidden id="id_User" value="{{$usuario->id}}">
-                        <h3 class="text-center">INFORMACIÓN PERSONAL DEL USUARIO</h3>
-                        <div><label id="Mnombre">Nombre: {{$usuario->name}} {{$usuario->apPaterno}} {{$usuario->apMaterno}}</label></div>
-                        <div><label id="Mcorreo">Correo: {{$usuario->email}}</label></div>
-                        <div><label id="Medad">Edad: {{$usuario->edad}}</label></div>
-                        <div><label id="Msexo">Sexo: {{$usuario->sexo}}</label></div>
-                        <div><label id="MedoCivil">Localidad: {{$usuario->edoCivil}}</label></div>
-                        <div><label id="Mdireccion">Dirección: {{$usuario->calle}} #{{$usuario->nCasa}} Col. {{$usuario->colonia}}</label></div>
-                        <div><label id="Mcelular">Teléfono Celular: {{$usuario->telfono}}</label></div>
-                        <div><label id="Mcurp">CURP: {{$usuario->curp}}</label></div>
-                        <div><label id="Marea">Área de trabajo: {{$area[0]->nombre}}</label></div>
+                        <div><label id="Mnombre"><strong>Nombre:</strong> {{$usuario->name}} {{$usuario->apPaterno}} {{$usuario->apMaterno}}</label></div>
+                        <div><label id="Mcorreo"><strong>Correo:</strong> {{$usuario->email}}</label></div>
+                        <div><label id="Mcelular"><strong>Teléfono Celular:</strong> {{$usuario->telfono}}</label></div>
+                        <div><label id="Mcurp"><strong>Cargo:</strong> {{$usuario->cargo}}</label></div>
+                        <div><label id="Mcurp"><strong>Puesto:</strong> {{$usuario->puesto}}</label></div>
+                        <div><label id="Marea"><strong>Dependencia:</strong> {{$usuario->dependencia}}</label></div>
 
                     </div>
                 </div>
@@ -34,7 +30,6 @@
     </div>
 </div>
 @else
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6">
@@ -49,7 +44,6 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
                         <input hidden id="id_User" value="{{$usuario->id}}">
-                        <h3 class="text-center">INFORMACIÓN PERSONAL DEL USUARIO</h3>
                         <div><label id="Mnombre">Nombre: {{$usuario->name}} {{$usuario->apPaterno}} {{$usuario->apMaterno}}</label></div>
                         <div><label id="Mcorreo">Correo: {{$usuario->email}}</label></div>
                         <div><label id="Medad">Edad: {{$usuario->edad}}</label></div>
@@ -123,68 +117,6 @@
             <div class="card-tabs">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true" onclick="editInfoMedicos()">Datos Medicos <i class="fas fa-pencil-alt" aria-hidden="true" style='font-size:24px'></i></a>
-                    </div>
-                </nav>
-
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
-                    @foreach($dataMe as $dM)
-                        <h3 class="text-center">INFORMACIÓN MÉDICA DEL USUARIO</h3>
-                        <div><label id="MtipoSangre">Tipo de Sangre: {{$dM->tipoSangre}}</label></div>
-                        <div><label id="MnoImss">No. IMSS: {{$dM->noImss}}</label></div>
-                        <div><label id="MpersonaEmerg">En caso de Emergencia llamar a: {{$dM->nombreEmergencia}}</label></div>
-                        <div><label id="MtelEmerg">Teléfono de Emergencia: {{$dM->telEmergencia}}</label></div>
-                        <div><label id="Mparentesco">Parentesco: {{$dM->parentesco}}</label></div>
-                        <div><label id="Malergias">Alergias: {{$dM->alergias}}</label></div>
-                        <div><label id="Menfermedades">Enfermedades: {{$dM->enfermedades}}</label></div>
-                        <form id="datosMedicosUser">
-                            {{ csrf_field() }}
-                            <label id="LSangre" hidden>Tipo de Sangre: </label>
-                            <select class="custom-select" name="tipoSangre" id="tipoSangre" style="margin-bottom: 5px;" hidden>
-                                        <option disabled>Elige un Tipo</option>
-                                        <option value="O+">O+</option>
-                                        <option value="O-">O-</option>
-                                        <option value="A+">A+</option>
-                                        <option value="A-">A-</option>
-                                        <option value="B+">B+</option>
-                                        <option value="B-">B-</option>
-                                        <option value="AB+">AB+</option>
-                                        <option value="AB-">AB-</option>
-                            </select>
-                            <label id="LNoImss" hidden>No. IMSS</label>
-                            <input hidden type="text" class="form-control" id="noImss" name="noImss" value="{{$dM->noImss}}" style="margin-bottom: 5px;">
-
-                            <label id="LPersonaEmerg" hidden>En caso de Emergencia Llamar a: </label>
-                            <input hidden type="text" class="form-control" id="nombreEmergencia" name="nombreEmergencia" value="{{$dM->nombreEmergencia}}" style="margin-bottom: 5px;">
-
-                            <label id="LTelefonoEmer" hidden>Teléfono de Emergencia</label>
-                            <input hidden type="text" class="form-control" id="telEmergencia" name="telEmergencia" value="{{$dM->telEmergencia}}" style="margin-bottom: 5px;">
-
-                            <label id="LParen" hidden>Parentesco</label>
-                            <input hidden type="text" class="form-control" id="parentesco" name="parentesco" value="{{$dM->parentesco}}" style="margin-bottom: 5px;">
-
-                            <label id="LAlergias" hidden>Alergias</label>
-                            <textarea hidden type="text" class="form-control" id="alergias" name="alergias" style="margin-bottom: 5px;">{{$dM->alergias}}</textarea>
-
-                            <label id="LEnfermedades" hidden>Enfermedades Cronicas: </label>
-                            <textarea hidden type="text" class="form-control" id="enfermedades" name="enfermedades" style="margin-bottom: 5px;">{{$dM->enfermedades}}</textarea>
-
-                            <div>
-                            <a class="btn btn-danger float-right" id="cancelInfoMedic" onclick="cancelInfoMedicos()" hidden style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px; color: white;">Cancelar</a>
-                            <button type="submit" class="btn btn-asm float-right" id="updateInfoMedic" hidden style="margin-top: 10px; margin-bottom: 10px;">Guardar</button>
-                            </div>
-                            <br>
-
-
-                        </form>
-                    @endforeach
-                    </div>
-                </div>
-            </div>
-            <div class="card-tabs">
-                <nav>
-                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true" onclick="editInfoEscolar()">Datos Escolares <i class="fas fa-pencil-alt" aria-hidden="true" style='font-size:24px'></i></a>
                     </div>
                 </nav>
@@ -192,7 +124,6 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
                         @foreach($dataEs as $dE)
-                            <h3 class="text-center">INFORMACIÓN ESCOLAR DEL USUARIO</h3>
                             <div><label id="Mprimaria">Certificado de Primaria: {{$dE->Primaria}}</label></div>
                             <div><label id="Msecundaria">Certificado de Secundaria: {{$dE->Secundaria}}</label></div>
                             <div><label id="Mprepa">Certificado de Preparatoria: {{$dE->Prepa}}</label></div>
@@ -282,6 +213,10 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+        <div class="col-lg-6">
+
             <div class="card-tabs">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -292,7 +227,6 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
                         @foreach($dataLa as $dL)
-                            <h3 class="text-center">INFORMACIÓN LABORAL DEL USUARIO</h3>
                             <div><label id="MfIngreso">Fecha de Ingreso: {{$dL->fechaIngreso}}</label></div>
                             <div><label id="MNombramiento">Nombramiento: {{$dL->nombramiento}}</label></div>
                             <div><label id="MtypeTra">Tipo de Trabajador: {{$dL->tipoTrabajador }}</label></div>
@@ -359,19 +293,69 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6">
+
             <div class="card-tabs">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Cursos</a>
+                        <a class="nav-item nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true" onclick="editInfoMedicos()">Datos Medicos <i class="fas fa-pencil-alt" aria-hidden="true" style='font-size:24px'></i></a>
                     </div>
                 </nav>
 
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">INFO GENERAL</div>
+                    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
+                    @foreach($dataMe as $dM)
+                        <div><label id="MtipoSangre">Tipo de Sangre: {{$dM->tipoSangre}}</label></div>
+                        <div><label id="MnoImss">No. IMSS: {{$dM->noImss}}</label></div>
+                        <div><label id="MpersonaEmerg">En caso de Emergencia llamar a: {{$dM->nombreEmergencia}}</label></div>
+                        <div><label id="MtelEmerg">Teléfono de Emergencia: {{$dM->telEmergencia}}</label></div>
+                        <div><label id="Mparentesco">Parentesco: {{$dM->parentesco}}</label></div>
+                        <div><label id="Malergias">Alergias: {{$dM->alergias}}</label></div>
+                        <div><label id="Menfermedades">Enfermedades: {{$dM->enfermedades}}</label></div>
+                        <form id="datosMedicosUser">
+                            {{ csrf_field() }}
+                            <label id="LSangre" hidden>Tipo de Sangre: </label>
+                            <select class="custom-select" name="tipoSangre" id="tipoSangre" style="margin-bottom: 5px;" hidden>
+                                        <option disabled>Elige un Tipo</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                            </select>
+                            <label id="LNoImss" hidden>No. IMSS</label>
+                            <input hidden type="text" class="form-control" id="noImss" name="noImss" value="{{$dM->noImss}}" style="margin-bottom: 5px;">
+
+                            <label id="LPersonaEmerg" hidden>En caso de Emergencia Llamar a: </label>
+                            <input hidden type="text" class="form-control" id="nombreEmergencia" name="nombreEmergencia" value="{{$dM->nombreEmergencia}}" style="margin-bottom: 5px;">
+
+                            <label id="LTelefonoEmer" hidden>Teléfono de Emergencia</label>
+                            <input hidden type="text" class="form-control" id="telEmergencia" name="telEmergencia" value="{{$dM->telEmergencia}}" style="margin-bottom: 5px;">
+
+                            <label id="LParen" hidden>Parentesco</label>
+                            <input hidden type="text" class="form-control" id="parentesco" name="parentesco" value="{{$dM->parentesco}}" style="margin-bottom: 5px;">
+
+                            <label id="LAlergias" hidden>Alergias</label>
+                            <textarea hidden type="text" class="form-control" id="alergias" name="alergias" style="margin-bottom: 5px;">{{$dM->alergias}}</textarea>
+
+                            <label id="LEnfermedades" hidden>Enfermedades Cronicas: </label>
+                            <textarea hidden type="text" class="form-control" id="enfermedades" name="enfermedades" style="margin-bottom: 5px;">{{$dM->enfermedades}}</textarea>
+
+                            <div>
+                            <a class="btn btn-danger float-right" id="cancelInfoMedic" onclick="cancelInfoMedicos()" hidden style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px; color: white;">Cancelar</a>
+                            <button type="submit" class="btn btn-asm float-right" id="updateInfoMedic" hidden style="margin-top: 10px; margin-bottom: 10px;">Guardar</button>
+                            </div>
+                            <br>
+
+
+                        </form>
+                    @endforeach
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

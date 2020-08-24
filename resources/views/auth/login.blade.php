@@ -125,49 +125,23 @@
                                     {{ __('Iniciar Sesión') }}
                                 </button>
                         </div>
-                        
-                        <div class="d-flex justify-content-center mt-3 login_container">
-                            <a href="/registro" class="btn login_btn">Registro Interno</a>
-                        </div>
 
                         <div class="d-flex justify-content-center mt-3 login_container">
-                            <a href="/registroExterno" class="btn login_btn">Registro Externo</a>
+                            
+                                <a class="btn login_btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Registrarse
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="/registro">Personal Interno</a>
+                                    <a class="dropdown-item" href="/registroExterno">Invitado Externo</a>
+                                </div>
+
                         </div>
                         
                     </form>
                     
                 </div>
-                
-		
-				<div class="mt-4">
-					<div class="d-flex justify-content-center links">
-                        <!--@if (Route::has('password.request'))
-                            <a class="btn btn-link" href="{{ route('password.request') }}">
-                                {{ __('¿Olvido su contraseña?') }}
-                            </a>
-                        @endif-->
-
-                            <!--<button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModalCenter">
-                                ¿Olvidó su contraseña?
-                            </button>-->
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title text-center" id="exampleModalLabel">Por favor, cóntacte al administrador</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-						
-                    </div>
-                    
-				</div>
 			</div>
 		</div>
     </div>
