@@ -93,7 +93,7 @@
     <div class="container-fluid">
         <div class="row">
         @foreach($cursos as $curso)
-            @if($curso->verificarArea($curso->id, Auth::user()->area_id ) && $curso->status_id == 2 )
+            @if($curso->verificarArea($curso->id, Auth::user()->area_id ) && $curso->status_id == 3 )
                 <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
                     <div class="card">
                         <img class="card-img-top" style="width:100%;" src="../uploads/{{$curso->imagenCurso}}">
