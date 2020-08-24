@@ -26,10 +26,10 @@ class DatabaseSeeder extends Seeder
             'id'=>1,
             'descripcion'=>'Planificando'
         ]);
-        DB::table('status')->insert([
+        /*DB::table('status')->insert([
             'id'=>2,
             'descripcion'=>'En inscripciones'
-        ]);
+        ]);*/
         DB::table('status')->insert([
             'id'=>3,
             'descripcion'=>'En curso'
@@ -38,19 +38,19 @@ class DatabaseSeeder extends Seeder
             'id'=>4,
             'descripcion'=>'Terminado'
         ]);
-        DB::table('status')->insert([
+       /* DB::table('status')->insert([
             'id'=>5,
             'descripcion'=>'Cancelado'
-        ]);
+        ]);*/
         //STATUS DE INSCRIPCION
-        DB::table('status')->insert([
+       /* DB::table('status')->insert([
             'id'=>6,
             'descripcion'=>'Aceptado'
         ]);
         DB::table('status')->insert([
             'id'=>7,
             'descripcion'=>'Rechazado'
-        ]);
+        ]);*/
 
 
         //AREAS SEED
