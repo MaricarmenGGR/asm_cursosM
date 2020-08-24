@@ -1,6 +1,6 @@
 @extends('layouts.menu')
 @section('content')
-@if($curso->verificarArea($curso->id, Auth::user()->area_id ) && $curso->status_id == 2 )
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -754,13 +754,7 @@
             </div>
         </div>
     </div>
-@else
-    <form action="/" id="homeForm">
-    </form>
-    <script>
-        document.getElementById('homeForm').submit();
-    </script>
-@endif
+
 <!--Ver Programa-->
 <script>
     function inscripcion(id_curso){
