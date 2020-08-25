@@ -9,7 +9,10 @@ use App\Examen_Preguntas;
 use App\Examen_Usuario;
 use App\Examen;
 use App\Curso;
+use ArrayObject;
+use DeepCopy\TypeFilter\Spl\ArrayObjectFilter;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\New_;
 
 class ExamenCursoController extends Controller
 {
@@ -167,9 +170,43 @@ class ExamenCursoController extends Controller
     public function resultadosGraficaExamen($id){
         $examen = Examen::where('curso_id','=',$id)->first();
         $respuestas = Examen_Usuario::where('examen_id','=',$examen->id)->get();
+        
         return response()->json(
             $respuestas
+            
         );
+    }
+
+    public function verTablaAprobados($id)
+    {
+        $examen = Examen::where('curso_id','=',$id)->first();
+        $respuestas = Examen_Usuario::where('examen_id','=',$examen->id)->get();
+        //
+        $usuarioID = DB::table('examen_usuario')
+        ->where('examen_id','=',$examen->id)
+        ->select('user_id')
+        ->get();
+        //
+        $arregloUser=[];
+        for($i=0;$i<count($usuarioID);$i++){
+            $idOcupo = $usuarioID[$i]->user_id;
+            array_push($arregloUser,$idOcupo);
+        }
+        
+        $personaOcupo=[];
+        foreach($arregloUser as $user){
+            $userData = DB::table('users')
+            ->where('id','=',$user)
+            ->select('id','name','apPaterno','apMaterno','email')
+            ->get();
+            array_push($personaOcupo,$userData[0]);
+        }
+
+
+        return response()->json(
+            $personaOcupo
+            
+        );   
     }
 
 }

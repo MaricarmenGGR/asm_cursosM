@@ -78,6 +78,7 @@ Route::post('/editarAreas/{id}', 'CursosController@editarAreas');
 Route::post('/agregaExterno','UsuariosController@userExternoStore');
 
 
+
 //ELABORACION EXAMEN
 Route::post('/crearPregunta', 'ExamenCursoController@crearPregunta')->name('crearPregunta');
 Route::post('/guardarRespuestas', 'ExamenCursoController@guardarRespuestas')->name('guardarRespuestas');
@@ -88,6 +89,7 @@ Route::post('/activarExamen', 'ExamenCursoController@activarExamen')->name('acti
 Route::post('/desactivarExamen', 'ExamenCursoController@desactivarExamen')->name('desactivarExamen');
 //GRAFICAR RESULTADOS EXAMEN
 Route::get('/resultadosGraficaExamen/{id}','ExamenCursoController@resultadosGraficaExamen');
+Route::get('/verUsuarioAprobado/{id}','ExamenCursoController@verTablaAprobados');
 //ASISTENCIA
 Route::post('/registrarEntrada', 'AsistenciaController@registrarEntrada')->name('registrarEntrada');
 Route::post('/registrarSalida', 'AsistenciaController@registrarSalida')->name('registrarSalida');

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -43,14 +44,14 @@ class DatabaseSeeder extends Seeder
             'descripcion'=>'Cancelado'
         ]);*/
         //STATUS DE INSCRIPCION
-       /* DB::table('status')->insert([
+        DB::table('status')->insert([
             'id'=>6,
             'descripcion'=>'Aceptado'
         ]);
         DB::table('status')->insert([
             'id'=>7,
             'descripcion'=>'Rechazado'
-        ]);*/
+        ]);
 
 
         //AREAS SEED

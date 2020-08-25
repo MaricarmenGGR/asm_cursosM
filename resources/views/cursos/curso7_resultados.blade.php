@@ -67,11 +67,55 @@
                         </figure>
 
                     </div>
-                    
-                </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-asm" onclick="verPersonas()">Ver listado de Personas que han concluido el curso</button>
+                    </div>
+                    <br>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                            <th class="text-center">Nombre</th>
+                                            <th class="text-center">Apellido Paterno</th>
+                                            <th class="text-center">Apellido Materno</th>
+                                            <th class="text-center">Correo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tablaResult"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                            <th class="text-center">Calificacion</th>
+                                            <th class="text-center">Estatus</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableEstatus"></tbody>
+                                                    
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
+
+    
+
+   
+
+
 </div>
 
 <!--Modificar Info del Curso-->
@@ -556,5 +600,70 @@
     }
     });
 </script>
+
+<script> 
+    function verPersonas(){
+        eliminarTabla(); 
+        var Calificacion="";
+        var Nombre="";
+        var AMaterno="";
+        var APaterno="";
+        var Estatus="";
+        var email = "";
+        var curso_id = $('#curso_id').val();
+        $.ajax({
+        async: false,
+        url: '/resultadosGraficaExamen/'+curso_id,
+        type:'GET',
+        success:(function(data){
+            var tablaDatos = $("#tableEstatus");
+            $(data).each(function(key,value){
+                Calificacion=value.calificacion;
+                        parseInt(Calificacion);
+                if(Calificacion<6){
+                    Estatus = "Reprobado";
+                }else{
+                    Estatus = "Aprobado";
+                }
+                tablaDatos.append(
+                '<tr class="hide">'+
+                '<td class="pt-3-half">'+value.calificacion+'</td>'+
+                '<td class="pt-3-half">'+Estatus+'</td>'+
+                '</tr>'); 
+            });
+        })
+    });
+
+
+    $.ajax({
+        async: false,
+        url: '/verUsuarioAprobado/'+curso_id,
+        type:'GET',
+        success:(function(data){
+            var tablaDatos = $("#tablaResult");
+            $(data).each(function(key,value){
+                tablaDatos.append(
+            '<tr class="hide">'+
+            '<td class="pt-3-half">'+value.name+'</td>'+
+            '<td class="pt-3-half">'+value.apPaterno+'</td>'+
+            '<td class="pt-3-half">'+value.apMaterno+'</td>'+
+            '<td class="pt-3-half">'+value.email+'</td>'+
+            '</tr>');           
+            });
+        })
+    });
+     
+}
+
+    function eliminarTabla(){
+        var tablaDatos = $("#tableEstatus");
+        tablaDatos.empty();
+        var tablaDatos2 = $("#tablaResult");
+        tablaDatos2.empty();
+    }
+
+</script>
+
+
 
 @endsection
