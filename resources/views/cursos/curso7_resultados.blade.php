@@ -110,12 +110,6 @@
             </div>
         </div>
     </div>
-
-    
-
-   
-
-
 </div>
 
 <!--Modificar Info del Curso-->

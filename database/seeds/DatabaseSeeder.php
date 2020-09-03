@@ -32,11 +32,11 @@ class DatabaseSeeder extends Seeder
             'descripcion'=>'En inscripciones'
         ]);*/
         DB::table('status')->insert([
-            'id'=>3,
+            'id'=>2,
             'descripcion'=>'En curso'
         ]);
         DB::table('status')->insert([
-            'id'=>4,
+            'id'=>3,
             'descripcion'=>'Terminado'
         ]);
        /* DB::table('status')->insert([
@@ -44,14 +44,14 @@ class DatabaseSeeder extends Seeder
             'descripcion'=>'Cancelado'
         ]);*/
         //STATUS DE INSCRIPCION
-        DB::table('status')->insert([
+        /*DB::table('status')->insert([
             'id'=>6,
             'descripcion'=>'Aceptado'
         ]);
         DB::table('status')->insert([
             'id'=>7,
             'descripcion'=>'Rechazado'
-        ]);
+        ]);*/
 
 
         //AREAS SEED
@@ -120,35 +120,14 @@ class DatabaseSeeder extends Seeder
         //USUARIOS SEED
         DB::table('users')->insert([
             'id'=>1,
-            'name'=>'Admin',
-            'apPaterno'=>'Ap P',
-            'apMaterno'=>'Ap M',
+            'name'=>'Administrador',
+            'apPaterno'=>'Gonzalez',
+            'apMaterno'=>'Rodriguez',
             'role_id'=>1,
             'area_id'=>1,
             'email'=>"admin@admin.com",
             'email_verified_at'=>null,
             'password' => bcrypt('admin1989'),
-            'sexo'=>'Masculino',
-            'edoCivil'=>'Soltero',
-            'calle'=>'Egipto',
-            'colonia'=>'Joyas',
-            'nCasa'=>'100',
-            'telfono'=>'4423562378',
-            'curp'=>'GORMPOEIRNEOEN',
-            'nHijos'=>3,
-            'edad'=>40,
-            'remember_token'=>null
-        ]);
-        DB::table('users')->insert([
-            'id'=>2,
-            'name'=>'Usuario1',
-            'apPaterno'=>'Usr ap',
-            'apMaterno'=>'Usr am',
-            'role_id'=>2,
-            'area_id'=>1,
-            'email'=>"user@user.com",
-            'email_verified_at'=>null,
-            'password' => bcrypt('user1989'),
             'sexo'=>'Femenino',
             'edoCivil'=>'Soltero',
             'calle'=>'Egipto',
@@ -159,6 +138,115 @@ class DatabaseSeeder extends Seeder
             'nHijos'=>3,
             'edad'=>40,
             'remember_token'=>null
+        ]);
+        DB::table('datos_escolares')->insert([
+            'id_user'=>1,
+            'Primaria'=>'SI',
+            'Secundaria'=>'SI',
+            'Prepa'=>'SI',
+            'cTecnica'=>'NO',
+            'cProfesional'=>'SI',
+            'nCTecnica'=>'Ninguna',
+            'nCProfesional'=>'Ingenieria Electrica',
+            'diplomados'=>'Ninguno',
+            'noCedula'=>'231234563',
+            'Maestrias'=>'Ninguna',
+            'cursosExtra'=>'Si',
+            'hCapacidades'=>'No',
+            'habilidadesDesc'=>'Ninguna'
+        ]);
+        DB::table('datos_laborales')->insert([
+            'id_user'=>1,
+            'fechaIngreso'=>'2020-09-02',
+            'nombramiento'=>'Secretario',
+            'tipoTrabajador'=>'Base',
+            'actActuales'=>'SI',
+            'actActualesDesc'=>'Servicios locatarios',
+            'responsabilidades'=>'Locatarios',
+            'Puesto'=>'Servidor Publico',
+            'descPuesto'=>'Descripcion Servidor',
+            'cursoInduccion'=>'SI',
+            'cursoInduccionDesc'=>'En linea',
+            'cargosAnt'=>'Ninguno',
+            'trabajosExt'=>'Ninguno'
+        ]);
+
+        DB::table('datos_medicos')->insert([
+            'id_user'=>1,
+            'tipoSangre'=>'O+',
+            'noImss'=>'45781245',
+            'nombreEmergencia'=>'Adriana Rodriguez Mandujano',
+            'telEmergencia'=>'4465897574',
+            'parentesco'=>'Madre',
+            'alergias'=>'Ninguno',
+            'enfermedades'=>'Ninguna'
+        ]);
+
+
+
+        DB::table('users')->insert([
+            'id'=>2,
+            'name'=>'Carlos',
+            'apPaterno'=>'Cedeno',
+            'apMaterno'=>'Martinez',
+            'role_id'=>2,
+            'area_id'=>1,
+            'email'=>"user@user.com",
+            'email_verified_at'=>null,
+            'password' => bcrypt('user1989'),
+            'sexo'=>'Masculino',
+            'edoCivil'=>'Casado',
+            'calle'=>'Egipto',
+            'colonia'=>'Joyas',
+            'nCasa'=>'100',
+            'telfono'=>'4423562378',
+            'curp'=>'GORMPOEIRNEOEN',
+            'nHijos'=>3,
+            'edad'=>40,
+            'remember_token'=>null
+        ]);
+
+        DB::table('datos_escolares')->insert([
+            'id_user'=>2,
+            'Primaria'=>'SI',
+            'Secundaria'=>'SI',
+            'Prepa'=>'SI',
+            'cTecnica'=>'NO',
+            'cProfesional'=>'SI',
+            'nCTecnica'=>'Ninguna',
+            'nCProfesional'=>'Ingenieria Mecanica',
+            'diplomados'=>'Ninguno',
+            'noCedula'=>'231234563',
+            'Maestrias'=>'Ninguna',
+            'cursosExtra'=>'Si',
+            'hCapacidades'=>'No',
+            'habilidadesDesc'=>'Ninguna'
+        ]);
+        DB::table('datos_laborales')->insert([
+            'id_user'=>2,
+            'fechaIngreso'=>'2020-09-02',
+            'nombramiento'=>'Gerente',
+            'tipoTrabajador'=>'Sindicalizado',
+            'actActuales'=>'SI',
+            'actActualesDesc'=>'Servicios locatarios',
+            'responsabilidades'=>'Locatarios',
+            'Puesto'=>'Servidor Publico',
+            'descPuesto'=>'Descripcion Servidor',
+            'cursoInduccion'=>'SI',
+            'cursoInduccionDesc'=>'En linea',
+            'cargosAnt'=>'Ninguno',
+            'trabajosExt'=>'Ninguno'
+        ]);
+
+        DB::table('datos_medicos')->insert([
+            'id_user'=>2,
+            'tipoSangre'=>'A+',
+            'noImss'=>'45781245',
+            'nombreEmergencia'=>'Isabel Rodriguez Mandujano',
+            'telEmergencia'=>'4465897574',
+            'parentesco'=>'Hermana',
+            'alergias'=>'Ninguno',
+            'enfermedades'=>'Ninguna'
         ]);
 
         

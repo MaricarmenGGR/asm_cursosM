@@ -103,7 +103,8 @@
                                                     <div class="text-left">
                                                         <label>Fecha</label>
                                                     </div>
-                                                    <input type="date" class="form-control" id="fechaActividad" name="fechaActividad" placeholder="fechaActividad" required>
+                                                    <input type="date" class="form-control" id="fechaActividad" name="fechaActividad" placeholder="fechaActividad" min="{{ $curso->fechaInicio }}" max="{{ $curso->fechaFin }}" required>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    
                                                 </div>
                                             
                                             <input type="hidden" value="{{$curso->id}}" id="curso_id" name="curso_id">

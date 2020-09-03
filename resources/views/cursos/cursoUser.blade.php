@@ -126,9 +126,9 @@
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
-                                            <button type="button" class="btn btn-asm btn-block" onclick="inscripcion({{$curso->id}})">
+                                            <!--<button type="button" class="btn btn-asm btn-block" onclick="inscripcion({{$curso->id}})">
                                                 Inscribirme
-                                            </button>
+                                            </button>-->
                                         </div>
                                         <div class="col-lg-1"></div>
                                     </div>
