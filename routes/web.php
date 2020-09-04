@@ -76,7 +76,7 @@ Route::get('/pdfCurso/{id}','CursosController@DescarganInfoCurso');
 Route::delete('/borrarCurso/{id}','CursosController@destroy');
 Route::post('/editarAreas/{id}', 'CursosController@editarAreas');
 Route::post('/agregaExterno','UsuariosController@userExternoStore');
-
+Route::get('/rechazarExterno/{id}','UsuariosController@borrarExternouser');
 
 
 //ELABORACION EXAMEN

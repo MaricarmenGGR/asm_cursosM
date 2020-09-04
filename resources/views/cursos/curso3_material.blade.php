@@ -195,7 +195,7 @@ $( document ).ready(function() {
             success: function(response){
                 Swal.fire({
                     icon: 'success',
-                    title: 'Se agregon los materiales',
+                    title: 'Se agrego el material',
                     showConfirmButton: false,
                     timer: 1500
                 });

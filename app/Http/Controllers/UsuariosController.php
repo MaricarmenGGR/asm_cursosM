@@ -331,5 +331,14 @@ class UsuariosController extends Controller
         
     }
 
+    public function borrarExternouser($id){
+        $usuarioExterno = DB::table('users')
+        ->where('id', '=',$id)
+        ->delete();
+
+        $usuarios=User::get();
+        return view('usuarios.index',compact('usuarios'));
+    }
+
     
 }

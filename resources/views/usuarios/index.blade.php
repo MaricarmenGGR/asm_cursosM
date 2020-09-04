@@ -37,8 +37,14 @@
                                         <td>
                                             <p class="text-center">
                                                 <a href={{route('usuarios.show',$usuario->id)}}><i class="fas fa-eye"></i></a>
+                                                <!--<input id="idUserInterno" name="user_id" type="hidden" value='{{$usuario->id}}'>-->
                                             </p>
                                         </td>
+                                        <!--<td>
+                                            <p class="text-center">
+                                                <a href='#' onclick="verBorradoInterno()"><i class="fas fa-trash-alt"></i></a>
+                                            </p>
+                                        </td>-->
                                     </tr>
                                     @endif
                                 @endforeach
@@ -67,6 +73,7 @@
                                         <th>Email</th>
                                         <th>Teléfono</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -81,6 +88,12 @@
                                         <td>
                                             <p class="text-center">
                                                 <a href={{route('usuarios.show',$usuario->id)}}><i class="fas fa-eye"></i></a>
+                                                <input id="idUserExterno" name="user_id" type="hidden" value='$usuario->id'>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="text-center">
+                                                <a href='/rechazarExterno/{{$usuario->id}}'><i class="fas fa-trash-alt"></i></a>
                                             </p>
                                         </td>
                                     </tr>
@@ -124,4 +137,18 @@
 
         } );
     </script>
+
+<script>
+    function verBorradoExterno(){
+        var id = $('#idUserExterno').val();
+        console.log(id);
+    }
+
+    function verBorradoInterno(){
+        var id = $('#idUserInterno').val();
+        console.log(id);
+    }
+
+
+</script>
 @endsection
