@@ -270,7 +270,7 @@ class UsuariosController extends Controller
     {
         //
     }
-
+ 
     public function perfil()
     {
         return view('usuarios.perfil');
